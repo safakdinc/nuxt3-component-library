@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navbar-height: 60px;
+  --padding-x: 32px;
+
+  @media (min-width: 768px) {
+    --padding-x: 100px;
+  }
+
+  @media (min-width: 1024px) {
+    --padding-x: 100px;
+  }
+
+  @media (min-width: 1536px) {
+    --padding-x: 250px;
+  }
+}
+
+body {
+  --background: #090909;
+  --background-fade: rgb(24, 24, 27);
+  --primary: rgb(23, 137, 97);
+  --primary-fade: rgb(34, 226, 127);
+  --text-gray: rgb(180, 180, 180);
+  --text-color: rgb(255, 255, 255);
+  --sidenav-width: 230px;
+  --navbar-height: 80px;
+
+  color: var(--text-color);
+  background-color: var(--background);
+}
+
+.layoutPadding {
+  padding-left: var(--padding-x);
+  padding-right: var(--padding-x);
+}
+
+@font-face {
+  font-family: 'interFont';
+  src: url('./assets//inter.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'graphIk';
+  src: url('./assets/fonts/GraphikRegular.otf') format('opentype');
+}
+
+.grahpikFont {
+  font-family: 'graphIk';
+  letter-spacing: 0px;
+}
+
+.maxScreenHeight {
+  max-height: calc(100vh - var(--navbar-height));
+}
+
+.minHeight {
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.interFont {
+  font-family: 'interFont';
+  letter-spacing: 0px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #212121;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(190, 190, 190);
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888;
+  border-radius: 10px;
+}
