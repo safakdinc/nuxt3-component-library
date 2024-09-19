@@ -1,5 +1,5 @@
 ---
-title: TracingBeam
+title: Tracing Beam
 description: A Vue component that creates an animated tracing beam effect alongside content.
 
 TracingBeam:

@@ -1,5 +1,5 @@
 ---
-title: ThreeDCarousel
+title: 3D Carousel
 description: A Vue component that creates an interactive 3D carousel using Three.js and GSAP.
 
 3DCarousel:
