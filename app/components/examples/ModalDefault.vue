@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <button @click="openModal" class="px-4 py-2 bg-green-500 rounded">Open Modal</button>
+  <div class="w-full flex justify-center items-center p-[16px] md:p-[64px]">
+    <button @click="openModal" class="px-4 py-2 bg-green-500 rounded h-fit">Open Modal</button>
     <ModalDefault :open="isModalOpen" @closeModal="closeModal">
       <div class="bg-[var(--background-fade)] px-6 py-4 w-[350px] h-[400px] rounded-lg shadow-lg flex flex-col">
         <img

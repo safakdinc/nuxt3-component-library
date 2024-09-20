@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex p-[16px] md:p-[64px]">
     <TabsVertical
       :tabs="['Dashboard', 'Analytics', 'Reports', 'Users']"
       :active="activeTab"

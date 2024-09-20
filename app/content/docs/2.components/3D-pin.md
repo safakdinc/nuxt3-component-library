@@ -35,7 +35,7 @@ Events:
 
 ## Usage
 
-:tab-preview-code{component="ThreeDPin"}
+:tab-preview-code{component="3DPin"}
 
 ### Slots
 

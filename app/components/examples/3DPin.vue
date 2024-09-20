@@ -1,11 +1,13 @@
 <template>
-  <div class="container">
+  <div class="w-full justify-center flex p-[16px] md:p-[64px]">
     <div class="pins-container">
       <ThreeDPin v-for="(pin, index) in pins" :key="index">
         <template #pin>
           <a href="#"> <ButtonUnderGradient>3D Pin</ButtonUnderGradient> </a>
         </template>
-        <div class="w-[320px] h-[384px] border rounded-lg flex flex-col gap-[16px] py-[16px] px-[24px]">
+        <div
+          class="w-[320px] h-[384px] border rounded-lg flex flex-col gap-[16px] py-[16px] px-[24px]"
+          style="background-color: var(--background-fade)">
           <TextMd>Deneme UI</TextMd>
           <TextMd class="text-[var(--text-gray)]">Customizable Tailwind CSS and GSAP Components.</TextMd>
         </div>
@@ -25,10 +27,6 @@ const pins = ref([
 </script>
 
 <style scoped>
-.container {
-  padding: 20px;
-}
-
 .pins-container {
   display: flex;
   justify-content: space-around;

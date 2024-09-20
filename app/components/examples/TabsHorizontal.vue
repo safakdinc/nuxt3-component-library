@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex items-center flex-col p-[16px] md:p-[64px]">
     <TabsHorizontal
       :tabs="['Home', 'Profile', 'Settings', 'Help']"
       :active="activeTab"

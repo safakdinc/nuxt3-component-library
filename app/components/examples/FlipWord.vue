@@ -1,5 +1,5 @@
 <template>
-  <TextLg class="flex flex-col items-start justify-start">
+  <TextLg class="flex flex-col items-start justify-start p-[64px]">
     <div class="flex items-center">
       Create &nbsp <FlipWordDefault class="font-bold" :words="['Wonderful', 'Dynamic', 'Cool', 'Better']"></FlipWordDefault>
     </div>
