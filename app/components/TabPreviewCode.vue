@@ -6,7 +6,7 @@
 
     <!-- Conditionally Render Preview or Code -->
     <div class="flex flex-col gap-[8px] overflow-hidden rounded-md" style="border: 1px solid rgb(255 255 255 / 0.3)">
-      <div v-show="isPreview" class="w-full flex justify-center preview min-h-[50vh] max-h-[80vh] overflow-y-auto p-[16px] md:p-[64px]">
+      <div v-show="isPreview" class="w-full flex justify-center preview min-h-[50vh] max-h-[80vh] overflow-x-hidden overflow-y-auto">
         <component :is="resolveComponent('examples-' + props.component)"></component>
       </div>
       <TextXs v-show="!isPreview" class="relative">

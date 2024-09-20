@@ -1,25 +1,22 @@
 <template>
-  <div ref="container" class="w-full">
-    <div
-      ref="parallaxContainer"
-      class="w-full flex flex-col gap-[32px] parallax-container pt-[100px]"
-    >
+  <div ref="container" class="w-full" :class="props.class">
+    <div ref="parallaxContainer" class="w-full flex flex-col gap-[32px] parallax-container">
       <div
-        v-for="(row, rowIndex) in items"
+        v-for="(row, rowIndex) in splitItems"
         :key="rowIndex"
         class="w-full flex flex-row gap-[32px] overflow-x-visible"
-        :ref="(el) => (rows[rowIndex] = el)"
-      >
+        :ref="el => (rows[rowIndex] = el)">
         <div
           v-for="(item, itemIndex) in row"
           :key="itemIndex"
-          class="w-[35%] flex-shrink-0 aspect-[4/3] rounded-lg bg-white"
-        >
-          <img
-            :src="item.img"
-            alt="item.name"
-            class="w-full h-full object-cover rounded-lg"
-          />
+          class="max-w-[480px] max-h-[384px] w-[40vw] aspect-[5/3.5] flex-shrink-0 rounded-lg bg-white image-shadow relative group transition-all hover:translate-y-[-15px]">
+          <NuxtLink v-if="item.link" :to="item.link" class="w-full h-full absolute top-0 left-0"></NuxtLink>
+          <div
+            class="w-full h-full absolute top-0 left-0 z-10 opacity-0 transition-all group-hover:opacity-100 flex items-end p-[16px] pointer-events-none"
+            style="background-color: rgba(0, 0, 0, 0.7)">
+            <div class="text-Lg">{{ item.name }}</div>
+          </div>
+          <img :src="item.img" :alt="item.name" :width="800" :height="500" class="w-full h-full object-cover object-top rounded-lg image" />
         </div>
       </div>
     </div>
@@ -27,124 +24,92 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
-const items = [
-  [
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-  ],
-  [
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-  ],
-  [
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-    {
-      img: "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      name: "Deneme",
-    },
-  ],
-];
+const props = defineProps({
+  items: {
+    type: Array,
+    default: () => []
+  },
+  triggerElement: {
+    type: String,
+    default: null
+  },
+  class: {
+    type: String,
+    default: ' '
+  }
+});
+
+const splitItems = computed(() => {
+  const result = [];
+  for (let i = 0; i < props.items.length; i += 3) {
+    result.push(props.items.slice(i, i + 3));
+  }
+  return result;
+});
 
 const container = ref(null);
 const parallaxContainer = ref();
 const rows = ref([]);
+const rowHeight = ref(384);
+
+function calculateHeight() {
+  rowHeight.value = document.querySelectorAll('.image')[0].offsetHeight;
+}
 
 onMounted(() => {
+  let scrollerElement = document.querySelector(props.triggerElement) || window;
+  ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' });
+  window.addEventListener('resize', calculateHeight);
+  calculateHeight();
+
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: container.value,
-      start: "top top",
-      end: "+=2500", // Set total scroll distance to 1000px
+      start: 'top top',
+      end: 'bottom top',
       scrub: 1,
-      markers: true,
-      pin: true,
-      pinSpacing: true,
-    },
+      scroller: scrollerElement
+    }
   });
 
-  // Rotation animation (completes in first 100px)
+  gsap.set(parallaxContainer.value, {
+    rotateX: 30,
+    rotateZ: 20,
+    y: 0
+  });
 
-  tl.fromTo(
+  tl.to(parallaxContainer.value, {
+    rotateX: 0,
+    rotateZ: 0,
+    duration: 0.2
+  });
+
+  tl.to(
     parallaxContainer.value,
     {
-      x: "0%",
-      rotateX: 30,
-      rotateZ: 20,
+      y: rowHeight.value * rows.value.length,
+      duration: 0.2
     },
-    {
-      x: 0,
-      rotateX: 0,
-      rotateZ: 0,
-      duration: 0.2, // This makes it complete in 10% of the total scroll distance
-    }
+    '<'
   );
 
-  tl.fromTo(
-    parallaxContainer.value,
-    {
-      y: "0",
-    },
-    {
-      y: "0",
-      duration: 0.2, // This makes it complete in 10% of the total scroll distance
-    },
-    "<"
-  );
-
-  // Other animations (will start after rotation and complete by the end)
   rows.value.forEach((row, index) => {
     gsap.set(row, {
-      x: index % 2 === 0 ? "-10%" : "10%",
+      x: index % 2 === 0 ? '-40%' : '10%'
     });
 
     tl.to(
       row,
       {
-        x: index % 2 === 0 ? "10%" : "-10%",
-        yPercent: -300,
+        x: index % 2 === 0 ? '20%' : '-30%',
+        duration: 1
       },
-      0.15 // Start after the rotation animation
+      '<'
     );
   });
 });
 </script>
-
-<style scoped>
-.parallax-container {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-</style>
