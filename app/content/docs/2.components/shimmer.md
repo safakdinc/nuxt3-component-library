@@ -1,5 +1,5 @@
 ---
-title: ShimmerLoading
+title: Shimmer Loading
 description: A Vue component that creates a shimmer loading effect, ideal for placeholder content.
 
 ShimmerLoading:
