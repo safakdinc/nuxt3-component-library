@@ -1,19 +1,15 @@
 <template>
   <div
-    ref="wrapper"
-    class="w-52 h-52 wrapper rounded-xl overflow-hidden relative"
+    ref="container"
     @mouseenter="handleMouseEnter"
-    :style="{ '--position': direction }"
-  >
-    <div
-      class="image rounded-xl absolute top-0 left-0 w-full h-full"
-      :style="{ backgroundImage: `url('${props.img}')` }"
-    ></div>
-    <div class="content w-full h-full relative">
-      <div
-        class="absolute top-0 left-0 w-full h-full bg-black opacity-30"
-      ></div>
-      <div class="absolute top-0 left-0 w-full h-full flex items-end p-3">
+    @mouseleave="handleMouseLeave"
+    :class="[' rounded-lg overflow-hidden group/card relative', props.class]">
+    <div class="relative h-full w-full">
+      <div ref="overlay" class="absolute inset-0 w-full h-full bg-black/60 z-10 opacity-0"></div>
+      <div ref="imageContainer" class="h-full w-full relative">
+        <img :src="props.img" :alt="props.imageAlt" :class="['h-full w-full object-cover scale-[1.15]', props.imageClass]" />
+      </div>
+      <div ref="content" :class="['w-full h-full top-0 left-0 absolute z-40', props.childrenClass]">
         <slot></slot>
       </div>
     </div>
@@ -21,57 +17,96 @@
 </template>
 
 <script setup>
+import { gsap } from 'gsap';
+
 const props = defineProps({
   img: {
     type: String,
-    default: "",
+    required: true
   },
+  imageAlt: {
+    type: String,
+    default: 'Hover image'
+  },
+  class: {
+    type: String,
+    default: ''
+  },
+  childrenClass: {
+    type: String,
+    default: ''
+  },
+  imageClass: {
+    type: String,
+    default: ''
+  }
 });
 
-const direction = ref("left");
+const container = ref(null);
+const overlay = ref(null);
+const imageContainer = ref(null);
+const content = ref(null);
 
-function handleMouseEnter() {
-  const { left, top, width, height } = event.target.getBoundingClientRect();
-  const x = event.clientX - left;
-  const y = event.clientY - top;
+const getDirection = (ev, obj) => {
+  const { width: w, height: h, left, top } = obj.getBoundingClientRect();
+  const x = ev.clientX - left - (w / 2) * (w > h ? h / w : 1);
+  const y = ev.clientY - top - (h / 2) * (h > w ? w / h : 1);
+  const d = Math.round(Math.atan2(y, x) / 1.57079633 + 5) % 4;
+  return ['top', 'right', 'bottom', 'left'][d];
+};
 
-  const xPercentage = (x / width) * 100;
-  const yPercentage = (y / height) * 100;
+const handleMouseEnter = event => {
+  if (!container.value) return;
+  const direction = getDirection(event, container.value);
+  animateHover(direction);
+};
 
-  let dir;
-  if (xPercentage < yPercentage) {
-    dir = xPercentage < 100 - yPercentage ? "left" : "bottom";
-  } else {
-    dir = xPercentage < 100 - yPercentage ? "top" : "right";
+const handleMouseLeave = () => {
+  animateHoverExit();
+};
+
+let duration = 0.2;
+
+const animateHover = direction => {
+  gsap.to(overlay.value, { opacity: 1, duration: duration });
+
+  let xMove = 0;
+  let yMove = 0;
+
+  switch (direction) {
+    case 'top':
+      yMove = 20;
+      break;
+    case 'bottom':
+      yMove = -20;
+      break;
+    case 'left':
+      xMove = 20;
+      break;
+    case 'right':
+      xMove = -20;
+      break;
   }
-  direction.value = dir;
-}
+
+  gsap.to(imageContainer.value, {
+    x: xMove,
+    y: yMove,
+    duration: duration,
+    ease: 'power2.out'
+  });
+
+  gsap.to(content.value, {
+    x: -xMove / 10,
+    y: -yMove / 10,
+    opacity: 1,
+    duration: duration,
+    ease: 'power2.out'
+  });
+};
+
+const animateHoverExit = () => {
+  gsap.to(overlay.value, { opacity: 0, duration: duration });
+  gsap.to(imageContainer.value, { x: 0, y: 0, duration: duration, ease: 'power2.out' });
+  gsap.to(content.value, { x: 0, y: 0, opacity: 0, duration: duration, ease: 'power2.out' });
+};
 </script>
-
-<style lang="scss" scoped>
-.wrapper {
-  position: relative;
-  &:hover {
-    .image {
-      background-position: var(--position);
-    }
-    .content {
-      opacity: 1;
-    }
-  }
-}
-.content {
-  transition: all 0.3s ease;
-  opacity: 0;
-}
-
-.image {
-  transition: all 0.3s ease;
-  background-size: 115% 115%;
-  object-fit: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
-  height: 100%;
-}
-</style>
