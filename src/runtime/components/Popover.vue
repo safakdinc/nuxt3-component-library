@@ -1,136 +1,226 @@
 <template>
-  <div
-    @mouseover="openPopover"
-    @mouseleave="closePopover"
-    class="box h-full"
-    ref="container"
-  >
-    <div ref="popover" class="relative">
-      <div class="popover w-auto h-auto cursor-pointer">
-        <slot name="trigger"></slot>
-      </div>
-      <Transition name="modal-Transition">
-        <div v-if="open" class="up-arrow top-3 z-[1011]"></div>
-      </Transition>
+  <div ref="popoverRoot" @mouseenter="mode === 'hover' && onMouseEnter()" @mouseleave="mode === 'hover' && onMouseLeave()" class="relative">
+    <div ref="trigger" @click="mode === 'click' && togglePopover()">
+      <slot name="trigger" :open="isOpen" :close="closePopover"> </slot>
     </div>
-    <Transition name="modal-Transition">
-      <div
-        v-if="open"
-        class="absolute z-[1010] pt-2 mt-1 content"
-        ref="content"
-      >
-        {{ calculatePosition() }}
-        <slot></slot></div
-    ></Transition>
+
+    <Transition :name="props.transitionName">
+      <div v-show="isOpen" ref="panel" :style="panelStyle" class="relative">
+        <div
+          v-if="props.arrow"
+          ref="arrow"
+          data-popper-arrow
+          class="visible block z-[-1] w-2 h-2 absolute rotate-45"
+          :class="props.arrowClass"></div>
+        <div class="z-[100]">
+          <slot :open="isOpen" :close="closePopover"></slot>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
-  arrowColor: {
+  mode: {
     type: String,
-    default: "black",
+    default: 'hover',
+    validator: value => ['click', 'hover'].includes(value)
   },
-  arrowBorderColor: {
+  open: {
+    type: Boolean,
+    default: undefined
+  },
+  disabled: {
+    type: Boolean,
+    default: false
+  },
+  openDelay: {
+    type: Number,
+    default: 0
+  },
+  closeDelay: {
+    type: Number,
+    default: 0
+  },
+  transitionName: {
     type: String,
-    default: "#353535",
+    default: 'popover'
   },
-});
-
-const container = ref();
-
-onMounted(() => {
-  if (container.value) {
-    container.value.style.setProperty("--arrow-color", props.arrowColor);
-    container.value.style.setProperty("--arrow-border", props.arrowBorderColor);
+  placement: {
+    type: String,
+    default: 'bottom'
+  },
+  arrow: {
+    type: Boolean,
+    default: true
+  },
+  arrowClass: {
+    type: String,
+    default: 'bg-gray-500'
+  },
+  offset: {
+    type: Number,
+    default: 8
   }
 });
-const open = ref(true);
-const popover = ref();
-const content = ref();
 
-const calculatePosition = () => {
-  if (content.value && popover.value) {
-    let contentRect = content.value.getBoundingClientRect();
-    let popoverRect = popover.value.getBoundingClientRect();
-    let windowWidth = window.innerWidth;
-    let offsetLeft =
-      popoverRect.x + popoverRect.width / 2 - contentRect.width / 2;
-    content.value.style.left = offsetLeft + "px";
-    if (offsetLeft <= 0) {
-      content.value.style.left = 0.75 + "rem";
+const emit = defineEmits(['update:open']);
+
+const isOpen = ref(props.open ?? false);
+const popoverRoot = ref(null);
+const trigger = ref(null);
+const panel = ref(null);
+const arrow = ref(null);
+const panelStyle = ref({});
+
+let openTimeout = null;
+let closeTimeout = null;
+
+const updatePosition = () => {
+  if (!trigger.value || !panel.value || !popoverRoot.value) return;
+
+  const triggerRect = trigger.value.getBoundingClientRect();
+  const panelRect = panel.value.getBoundingClientRect();
+
+  let top, left;
+
+  switch (props.placement) {
+    case 'top':
+      top = -panelRect.height - props.offset;
+      left = (triggerRect.width - panelRect.width) / 2;
+      break;
+    case 'bottom':
+      top = triggerRect.height + props.offset;
+      left = (triggerRect.width - panelRect.width) / 2;
+      break;
+    case 'left':
+      top = (triggerRect.height - panelRect.height) / 2;
+      left = -panelRect.width - props.offset;
+      break;
+    case 'right':
+      top = (triggerRect.height - panelRect.height) / 2;
+      left = triggerRect.width + props.offset;
+      break;
+  }
+
+  panelStyle.value = {
+    position: 'absolute',
+    top: `${top}px`,
+    left: `${left}px`
+  };
+
+  if (props.arrow) {
+    const arrowSize = 8; // Adjust this value based on your arrow size
+    let arrowTop, arrowLeft;
+
+    switch (props.placement) {
+      case 'top':
+        arrowTop = panelRect.height - arrowSize / 2;
+        arrowLeft = panelRect.width / 2;
+        break;
+      case 'bottom':
+        arrowTop = -arrowSize / 2;
+        arrowLeft = panelRect.width / 2;
+        break;
+      case 'left':
+        arrowTop = panelRect.height / 2 - arrowSize / 2;
+        arrowLeft = panelRect.width - arrowSize / 2;
+        break;
+      case 'right':
+        arrowTop = panelRect.height / 2 - arrowSize / 2;
+        arrowLeft = -arrowSize / 2;
+        break;
     }
-    if (contentRect.right >= windowWidth) {
-      content.value.style.left =
-        windowWidth - contentRect.width - convertRemToPixels(1) + "px";
+
+    arrow.value.style.top = `${arrowTop}px`;
+    arrow.value.style.left = `${arrowLeft}px`;
+  }
+};
+watch(
+  () => props.open,
+  newValue => {
+    if (newValue !== undefined) {
+      isOpen.value = newValue;
     }
-    content.value.style.top = popoverRect.bottom + popover.height + "px";
+  }
+);
+
+watch(isOpen, newValue => {
+  emit('update:open', newValue);
+  if (newValue) {
+    nextTick(updatePosition);
+  }
+});
+
+const togglePopover = () => {
+  if (!props.disabled) {
+    isOpen.value = !isOpen.value;
   }
 };
 
-function convertRemToPixels(rem) {
-  return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-}
+const openPopover = () => {
+  if (!props.disabled && !isOpen.value) {
+    isOpen.value = true;
+  }
+};
+
+const closePopover = () => {
+  if (isOpen.value) {
+    isOpen.value = false;
+  }
+};
+
+const onMouseEnter = () => {
+  if (closeTimeout) {
+    clearTimeout(closeTimeout);
+    closeTimeout = null;
+  }
+  openTimeout = setTimeout(openPopover, props.openDelay);
+};
+
+const onMouseLeave = () => {
+  if (openTimeout) {
+    clearTimeout(openTimeout);
+    openTimeout = null;
+  }
+  closeTimeout = setTimeout(closePopover, props.closeDelay);
+};
+
+const handleClickOutside = event => {
+  if (popoverRoot.value && !popoverRoot.value.contains(event.target)) {
+    closePopover();
+  }
+};
 
 onMounted(() => {
-  setTimeout(() => {
-    calculatePosition();
-  }, 10);
+  if (panel.value) {
+    updatePosition();
+  }
+  document.addEventListener('click', handleClickOutside);
+  window.addEventListener('resize', updatePosition);
+  window.addEventListener('scroll', updatePosition);
 });
-
-function openPopover() {
-  open.value = true;
-}
-function closePopover() {
-  open.value = false;
-}
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+  window.removeEventListener('resize', updatePosition);
+  window.removeEventListener('scroll', updatePosition);
+});
 </script>
 
 <style scoped>
-.box {
-  --arrow-border: black;
-  --arrow-color: red;
+.popover-enter-active,
+.popover-leave-active {
+  transition: all 0.2s ease-out, left 0s ease;
 }
-.up-arrow {
-  position: relative;
-  text-decoration: none;
-  border-radius: 1px;
-}
-.up-arrow:before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-bottom-color: var(--arrow-border);
-  transform: translateX(-50%);
-}
-
-.up-arrow:after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% - 1px);
-  width: 0;
-  height: 0;
-  border: 9px solid transparent;
-  border-bottom-color: var(--arrow-color);
-  transform: translateX(-50%);
-}
-.modal-Transition-enter-from,
-.modal-Transition-leave-to {
-  opacity: 0;
-}
-.modal-transition-enter-to,
-.modal-Transition-leave-from {
+.popover-enter-to,
+.popover-leave-from {
   opacity: 1;
+  transform: translateY(0);
 }
-.modal-Transition-enter-active,
-.modal-Transition-leave-active {
-  transition: all 0.15s ease-in-out;
+.popover-enter-from,
+.popover-leave-to {
+  opacity: 0;
+  transform: translateY(15px);
 }
 </style>
