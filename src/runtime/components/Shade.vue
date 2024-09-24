@@ -2,20 +2,16 @@
   <div class="w-full flex flex-col overflow-x-hidden gap-[-2px]">
     <div class="h-screen"></div>
     <div class="flex origin-bottom flex-row" ref="element">
-      <img
-        sizes="100vw"
-        src="/transition.png"
-        class="pointer-events-none h-auto w-full grow origin-top mt-2px"
-      />
+      <img sizes="100vw" src="/transition.png" class="pointer-events-none h-auto w-full grow origin-top mt-2px" />
     </div>
     <div class="h-[400vh] bg-black translate-y-[-2px]"></div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import { ref, onMounted } from 'vue';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 const element = ref();
@@ -28,7 +24,7 @@ onMounted(() => {
     { scaleY: 0 },
     {
       scaleY: 8,
-      ease: "none", // Ensures linear scaling
+      ease: 'none' // Ensures linear scaling
     }
   );
   tl.to(element.value, { scaleX: 2.2 });
@@ -38,11 +34,11 @@ onMounted(() => {
     ScrollTrigger.create({
       animation: tl,
       trigger: element.value,
-      start: "top bottom",
-      end: "+=2000",
+      start: 'top bottom',
+      end: '+=2000',
       scrub: 2,
       pin: true,
-      pinSpacing: true,
+      pinSpacing: true
     });
   }, 10);
 });
