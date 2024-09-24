@@ -1,5 +1,5 @@
 <template>
-  <div>index</div>
+  <LambSection></LambSection>
 </template>
 
 <script setup></script>

@@ -1,11 +1,8 @@
 <template>
   <div class="wrapper rounded-xl">
-    <input @input="emits('handleInput')" type="text" class="w-full" />
+    <input @input="emits('handleInput')" :type="props.type" class="w-full" />
     <span class="span">{{ props.label }}</span>
-    <div
-      :style="{ '--background': props.underlineColor }"
-      class="underline"
-    ></div>
+    <div :style="{ '--background': props.underlineColor }" class="underline"></div>
   </div>
 </template>
 
@@ -13,14 +10,18 @@
 const props = defineProps({
   label: {
     type: String,
-    default: "Label",
+    default: 'Label'
+  },
+  type: {
+    default: 'text',
+    type: String
   },
   underlineColor: {
     type: String,
-    default: "aliceblue",
-  },
+    default: 'aliceblue'
+  }
 });
-const emits = defineEmits(["handleInput"]);
+const emits = defineEmits(['handleInput']);
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +59,7 @@ input {
   pointer-events: none;
   position: absolute;
   top: 0px;
-  left: 0;
+  left: 3px;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -72,7 +73,7 @@ input {
   border-radius: 9999px;
   overflow: hidden;
   &::after {
-    content: "";
+    content: '';
     display: block;
     position: relative;
     z-index: 10;
