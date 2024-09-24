@@ -1,29 +1,26 @@
 <template>
-  <div class="relative cursor-pointer">
+  <NuxtLink :to="props.url" class="relative cursor-pointer">
     <div class="absolute bottom-[130%] left-[50%] w-[250px] aspect-[4/2] image">
-      <img
-        :src="getPreview()"
-        class="w-full h-full rounded-lg object-cover object-top"
-      />
+      <img :src="getPreview()" class="w-full h-full rounded-lg object-cover object-top" />
     </div>
     <div class="link"><slot></slot></div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup>
 const props = defineProps({
   url: {
     type: String,
-    default: "https://astrilya.com",
+    default: 'https://astrilya.com'
   },
   width: {
     type: Number,
-    default: 800,
+    default: 1200
   },
   height: {
     type: Number,
-    default: 800,
-  },
+    default: 1200
+  }
 });
 function getPreview() {
   return `https://api.microlink.io/?url=${props.url}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=${props.width}&viewport.height=${props.height}`;
