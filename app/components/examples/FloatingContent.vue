@@ -1,14 +1,14 @@
 <template>
   <div class="w-full flex items-center justify-center">
-    <GlobeContainer class="w-full min-h-[540px]">
-      <GlobeItem v-for="(item, index) in items" :key="index" :positions="item.positions" :class="item.class">
+    <FloatingContentContainer class="w-full min-h-[540px]">
+      <FloatingContentItem v-for="(item, index) in items" :key="index" :positions="item.positions" :class="item.class">
         <div class="flex flex-col gap-[8px] justify-end p-4 bg-[var(--background-fade)] bg-opacity-50 rounded-3xl">
           <img :src="item.img" class="w-full flex-1 object-cover rounded-lg object-center" />
           <TextMd class="text-white text-lg font-bold">{{ item.title }}</TextMd>
           <p class="text-gray-300 text-sm">{{ item.description }}</p>
         </div>
-      </GlobeItem>
-    </GlobeContainer>
+      </FloatingContentItem>
+    </FloatingContentContainer>
   </div>
 </template>
 
