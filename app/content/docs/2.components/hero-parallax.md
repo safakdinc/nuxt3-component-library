@@ -1,5 +1,5 @@
 ---
-title: HeroParallax
+title: Hero Parallax
 description: A Vue component that creates a parallax effect with image grid for hero sections.
 
 HeroParallax:

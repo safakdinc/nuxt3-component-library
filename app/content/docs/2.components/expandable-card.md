@@ -1,5 +1,5 @@
 ---
-title: ExpandableCard
+title: Expandable Card
 description: A Vue component that creates an expandable card with smooth animations.
 
 ExpandableCard:

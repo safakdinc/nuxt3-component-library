@@ -1,5 +1,5 @@
 ---
-title: AnimatedTooltip
+title: Animated Tooltip
 description: A Vue component that creates an animated tooltip with a dynamic hover effect.
 
 AnimatedTooltip:

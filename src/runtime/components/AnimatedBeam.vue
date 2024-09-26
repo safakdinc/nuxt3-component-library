@@ -93,7 +93,7 @@ const props = defineProps({
   },
   duration: {
     type: Number,
-    default: () => Math.random() * 3 + 4
+    default: () => Math.random() + 4
   }
 });
 
