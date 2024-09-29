@@ -2,7 +2,10 @@
   <div class="w-full flex flex-col overflow-x-hidden gap-[-2px]">
     <div class="h-screen"></div>
     <div class="flex origin-bottom flex-row" ref="element">
-      <img sizes="100vw" src="/transition.png" class="pointer-events-none h-auto w-full grow origin-top mt-2px" />
+      <img
+        sizes="100vw"
+        src="https://res.cloudinary.com/dn5zxeevu/image/upload/v1727605207/transition_svj8u3.png"
+        class="pointer-events-none h-auto w-full grow origin-top mt-2px" />
     </div>
     <div class="h-[400vh] bg-black translate-y-[-2px]"></div>
   </div>
