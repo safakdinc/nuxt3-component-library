@@ -20,7 +20,7 @@ export default defineNuxtModule<ModuleOptions>({
     const runtimeDir = resolver.resolve('./runtime');
 
     addPlugin({
-      src: resolver.resolve(runtimeDir, 'plugins', 'eventBus')
+      src: resolver.resolve(runtimeDir, 'plugins', 'eventbus')
     });
 
     // Install v-wave plugin
