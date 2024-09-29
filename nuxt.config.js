@@ -34,6 +34,5 @@ export default defineNuxtConfig({
 
   css: ['./main.scss', './app/assets/css/transitions.scss'],
   ssr: false,
-  target: 'static',
   compatibilityDate: '2024-09-16'
 });
