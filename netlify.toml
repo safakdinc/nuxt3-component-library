@@ -2,8 +2,6 @@
 [build]
   # Build command for Nuxt 3 SPA
   command = "npx nuxi generate"
-  # The directory where the generated static files are located
-  publish = ".output/public"
   
   # Set the Node.js version to use during the build process
   environment = { NODE_VERSION = "20.9.0" }
