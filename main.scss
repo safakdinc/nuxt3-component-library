@@ -39,11 +39,6 @@ body {
 }
 
 @font-face {
-  font-family: 'interFont';
-  src: url('./assets//inter.ttf') format('truetype');
-}
-
-@font-face {
   font-family: 'graphIk';
   src: url('./assets/fonts/GraphikRegular.otf') format('opentype');
 }
@@ -59,11 +54,6 @@ body {
 
 .minHeight {
   min-height: calc(100vh - var(--navbar-height));
-}
-
-.interFont {
-  font-family: 'interFont';
-  letter-spacing: 0px;
 }
 
 ::-webkit-scrollbar {
