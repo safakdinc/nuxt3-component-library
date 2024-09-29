@@ -1,0 +1,14 @@
+name = "nuxt-3-spa"
+type = "javascript" 
+workers_dev = true  
+compatibility_date = "2024-09-16"  
+
+[build]
+command = "npx nuxi generate" 
+
+[env.production]
+vars = { NODE_VERSION = "20.9.0" }
+
+[[pages]]
+  entrypoint = "./.output/public"  # Output directory after running the build
+  routes = [{ pattern = "/*", path = "/index.html", status = 200 }]  # SPA routing to redirect all traffic to index.html
