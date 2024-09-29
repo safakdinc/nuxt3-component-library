@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     dirs: ['~/components']
   },
 
-  modules: ['./src/module', '@nuxt/content'],
+  modules: ['./src/module', '@nuxt/content', '@nuxt/image'],
 
   content: {
     sources: {
