@@ -9,10 +9,10 @@ AnimatedTooltip:
     - Default
     - Description
   props:
-    - name: 'No props'
-      type: '-'
-      default: '-'
-      description: 'This component does not accept any props.'
+    - name: 'offset'
+      type: 'Number'
+      default: '0'
+      description: 'Adjust offset for tooltip position.'
 
 Slots:
   head:
@@ -28,6 +28,10 @@ Slots:
 ## Usage
 
 :tab-preview-code{component="AnimatedTooltip"}
+
+### Props
+
+:component-props{name="AnimatedTooltip"}
 
 ### Slots
 

@@ -5,7 +5,7 @@
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave">
     <Transition name="tooltip">
-      <div v-if="isHovered" class="absolute bottom-[100%] left-[50%] translate-x-[-50%] p-3">
+      <div v-if="isHovered" class="absolute left-[50%] translate-x-[-50%] p-3" :style="{ bottom: `calc(100% + ${props.offset}px)` }">
         <div ref="tooltip" class="tooltip py-[4px]">
           <div class="tooltip-underline"></div>
           <slot name="tooltip"></slot>
@@ -19,6 +19,13 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  offset: {
+    type: Number,
+    default: 0
+  }
+});
+
 const isHovered = ref(false);
 const tooltip = ref();
 
