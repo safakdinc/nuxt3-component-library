@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="flex-1 flex flex-col justify-center items-center">
     <TextLg class="flex flex-col justify-center gap-2">
       <div class="flex items-center">
         Customize &nbsp
