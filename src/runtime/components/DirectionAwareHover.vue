@@ -9,7 +9,7 @@
       <div ref="imageContainer" class="h-full w-full relative">
         <img :src="props.img" :alt="props.imageAlt" :class="['h-full w-full object-cover scale-[1.15]', props.imageClass]" />
       </div>
-      <div ref="content" :class="['w-full h-full top-0 left-0 absolute z-40', props.childrenClass]">
+      <div ref="content" :class="['w-full h-full top-0 left-0 absolute z-40 opacity-0', props.childrenClass]">
         <slot></slot>
       </div>
     </div>
