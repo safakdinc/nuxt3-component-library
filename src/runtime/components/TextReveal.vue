@@ -19,7 +19,7 @@ const props = defineProps({
   },
   class: {
     type: String,
-    default: 'h-[100vh] sticky top-0 '
+    default: 'h-[100vh] sticky top-10 '
   }
 });
 
@@ -32,17 +32,6 @@ onMounted(() => {
   const height = textContainer.value.offsetHeight / words.length;
   let scrollerElement = document.querySelector(props.triggerElement) || window;
   ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' });
-  ScrollTrigger.scrollerProxy(scrollerElement, {
-    scrollTop(value) {
-      if (arguments.length) {
-        scrollerElement.scrollTop = value;
-      }
-      return scrollerElement.scrollTop;
-    },
-    getBoundingClientRect() {
-      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    }
-  });
 
   words.forEach((word, index) => {
     gsap.fromTo(
