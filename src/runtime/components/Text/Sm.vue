@@ -1,5 +1,5 @@
 <template>
-  <div class="text-[14px] lg:text-[16px] xl:text-[18px]"><slot></slot></div>
+  <div class="text-[12px] lg:text-[14px] xl:text-[14px]"><slot></slot></div>
 </template>
 
 <script setup></script>
