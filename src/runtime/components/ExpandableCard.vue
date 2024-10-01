@@ -2,7 +2,7 @@
   <div ref="container">
     <div
       @click="openExpandable"
-      class="flex gap-[16px] min-w-[350px] w-full items-center cursor-pointer rounded-xl relative p-2 originalBackgroundSlot group">
+      class="flex gap-[16px] max-w-full w-full items-center cursor-pointer rounded-xl relative p-2 originalBackgroundSlot group">
       <div
         class="absolute top-0 left-0 w-full h-full rounded-[inherit] background bg-[var(--background-fade)] transition-colors duration-300 group-hover:bg-[#2e2e33] z-[-1]"
         :class="props.backgroundClass"></div>
@@ -12,14 +12,14 @@
       <div class="flex-1 flex originalTitleSlot">
         <div class="flex-1 flex items-center title z-[100] relative">
           <div class="flex-1 flex flex-col justify-center w-full">
-            <TextXs>{{ props.cardInfo.title }}</TextXs>
-            <TextXs style="color: var(--text-gray)">{{ props.cardInfo.description }}</TextXs>
+            <div class="text-[10px] lg:text-[12px] xl:text-[12px]">{{ props.cardInfo.title }}</div>
+            <div class="text-[10px] lg:text-[12px] xl:text-[12px]" style="color: var(--text-gray)">{{ props.cardInfo.description }}</div>
           </div>
           <button
             @click="handleButtonClick"
             :class="props.buttonClass"
-            class="rounded-full h-fit px-4 py-2 bg-white text-black transition-colors duration-300 hover:bg-green-600 hover:text-white">
-            {{ props.cardInfo.ctaText }}
+            class="rounded-full h-fit px-[8px] py-[4px] md:px-4 md:py-2 bg-white text-black transition-colors duration-300 hover:bg-green-600 hover:text-white">
+            <div class="text-[10px] lg:text-[12px] xl:text-[12px]">{{ props.cardInfo.ctaText }}</div>
           </button>
         </div>
       </div>
@@ -29,8 +29,8 @@
       <div v-show="open" class="w-full h-full fixed top-0 left-0 z-[1001]">
         <div class="w-full h-full relative flex justify-center items-center z-[100]">
           <div v-show="open" @click="closeExpandable" class="absolute top-0 left-0 bg-black w-full h-full opacity-50 z-[-1]"></div>
-          <div class="rounded-xl background-slot relative">
-            <div class="h-[80vh] w-[500px] flex flex-wrap gap-[16px] customScroll overflow-y-auto">
+          <div class="rounded-xl background-slot relative w-[95%] md:w-full">
+            <div class="h-[80vh] w-full max-w-[500px] flex flex-wrap gap-[16px] customScroll overflow-y-auto">
               <div class="w-full h-[320px] image-slot"></div>
               <div class="w-full h-fit flex flex-wrap gap-[24px] px-[16px] pb-[16px]">
                 <div class="w-full flex justify-around title-slot"></div>

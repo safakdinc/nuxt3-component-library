@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full justify-center flex p-[64px]">
+  <div class="w-full justify-center flex p-[16px] lg:p-[64px]">
     <HoverContainer class="w-full flex flex-wrap gap-[8px]">
       <HoverCard
         v-for="(framework, index) in frameworks"

@@ -8,9 +8,9 @@
       </div>
     </div>
     <div class="flex flex-col gap-[16px]">
-      <ShimmerLoading class="h-4 w-[350px] max-w-full"></ShimmerLoading>
-      <ShimmerLoading class="h-4 w-[400px] max-w-full"></ShimmerLoading>
-      <ShimmerLoading class="h-4 w-[200px] max-w-full"></ShimmerLoading>
+      <ShimmerLoading class="h-4 max-w-[350px] w-full"></ShimmerLoading>
+      <ShimmerLoading class="h-4 max-w-[400px] w-full"></ShimmerLoading>
+      <ShimmerLoading class="h-4 max-w-[200px] w-full"></ShimmerLoading>
     </div>
   </div>
 </template>

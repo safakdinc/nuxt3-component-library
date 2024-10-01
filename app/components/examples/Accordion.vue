@@ -1,5 +1,5 @@
 <template>
-  <AccordionContainer :openSingle="true" class="py-[32px]">
+  <AccordionContainer :openSingle="true" class="py-[32px] px-[8px]">
     <AccordionItem :index="0" :open="true">
       <template #trigger>
         <span class="text-lg font-bold">Getting Started</span>

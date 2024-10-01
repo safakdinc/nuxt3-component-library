@@ -17,14 +17,14 @@
       <div class="flex items-center">
         Create &nbsp
         <FlipWordFaded
-          class="font-bold text-green-600"
+          class="font-bold"
           :words="['smooth', 'elegant', 'subtle', 'graceful']"
           :intervals="1000"
           :duration="0.5"
           ease="power1.out"
           :start="true"></FlipWordFaded>
       </div>
-      <div>fades with <code>FlipWordFaded</code></div>
+      <div>fades</div>
     </TextLg>
   </div>
 </template>

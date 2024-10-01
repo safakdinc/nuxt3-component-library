@@ -1,12 +1,12 @@
 <template>
   <div class="w-full justify-center flex p-[16px] md:p-[64px]">
-    <div class="pins-container">
+    <div class="pins-container w-full max-w-[320px]">
       <ThreeDPin v-for="(pin, index) in pins" :key="index">
         <template #pin>
           <a href="#"> <ButtonUnderGradient>3D Pin</ButtonUnderGradient> </a>
         </template>
         <div
-          class="w-[320px] h-[384px] border rounded-lg flex flex-col gap-[16px] py-[16px] px-[24px]"
+          class="w-full h-[384px] border rounded-lg flex flex-col gap-[16px] py-[16px] px-[24px]"
           style="background-color: var(--background-fade)">
           <TextMd>Deneme UI</TextMd>
           <TextMd class="text-[var(--text-gray)]">Customizable Tailwind CSS and GSAP Components.</TextMd>

@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-wrap justify-center gap-6 p-4">
+  <div class="flex-1 flex flex-wrap justify-center gap-6 p-4">
     <BorderGradient background="rgba(15, 23, 42, 0.8)" class="flex items-center justify-center" wrapperClass="custom-wrapper">
-      <div class="w-[300px] h-[400px] flex flex-col justify-between p-6">
+      <div class="w-full max-w-[300px] h-[400px] flex flex-col justify-between p-6">
         <h2 class="text-white text-2xl font-bold">Starry Night</h2>
         <p class="text-gray-300">A mesmerizing blend of deep blues and vibrant yellows, reminiscent of Van Gogh's masterpiece.</p>
         <div class="flex justify-between items-center">
@@ -14,7 +14,7 @@
       background="rgba(255, 255, 255, 0.9)"
       class="flex items-center justify-center light-theme"
       wrapperClass="custom-wrapper light-wrapper">
-      <div class="w-[300px] h-[400px] flex flex-col justify-between p-6">
+      <div class="w-full max-w-[300px] h-[400px] flex flex-col justify-between p-6">
         <h2 class="text-gray-800 text-2xl font-bold">Sunrise Serenity</h2>
         <p class="text-gray-600">
           Soft pastels blend together, creating a calming atmosphere that evokes the tranquility of a peaceful dawn.

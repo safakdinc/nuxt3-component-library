@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 flex items-center justify-center min-h-full px-[120px]">
+  <div class="flex-1 flex items-center justify-center min-h-full px-[8px] lg:px-[120px]">
     <div ref="container" class="w-full flex flex-col h-full items-center justify-center relative">
       <AnimatedBeam :container="container" :from="div2" :to="div3" :curvature="-240" class=""> </AnimatedBeam>
       <AnimatedBeam :container="container" :from="div2" :to="div1" :reverse="true" :curvature="-40" class=""> </AnimatedBeam>

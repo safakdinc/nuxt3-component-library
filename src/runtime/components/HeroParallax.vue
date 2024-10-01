@@ -87,11 +87,10 @@ onMounted(() => {
     rotateZ: 0,
     duration: 0.2
   });
-
   tl.to(
     parallaxContainer.value,
     {
-      y: rowHeight.value * rows.value.length,
+      y: '100vh',
       duration: 0.2
     },
     '<'

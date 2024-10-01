@@ -171,7 +171,7 @@ watchEffect(() => {
 
 @media only screen and (max-width: 768px) {
   .search-box.active {
-    width: 150px;
+    width: min(80%, 300px);
   }
   .search-box {
     width: 35px;
