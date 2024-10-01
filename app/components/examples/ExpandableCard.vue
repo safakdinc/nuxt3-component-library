@@ -1,7 +1,7 @@
 <template>
   <div class="p-8 flex-1 px-[16px] lg:px-[180px] flex flex-col gap-[16px]">
     <ExpandableCard v-for="card in cards" :card-info="card">
-      <TextXs style="color: var(--text-gray)" class="text" v-html="card.content"></TextXs>
+      <TextSm style="color: var(--text-gray)" class="text" v-html="card.content"></TextSm>
     </ExpandableCard>
   </div>
 </template>
