@@ -1,11 +1,9 @@
 <template>
   <button
-    v-wave
     :class="props.classs"
     class="px-[16px] py-[8px] rounded-lg button cursor-pointer relative h-fit"
     @click="emits('handleClick')"
-    :style="{ '--color': props.underlineColor }"
-  >
+    :style="{ '--color': props.underlineColor }">
     <slot></slot>
   </button>
 </template>
@@ -14,17 +12,17 @@
 const props = defineProps({
   underlineColor: {
     type: String,
-    default: "rgb(255, 255, 255)",
+    default: 'rgb(255, 255, 255)'
   },
-  classs: String,
+  classs: String
 });
-const emits = defineEmits(["handleClick"]);
+const emits = defineEmits(['handleClick']);
 </script>
 
 <style lang="scss" scoped>
 .button {
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;

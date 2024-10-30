@@ -8,8 +8,8 @@
         <div ref="div1" class="w-10 aspect-square rounded-full bg-blue-400"></div>
       </div>
       <div class="w-full flex justify-between h-fit">
-        <div ref="div2" class="w-10 aspect-square rounded-full bg-red-400"></div>
-        <div ref="div3" class="w-10 aspect-square rounded-full bg-green-400"></div>
+        <div ref="div2" class="w-10 aspect-square rounded-full bg-primary-fade"></div>
+        <div ref="div3" class="w-10 aspect-square rounded-full bg-primary"></div>
       </div>
     </div>
   </div>

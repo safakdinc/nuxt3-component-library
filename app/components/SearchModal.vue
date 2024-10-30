@@ -4,17 +4,17 @@
     style="width: min(600px, 100vw)">
     <div class="flex gap-3 items-center px-4 py-4 line pb-3 bg-[var(--background-fade)] sticky top-0 left-0 z-[10]">
       <i class="fa fa-search"></i>
-      <TextXs>
+      <div class="text-sm">
         <input type="text" placeholder="Search..." v-model="searchQuery" @input="filterItems" />
-      </TextXs>
+      </div>
     </div>
     <div class="w-full flex flex-col gap-[12px]">
       <div v-for="(group, title) in filteredNavigation" :key="title" class="flex flex-col gap-[12px] line pb-3 px-4">
-        <TextSm class="font-semibold">{{ formatTitle(title) }}</TextSm>
+        <div class="font-semibold">{{ formatTitle(title) }}</div>
         <div class="flex flex-col gap-[12px] link-group">
           <NuxtLink class="link flex gap-2 items-center" :to="item._path" v-for="item in group" :key="item._path">
             <i class="fa-regular fa-file-lines text-[var(--text-gray)]"></i>
-            <TextXs>{{ item.title }}</TextXs>
+            <div class="text-sm">{{ item.title }}</div>
           </NuxtLink>
         </div>
       </div>

@@ -9,12 +9,12 @@
       <div v-show="isPreview" class="w-full flex justify-center preview min-h-[50vh] max-h-[80vh] overflow-x-hidden overflow-y-auto">
         <component :is="resolveComponent('examples-' + props.component)"></component>
       </div>
-      <TextXs v-show="!isPreview" class="relative">
+      <div v-show="!isPreview" class="relative text-sm">
         <button @click="copyClipBoard" class="absolute top-[4px] right-[12px] px-[12px] py-[6px] copy-code rounded-md">
-          <TextMd> <i class="fa-solid" :class="{ 'fa-check': copied, 'fa-copy': !copied }"></i></TextMd>
+          <div><i class="fa-solid text-2xl" :class="{ 'fa-check': copied, 'fa-copy': !copied }"></i></div>
         </button>
         <div class="w-full overflow-hidden" v-html="highlightedCode"></div>
-      </TextXs>
+      </div>
     </div>
   </div>
 </template>

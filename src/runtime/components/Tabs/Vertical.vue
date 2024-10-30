@@ -1,18 +1,18 @@
 <template>
-  <div class="flex flex-col relative main" :style="{ '--background': props.background }" ref="main">
-    <div
-      v-wave
+  <div :class="twMerge('flex flex-col relative main h-fit', props.class)" :style="{ '--background': props.background }" ref="main">
+    <button
       v-for="(item, index) in tabs"
-      class="cursor-pointer px-[16px] py-[8px] rounded-lg link"
-      :class="props.class"
+      :class="twMerge('cursor-pointer px-[16px] py-[8px] rounded-lg link', props.class)"
       ref="link"
       @click="handleClick(index)">
       {{ item }}
-    </div>
+    </button>
   </div>
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
 const props = defineProps({
   active: {
     type: Number,
@@ -26,10 +26,8 @@ const props = defineProps({
     type: String,
     default: 'aliceblue'
   },
-  class: {
-    type: String,
-    default: ''
-  }
+  class: String,
+  tabClass: String
 });
 
 const emits = defineEmits(['handleClick']);

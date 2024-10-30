@@ -2,7 +2,6 @@
   <button @click="emits('handleClick')" class="w-fit h-fit rounded-lg flex conic-border" style="color: var(--text-color)">
     <div class="background z-[-1]"></div>
     <div
-      v-wave
       :class="props.class"
       class="w-fit h-fit flex gap-3 rounded-[inherit] px-[16px] py-[8px] z-10"
       :style="{ 'background-color': props.backgroundColor }">

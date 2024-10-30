@@ -1,28 +1,33 @@
 <template>
   <div
-    class="rounded-full cursor-pointer relative main"
+    :class="twMerge('main rounded-full cursor-pointer relative', props.class)"
     @mousemove="mouseMove"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave">
     <Transition name="tooltip">
-      <div v-if="isHovered" class="absolute left-[50%] translate-x-[-50%] p-3" :style="{ bottom: `calc(100% + ${props.offset}px)` }">
+      <div v-show="isHovered" class="absolute left-[50%] translate-x-[-50%] p-3" :style="{ bottom: `calc(100% + ${props.offset}px)` }">
         <div ref="tooltip" class="tooltip py-[4px]">
-          <div class="tooltip-underline"></div>
+          <div class="tooltip-underline" :style="{ '--underlineColor': props.underlineColor }"></div>
           <slot name="tooltip"></slot>
         </div>
       </div>
     </Transition>
-    <div class="content">
-      <slot></slot>
-    </div>
+    <slot></slot>
   </div>
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
 const props = defineProps({
+  class: String,
   offset: {
     type: Number,
     default: 0
+  },
+  underlineColor: {
+    type: String,
+    default: 'rgb(65, 228, 181)'
   }
 });
 
@@ -63,17 +68,11 @@ function handleMouseLeave() {
     left: 0;
     width: 100%;
     height: 1px;
-    background: rgb(22, 219, 179);
-    background: linear-gradient(90deg, rgba(22, 219, 179, 0) 0%, rgba(65, 228, 181, 1) 50%, rgba(145, 66, 222, 0) 100%);
+    background: var(--underlineColor);
+    background: linear-gradient(90deg, rgba(22, 219, 179, 0) 0%, var(--underlineColor) 50%, rgba(145, 66, 222, 0) 100%);
   }
 }
 
-.content {
-  transition: scale 0.3s ease;
-  &:hover {
-    scale: 1.15;
-  }
-}
 .tooltip-enter-active,
 .tooltip-leave-active {
   transition: all 0.3s var(--transition);

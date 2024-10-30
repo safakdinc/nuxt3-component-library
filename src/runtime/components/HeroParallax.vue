@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="w-full" :class="props.class">
+  <div ref="container" :class="twMerge('w-full', props.class)">
     <div ref="parallaxContainer" class="w-full flex flex-col gap-[32px] parallax-container">
       <div
         v-for="(row, rowIndex) in splitItems"
@@ -26,6 +26,7 @@
 <script setup>
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { twMerge } from 'tailwind-merge';
 gsap.registerPlugin(ScrollTrigger);
 
 const props = defineProps({

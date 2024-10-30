@@ -4,8 +4,12 @@
       @click="openExpandable"
       class="flex gap-[16px] max-w-full w-full items-center cursor-pointer rounded-xl relative p-2 originalBackgroundSlot group">
       <div
-        class="absolute top-0 left-0 w-full h-full rounded-[inherit] background bg-[var(--background-fade)] transition-colors duration-300 group-hover:bg-[#2e2e33] z-[-1]"
-        :class="props.backgroundClass"></div>
+        :class="
+          twMerge(
+            'absolute top-0 left-0 w-full h-full rounded-[inherit] background bg-[var(--background-fade)] transition-colors duration-300 group-hover:bg-[#2e2e33] z-[-1]',
+            props.backgroundClass
+          )
+        "></div>
       <div class="w-[56px] h-[56px] aspect-square rounded-lg overflow-hidden originalImageSlot">
         <img :src="props.cardInfo.src" class="w-full h-full object-cover object-center image rounded-t-[inherit]" />
       </div>
@@ -17,8 +21,12 @@
           </div>
           <button
             @click="handleButtonClick"
-            :class="props.buttonClass"
-            class="rounded-full h-fit px-[8px] py-[4px] md:px-4 md:py-2 bg-white text-black transition-colors duration-300 hover:bg-green-600 hover:text-white">
+            :class="
+              twMerge(
+                'rounded-full h-fit px-[8px] py-[4px] md:px-4 md:py-2 bg-white text-black transition-colors duration-300 hover:bg-green-600 hover:text-white',
+                props.buttonClass
+              )
+            ">
             <div class="text-[10px] lg:text-[12px] xl:text-[14px]">{{ props.cardInfo.ctaText }}</div>
           </button>
         </div>
@@ -48,6 +56,7 @@
 <script setup>
 import gsap from 'gsap';
 import Flip from 'gsap/dist/Flip';
+import { twMerge } from 'tailwind-merge';
 gsap.registerPlugin(Flip);
 
 const props = defineProps({

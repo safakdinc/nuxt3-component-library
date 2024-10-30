@@ -2,9 +2,8 @@
   <button
     @click="emits('handleClick')"
     :style="{ background: props.borderColor }"
-    class="no-underline h-fit w-auto group cursor-pointer relative rounded-full p-px text-xs font-semibold leading-6 text-white inline-block h-fit">
+    class="no-underline h-fit w-auto group cursor-pointer relative rounded-full p-px text-xs font-semibold leading-6 text-white inline-block">
     <div
-      v-wave
       :class="props.class"
       :style="{ background: props.background }"
       class="relative flex items-center z-10 rounded-[inherit] py-0.5 px-4 ring-1 ring-white/10 w-auto">

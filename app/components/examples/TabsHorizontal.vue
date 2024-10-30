@@ -4,7 +4,6 @@
       :tabs="['Home', 'Profile', 'Settings', 'Help']"
       :active="activeTab"
       background="lightblue"
-      class="my-custom-class"
       @handleClick="handleTabClick" />
     <div class="content mt-4">
       <p>Active tab content: {{ tabContents[activeTab] }}</p>

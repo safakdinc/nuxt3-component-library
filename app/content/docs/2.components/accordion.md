@@ -25,6 +25,10 @@ AccordionItem:
       type: 'String'
       default: 'required'
       description: 'A unique identifier for the accordion item.'
+    - name: 'buttonClass'
+      type: 'String'
+      default: 'undefined'
+      description: 'Additional CSS classes to apply to the accordion button.'
 
 AccordionContainer:
   head:
@@ -37,6 +41,10 @@ AccordionContainer:
       type: 'Boolean'
       default: 'true'
       description: 'If true, only one accordion item can be open at a time.'
+    - name: 'class'
+      type: 'String'
+      default: 'undefined'
+      description: 'Additional CSS classes to apply to the container.'
 
 Slots:
   head:

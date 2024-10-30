@@ -2,7 +2,7 @@
   <div @click="emits('handleClick')" class="rounded-lg p-[2px] relative main cursor-pointer h-fit">
     <div class="background rounded-[inherit]"></div>
     <div class="blur rounded-[inherit]"></div>
-    <button v-wave :class="props.class" class="button rounded-[inherit] z-[1] px-[16px] py-[8px]">
+    <button :class="props.class" class="button rounded-[inherit] z-[1] px-[16px] py-[8px]">
       <slot></slot>
     </button>
   </div>

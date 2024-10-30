@@ -1,5 +1,5 @@
 <template>
-  <div :class="props.wrapperClass" class="rounded-2xl p-[3px] relative cursor-pointer card">
+  <div :class="twMerge('rounded-2xl p-[3px] relative cursor-pointer card', props.wrapperClass)">
     <div class="absolute top-0 left-0 h-full w-full rounded-[inherit] gradient-border"></div>
     <div class="absolute top-0 left-0 h-full w-full gradient"></div>
     <div
@@ -12,6 +12,8 @@
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
 const props = defineProps({
   background: {
     type: String,

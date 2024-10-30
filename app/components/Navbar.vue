@@ -7,17 +7,19 @@
           <NuxtLink to="/" class="text-2xl md-text font-bold hidden sm:block">Title</NuxtLink>
           <NuxtLink to="/docs/components" class="link-button text-[var(--text-gray)] font-[500]">Components</NuxtLink>
         </div>
-        <ModalButton>
-          <template #button>
-            <button class="transition duration-300 hover:text-[var(--primary)]">
-              <i class="fa fa-search"></i>
-            </button>
-          </template>
-          <SearchModal></SearchModal>
-        </ModalButton>
-        <button @click="toggleSidebar" class="block md:hidden">
-          <i class="fa fa-bars"></i>
-        </button>
+        <div class="flex gap-[32px]">
+          <ModalButton>
+            <template #button>
+              <button class="transition duration-300 hover:text-[var(--primary)]">
+                <i class="fa fa-search"></i>
+              </button>
+            </template>
+            <SearchModal></SearchModal>
+          </ModalButton>
+          <button @click="toggleSidebar" class="block md:hidden">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
       </div>
     </div>
   </div>

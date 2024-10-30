@@ -1,5 +1,5 @@
 <template>
-  <div :class="props.class" class="w-64 flex flex-col" ref="container">
+  <div :class="twMerge('w-64 flex flex-col', props.class)" ref="container">
     <div ref="textContainer">
       <slot></slot>
     </div>
@@ -10,6 +10,7 @@
 import gsap from 'gsap';
 import SplitType from 'split-type';
 import ScrollTrigger from 'gsap/ScrollTrigger';
+import { twMerge } from 'tailwind-merge';
 gsap.registerPlugin(ScrollTrigger);
 
 const props = defineProps({

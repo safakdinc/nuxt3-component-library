@@ -11,12 +11,13 @@
       '--cancel-btn-hover-color': props.cancel_btn_hover_color
     }">
     <input type="text" ref="search_input" class="input" v-model="inputValue" :placeholder="placeholder" />
-    <div class="search-btn flex items-center justify-center" @click="searchBoxOpen" ref="search_btn">
-      <i class="fa-solid fa-search"></i>
-    </div>
+
     <div class="cancel-btn" ref="cancel_btn" @click="searchBoxClose">
       <i class="fa-solid fa-xmark"></i>
     </div>
+    <button class="search-btn flex items-center justify-center" @click="searchBoxOpen" ref="search_btn">
+      <i class="fa-solid fa-search"></i>
+    </button>
   </div>
 </template>
 
@@ -100,19 +101,24 @@ watchEffect(() => {
   &.active {
     width: 300px;
   }
-  input {
+  .input {
     height: 100%;
-    width: 100%;
+    width: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
     border: none;
     outline: none;
     background: var(--background);
     font-size: 16px;
     border-radius: 50px;
-    padding: 0 60px 0 20px;
+    padding: 0 0px 0 0px;
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.68, -0.25, 0.265, 1.25);
     &.active {
       opacity: 1;
+      width: 100%;
+      padding: 0 60px 0 20px;
     }
   }
   .search-btn {

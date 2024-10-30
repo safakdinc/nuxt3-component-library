@@ -1,5 +1,6 @@
 <template>
-  <div :class="['relative flex  flex-col items-center justify-center overflow-hidden bg-slate-950 w-full rounded-md z-0', props.class]">
+  <div
+    :class="twMerge('relative flex  flex-col items-center justify-center overflow-hidden bg-slate-950 w-full rounded-md z-0', props.class)">
     <div class="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0">
       <div
         ref="leftLamp"
@@ -35,6 +36,7 @@
 <script setup>
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { twMerge } from 'tailwind-merge';
 
 gsap.registerPlugin(ScrollTrigger);
 

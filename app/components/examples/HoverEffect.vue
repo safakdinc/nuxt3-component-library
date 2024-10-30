@@ -1,16 +1,15 @@
 <template>
   <div class="w-full justify-center flex p-[16px] lg:p-[64px]">
-    <HoverContainer class="w-full flex flex-wrap gap-[8px]">
+    <HoverContainer>
       <HoverCard
         v-for="(framework, index) in frameworks"
         :key="index"
-        class="aspect-square p-4 flex flex-col items-center justify-center bg-[var(--background-fade)]"
-        style="flex: 1 1 max(calc(100% / 4), 150px)">
+        class="aspect-square p-4 flex flex-col items-center justify-center bg-[var(--background-fade)]">
         <div class="flex-1 flex items-center justify-center">
           <img :src="framework.img" :alt="framework.name" class="h-full max-h-[100px] aspect-square object-center object-contain mb-4" />
         </div>
-        <TextMd class="text-lg font-bold mb-2">{{ framework.name }}</TextMd>
-        <TextXs class="text-sm text-gray-500 text-center">{{ framework.description }}</TextXs>
+        <div class="text-lg font-bold mb-2">{{ framework.name }}</div>
+        <div class="text-sm text-gray-500 text-center">{{ framework.description }}</div>
       </HoverCard>
     </HoverContainer>
   </div>

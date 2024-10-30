@@ -17,15 +17,25 @@
   @media (min-width: 1536px) {
     --padding-x: 250px;
   }
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 body {
   --background: #090909;
-  --background-fade: rgb(24, 24, 27);
+  --background-fade: #18181b;
   --primary: rgb(23, 137, 97);
-  --primary-fade: rgb(34, 226, 127);
-  --text-gray: rgb(180, 180, 180);
-  --text-color: rgb(255, 255, 255);
+  --primary-fade: #22e27f;
+  --text-gray: #b4b4b4;
+  --text-color: #ffffff;
   --sidenav-width: 230px;
   --navbar-height: 80px;
 

@@ -4,7 +4,7 @@
       <FloatingContentItem v-for="(item, index) in customizedItems" :key="index" :positions="item.positions" :class="item.class">
         <div class="flex flex-col gap-[8px] justify-end p-4 bg-[var(--background-fade)] bg-opacity-50 rounded-3xl">
           <img :src="item.img" class="w-full flex-1 object-cover rounded-lg object-center" />
-          <TextMd class="text-white text-lg font-bold">{{ item.title }}</TextMd>
+          <div class="text-white text-lg font-bold">{{ item.title }}</div>
           <p class="text-gray-300 text-sm">{{ item.description }}</p>
         </div>
       </FloatingContentItem>

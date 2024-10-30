@@ -27,6 +27,13 @@ export default defineNuxtConfig({
       }
     }
   },
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => {
+        return tag === 'spline-viewer';
+      }
+    }
+  },
 
   deneme: {
     css: true

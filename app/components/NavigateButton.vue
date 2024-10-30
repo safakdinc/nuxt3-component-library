@@ -8,8 +8,8 @@
       <i v-if="props.right" class="fa fa-chevron-right"></i>
       <i v-else class="fa fa-chevron-left"></i>
     </div>
-    <TextMd class="font-[600]">{{ props.data.title }}</TextMd>
-    <TextXs style="color: var(--text-gray)" class="description" :class="{ 'text-end': props.right }">{{ props.data.description }}</TextXs>
+    <div class="font-[600] text-xl">{{ props.data.title }}</div>
+    <div style="color: var(--text-gray)" class="description text-sm" :class="{ 'text-end': props.right }">{{ props.data.description }}</div>
   </NuxtLink>
 </template>
 

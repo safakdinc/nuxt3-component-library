@@ -13,6 +13,10 @@ AnimatedTooltip:
       type: 'Number'
       default: '0'
       description: 'Adjust offset for tooltip position.'
+    - name: 'class'
+      type: 'String'
+      default: 'undefined'
+      description: 'Additional CSS classes to apply to the container.'
 
 Slots:
   head:

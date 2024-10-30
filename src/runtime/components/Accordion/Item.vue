@@ -1,13 +1,18 @@
 <template>
   <div class="flex flex-col">
-    <button v-wave class="sticky top-0 left-0 h-fit w-full px-[8px] rounded-t-lg" @click="handleClick">
-      <div class="flex justify-between py-[8px] font-bold items-center">
-        <slot name="trigger"></slot>
-        <i
-          :class="{ 'rotate-[-180deg]': isOpen }"
-          class="fa fa-chevron-down transition-all"
-          :style="{ transitionDuration: props.duration + 's' }"></i>
-      </div>
+    <button
+      :class="
+        twMerge(
+          'sticky top-0 left-0 h-fit w-full px-[8px] py-[8px] rounded-t-lg flex justify-between font-bold items-center',
+          props.buttonClass
+        )
+      "
+      @click="handleClick">
+      <slot name="trigger"></slot>
+      <i
+        :class="{ 'rotate-[-180deg]': isOpen }"
+        class="fa fa-chevron-down transition-all"
+        :style="{ transitionDuration: props.duration + 's' }"></i>
     </button>
     <div class="max-h-0 overflow-auto" ref="container">
       <slot></slot>
@@ -16,7 +21,9 @@
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
 import gsap from 'gsap';
+import emitter from '../../composables/eventBus';
 
 useHead({
   link: [
@@ -43,7 +50,8 @@ const props = defineProps({
   index: {
     type: Number,
     required: true
-  }
+  },
+  buttonClass: String
 });
 
 const isOpen = ref(props.open);
@@ -60,19 +68,16 @@ watch(
 
 const activeIndex = inject('activeIndex');
 const openSingle = inject('openSingle');
-const { $event } = useNuxtApp();
 
 /* To prevent possible bugs, the container component needs to know which item is open at startup.*/
 if (openSingle) {
   if (props.open) {
-    $event('accordeon:activate', props.index);
+    emitter.emit('activate', props.index);
   }
   watch(activeIndex, newVal => {
     isOpen.value = props.index === newVal;
   });
 }
-
-const emits = defineEmits(['handleToggle']);
 
 const container = ref();
 
@@ -110,8 +115,7 @@ onMounted(() => {
 
 function handleClick() {
   isOpen.value = !isOpen.value;
-  emits('handleToggle', props.index);
-  $event('accordeon:activate', props.index);
+  emitter.emit('accordeon', props.index);
 }
 </script>
 <style></style>

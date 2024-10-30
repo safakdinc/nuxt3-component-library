@@ -1,5 +1,5 @@
 <template>
-  <button v-wave class="px-[16px] py-[8px] rounded-lg button cursor-pointer relative overflow-hidden h-fit" @click="emits('handleClick')">
+  <button class="px-[16px] py-[8px] rounded-lg button cursor-pointer relative overflow-hidden h-fit" @click="emits('handleClick')">
     <div class="shimmer w-full h-full absolute top-0" :style="{ '--color': props.shimmerColor }"></div>
     <slot></slot>
   </button>

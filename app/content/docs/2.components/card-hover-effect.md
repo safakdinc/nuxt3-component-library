@@ -8,7 +8,11 @@ HoverContainer:
     - Type
     - Default
     - Description
-  props: []
+  props:
+    - name: 'class'
+      type: 'String'
+      default: 'null'
+      description: 'A custom CSS class to style the hover container.'
 
 HoverCard:
   head:
@@ -48,6 +52,8 @@ You can customize the Hover Card Effect by:
 ### HoverContainer
 
 The `HoverContainer` component wraps all `HoverCard` components and manages the mouse movement tracking to provide dynamic hover effects.
+
+:component-props{name="HoverContainer"}
 
 ### HoverCard
 

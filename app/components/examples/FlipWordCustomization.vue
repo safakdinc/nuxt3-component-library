@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 flex flex-col justify-center items-center">
-    <TextLg class="flex flex-col justify-center gap-2">
+    <div class="text-lg flex flex-col justify-center gap-2">
       <div class="flex items-center">
         Customize &nbsp
         <FlipWordDefault
@@ -11,9 +11,9 @@
           ease="back.out(2.5)"></FlipWordDefault>
       </div>
       <div>with <code>FlipWordDefault</code></div>
-    </TextLg>
+    </div>
 
-    <TextLg class="flex items-center gap-2 justify-start">
+    <div class="text-lg flex items-center gap-2 justify-start">
       <div class="flex items-center">
         Create &nbsp
         <FlipWordFaded
@@ -25,6 +25,6 @@
           :start="true"></FlipWordFaded>
       </div>
       <div>fades</div>
-    </TextLg>
+    </div>
   </div>
 </template>

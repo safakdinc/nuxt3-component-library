@@ -1,5 +1,5 @@
 <template>
-  <div ref="container" class="w-full h-[60vh] relative" :class="props.class">
+  <div ref="container" :class="twMerge('w-full h-[60vh] relative', props.class)">
     <div
       @mousedown="onClick"
       @mouseup="onMouseUp"
@@ -7,11 +7,13 @@
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
       @touchmove="onTouchMove"
-      class="absolute top-[30%] translate-y-[-50%] left-0 w-full h-[60%] z-[100]"></div>
+      :class="twMerge('absolute top-[40%] translate-y-[-50%] left-0 w-full h-[80%] z-[100]', controlContainerClass)"></div>
   </div>
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
 import * as THREE from 'three';
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
 import gsap from 'gsap';
@@ -22,6 +24,10 @@ const props = defineProps({
     required: true
   },
   class: {
+    type: String,
+    default: ''
+  },
+  controlContainerClass: {
     type: String,
     default: ''
   },

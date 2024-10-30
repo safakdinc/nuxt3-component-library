@@ -10,8 +10,7 @@
           v-if="props.arrow"
           ref="arrow"
           data-popper-arrow
-          class="visible block z-[-1] w-2 h-2 absolute rotate-45"
-          :class="props.arrowClass"></div>
+          :class="twMerge('visible block z-[-1] w-2 h-2 absolute rotate-45', props.arrowClass)"></div>
         <div class="z-[100]">
           <slot :open="isOpen" :close="closePopover"></slot>
         </div>
@@ -21,6 +20,8 @@
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
 const props = defineProps({
   mode: {
     type: String,

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full flex flex-wrap justify-center p-[16px] md:p-[64px]">
-    <TextMd class="w-full flex justify-center font-bold">Scroll down for parallax effect</TextMd>
+    <div class="w-full flex justify-center font-bold">Scroll down for parallax effect</div>
     <div class="h-[40vh] w-full"></div>
     <ParallaxImage
       class="w-full md:w-1/2 aspect-square"

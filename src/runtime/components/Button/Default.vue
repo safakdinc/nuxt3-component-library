@@ -1,5 +1,5 @@
 <template>
-  <button v-wave class="px-[16px] py-[8px] rounded-lg button cursor-pointer h-fit" @click="emits('handleClick')">
+  <button class="px-[16px] py-[8px] rounded-lg button cursor-pointer h-fit" @click="emits('handleClick')">
     <slot></slot>
   </button>
 </template>

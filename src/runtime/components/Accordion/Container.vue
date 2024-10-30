@@ -1,21 +1,24 @@
 <template>
-  <div class="flex flex-col">
-    <slot @handleToggle="handleToggle"></slot>
+  <div :class="twMerge('flex flex-col', props.class)">
+    <slot></slot>
   </div>
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+import emitter from '../../composables/eventBus';
+
 const props = defineProps({
   openSingle: {
     type: Boolean,
     default: true
-  }
+  },
+  class: String
 });
 
 const activeIndex = ref(null);
 
-const { $listen } = useNuxtApp();
-$listen('accordeon:activate', index => {
+emitter.on('accordeon', index => {
   activeIndex.value = index;
 });
 

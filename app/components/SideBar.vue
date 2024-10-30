@@ -6,10 +6,10 @@
       :class="{ maxScreenHeight: !windowSmall }">
       <div class="flex flex-col gap-[24px] px-[16px] py-[24px]">
         <div v-for="(group, title) in groupedNavigation" :key="title" class="flex flex-col gap-[8px]">
-          <TextSm class="font-semibold">{{ formatTitle(title) }}</TextSm>
+          <div class="font-semibold">{{ formatTitle(title) }}</div>
           <div class="flex flex-col gap-[12px] link-group">
             <NuxtLink class="link" :to="item._path" v-for="item in group" :key="item._path">
-              <TextXs>{{ item.title }}</TextXs>
+              <div class="text-sm">{{ item.title }}</div>
             </NuxtLink>
           </div>
         </div>

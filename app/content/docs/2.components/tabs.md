@@ -24,6 +24,10 @@ TabsHorizontal:
     - name: 'class'
       type: 'String'
       default: '""'
+      description: 'Additional CSS classes to apply to the container'
+    - name: 'tabClass'
+      type: 'String'
+      default: '""'
       description: 'Additional CSS classes to apply to the tabs'
 
 TabsVertical:
@@ -46,6 +50,10 @@ TabsVertical:
       default: 'aliceblue'
       description: 'Background color of the active tab indicator'
     - name: 'class'
+      type: 'String'
+      default: '""'
+      description: 'Additional CSS classes to apply to the container'
+    - name: 'tabClass'
       type: 'String'
       default: '""'
       description: 'Additional CSS classes to apply to the tabs'
@@ -78,10 +86,6 @@ The TabsVertical component creates a vertical tab layout with an animated side i
 ### Props
 
 :component-props{name="TabsHorizontal"}
-
-### Props
-
-:component-props{name="TabsVertical"}
 
 ### Events
 

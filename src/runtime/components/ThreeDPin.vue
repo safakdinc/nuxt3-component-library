@@ -1,6 +1,6 @@
 <template>
   <div class="relative main" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <div class="w-full h-full absolute top-0 left-0 flex flex-col items-center pin-container">
+    <div :class="twMerge('w-full h-full absolute top-0 left-0 flex flex-col items-center pin-container', props.class)">
       <div class="pin">
         <slot name="pin"></slot>
       </div>
@@ -21,6 +21,12 @@
 </template>
 
 <script setup>
+import { twMerge } from 'tailwind-merge';
+
+const props = defineProps({
+  class: String
+});
+
 const isHovered = ref(false);
 provide('isHovered', isHovered);
 function handleMouseEnter() {
