@@ -34,12 +34,26 @@ export default defineNuxtConfig({
       }
     }
   },
-
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          silenceDeprecations: ['legacy-js-api']
+        }
+      }
+    }
+  },
   deneme: {
     css: true
   },
 
   css: ['./main.scss', './app/assets/css/transitions.scss'],
-  ssr: false,
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {}
+    }
+  },
+  ssr: true,
   compatibilityDate: '2024-09-16'
 });

@@ -2,7 +2,7 @@ name = "nuxt-3-spa"
 compatibility_date = "2024-09-16"
 
 [build]
-command = "yarn install && npx nuxi generate"
+command = "yarn install && yarn build"
 
 [site]
 bucket = ".output/public"

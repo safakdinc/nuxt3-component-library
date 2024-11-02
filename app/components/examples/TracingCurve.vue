@@ -1,6 +1,8 @@
 <template>
   <div class="flex-1 relative">
-    <TracingCurveContainer :curveData="curveData" :trigger-element="'.preview'"></TracingCurveContainer>
+    <ClientOnly>
+      <TracingCurveContainer :curveData="curveData" :trigger-element="'.preview'"></TracingCurveContainer>
+    </ClientOnly>
   </div>
 </template>
 

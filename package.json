@@ -19,7 +19,7 @@
     "mitt": "^3.0.1",
     "nuxt": "^3.13.0",
     "postcss": "^8.4.45",
-    "sass": "^1.78.0",
+    "sass": "^1.80.6",
     "shiki": "^1.16.3",
     "split-type": "^0.3.4",
     "tailwind-merge": "^2.5.3",
@@ -29,5 +29,8 @@
     "vite-plugin-eslint": "^1.8.1",
     "vue": "latest",
     "vue-router": "latest"
+  },
+  "devDependencies": {
+    "sass-loader": "^13.0.0"
   }
 }

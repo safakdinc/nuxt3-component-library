@@ -89,9 +89,10 @@ watch(
   }
 );
 
-const prevWidth = ref(window.innerWidth);
+const prevWidth = ref();
 
 onMounted(() => {
+  prevWidth.value = window.innerWidth;
   if (props.start) {
     createTimeline();
   }

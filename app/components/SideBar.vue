@@ -47,6 +47,7 @@ const windowSmall = ref(true);
 
 onMounted(() => {
   window.addEventListener('resize', resize);
+  resize();
 });
 
 function resize() {
@@ -56,8 +57,6 @@ function resize() {
     windowSmall.value = false;
   }
 }
-
-resize();
 
 const formatTitle = title => {
   return title.charAt(0).toUpperCase() + title.slice(1);
