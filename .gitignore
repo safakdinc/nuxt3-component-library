@@ -24,4 +24,3 @@ logs
 !.env.example
 
 #yarn
-yarn.lock
