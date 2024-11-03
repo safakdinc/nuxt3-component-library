@@ -9,6 +9,11 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "main": ".output/server/index.mjs",
+  "engines": {
+    "node": "20.9.0",
+    "yarn": "1.22.22"
+  },
   "dependencies": {
     "@nuxt/content": "^2.13.2",
     "@nuxt/image": "^1.8.0",

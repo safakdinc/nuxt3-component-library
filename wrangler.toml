@@ -1,0 +1,11 @@
+name = "nuxt-3-spa"
+main = ".output/server/index.mjs"
+compatibility_date = "2023-01-01"
+
+[site]
+bucket = ".output/public"
+
+[build]
+command = "yarn install && yarn build"
+
+
