@@ -10,7 +10,19 @@ export default defineNuxtConfig({
     dirs: ['~/components']
   },
 
-  modules: ['./src/module', '@nuxt/content', '@nuxt/image'],
+  modules: ['./src/module', '@nuxt/content', '@nuxt/image', '@nuxt/eslint'],
+
+  eslint: {
+    root: true,
+    env: {
+      browser: true,
+      node: true
+    },
+    extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', '@vue/typescript/recommended'],
+    parserOptions: {
+      parser: '@typescript-eslint/parser'
+    }
+  },
 
   content: {
     sources: {
@@ -54,6 +66,7 @@ export default defineNuxtConfig({
       autoprefixer: {}
     }
   },
+  devtools: true,
   ssr: true,
   compatibilityDate: '2024-09-16'
 });
