@@ -22,48 +22,43 @@
 <script setup>
 const items = [
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043660/home1_yoxu12.webp',
+    img: 'https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Lorem',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043657/home2_xcbupc.webp',
+    img: 'https://images.pexels.com/photos/16245254/pexels-photo-16245254/free-photo-of-chatgpt-a-chatbot-for-your-website.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Ipsum',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043659/home3_p2hkbw.webp',
+    img: 'https://images.pexels.com/photos/1910236/pexels-photo-1910236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Dolor',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043655/home4_wypt74.webp',
+    img: 'https://images.pexels.com/photos/2832382/pexels-photo-2832382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Sit',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043652/home5_w01yqy.webp',
+    img: 'https://images.pexels.com/photos/2333293/pexels-photo-2333293.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Amet',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043654/home6_q9alqk.webp',
+    img: 'https://images.pexels.com/photos/604684/pexels-photo-604684.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Consectetur',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721044200/getpubthumb_msnsgc.webp',
+    img: 'https://images.pexels.com/photos/3308588/pexels-photo-3308588.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Adipisicing',
     link: 'https://yazilimpanteri.netlify.app'
   },
   {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043662/home8_i0nrxz.webp',
+    img: 'https://images.pexels.com/photos/2860807/pexels-photo-2860807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
     name: 'Elit',
-    link: 'https://yazilimpanteri.netlify.app'
-  },
-  {
-    img: 'https://res.cloudinary.com/dn5zxeevu/image/upload/v1721043650/home9_ewsddc.webp',
-    name: 'Expedita',
     link: 'https://yazilimpanteri.netlify.app'
   }
 ];

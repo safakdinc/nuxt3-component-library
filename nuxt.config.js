@@ -9,6 +9,9 @@ export default defineNuxtConfig({
     global: true,
     dirs: ['~/components']
   },
+  build: {
+    transpile: ['three', '@splinetool/loader']
+  },
 
   modules: ['./src/module', '@nuxt/content', '@nuxt/image', '@nuxt/eslint'],
 
