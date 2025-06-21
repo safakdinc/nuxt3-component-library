@@ -1,0 +1,105 @@
+@import 'tailwindcss';
+
+@theme static {
+  /* Primary Colors */
+  --color-primary: #178961;
+  --color-primary-fade: #22e27f;
+
+  /* Text Colors */
+  --color-text-gray: #b4b4b4;
+  --color-text-color: #ffffff; /* Renamed from 'text-color' to avoid potential conflicts and follow common naming conventions */
+
+  /* Background Colors */
+  --color-background: #090909;
+  --color-background-fade: #18181b;
+}
+
+:root {
+  --navbar-height: 60px;
+  --padding-x: 32px;
+
+  @media (min-width: 768px) {
+    --padding-x: 100px;
+  }
+
+  @media (min-width: 1024px) {
+    --padding-x: 100px;
+  }
+
+  @media (min-width: 1536px) {
+    --padding-x: 250px;
+  }
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+body {
+  --background: #090909;
+  --background-fade: #18181b;
+  --primary: rgb(23, 137, 97);
+  --primary-fade: #22e27f;
+  --text-gray: #b4b4b4;
+  --text-color: #ffffff;
+  --sidenav-width: 230px;
+  --navbar-height: 80px;
+
+  color: var(--text-color);
+  background-color: var(--background);
+}
+
+.layoutPadding {
+  padding-left: var(--padding-x);
+  padding-right: var(--padding-x);
+}
+
+@font-face {
+  font-family: 'graphIk';
+  src: url('./assets/fonts/GraphikRegular.otf') format('opentype');
+}
+
+.grahpikFont {
+  font-family: 'graphIk';
+  letter-spacing: 0px;
+}
+
+.maxScreenHeight {
+  max-height: calc(100vh - var(--navbar-height));
+}
+
+.minHeight {
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #212121;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(190, 190, 190);
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  background: #888;
+  border-radius: 10px;
+}

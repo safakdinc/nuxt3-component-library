@@ -1,39 +1,28 @@
+// nuxt.config.ts
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { resolve } from 'path';
-export default defineNuxtConfig({
-  future: {
-    compatibilityVersion: 4
-  },
+import tailwindcss from '@tailwindcss/vite';
 
+export default defineNuxtConfig({
+  compatibilityDate: '2025-05-15',
+  devtools: true,
+  ssr: false,
   components: {
     global: true,
     dirs: ['~/components']
   },
-  build: {
-    transpile: ['three', '@splinetool/loader']
-  },
+  extends: ['./layers/pantherui'],
 
-  modules: ['./src/module', '@nuxt/content', '@nuxt/image', '@nuxt/eslint'],
-
-  eslint: {
-    root: true,
-    env: {
-      browser: true,
-      node: true
-    },
-    extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', '@vue/typescript/recommended'],
-    parserOptions: {
-      parser: '@typescript-eslint/parser'
-    }
-  },
+  modules: ['@nuxt/content', '@nuxt/image', '@nuxt/eslint', '@tresjs/nuxt'],
 
   content: {
-    sources: {
-      content: {
-        driver: 'fs',
-        base: resolve(__dirname, 'app/content')
-      }
-    },
+    // Remove the 'sources' section here.
+    // sources: {
+    //   content: {
+    //     driver: 'fs',
+    //     base: resolve(__dirname, 'content')
+    //   }
+    // },
     markdown: {
       mdc: true,
       markdown: {
@@ -50,26 +39,15 @@ export default defineNuxtConfig({
     }
   },
   vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          silenceDeprecations: ['legacy-js-api']
-        }
-      }
+    plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: ['gsap', 'gsap/ScrollTrigger', 'gsap/dist/Flip', 'gsap/ScrollToPlugin', 'split-type', 'shiki', 'tailwind-merge', 'three']
     }
-  },
-  deneme: {
-    css: true
   },
 
-  css: ['./main.scss', './app/assets/css/transitions.scss'],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {}
-    }
+  nitro: {
+    preset: 'netlify'
   },
-  devtools: true,
-  ssr: true,
-  compatibilityDate: '2024-09-16'
+
+  css: ['./main.css', './assets/css/transitions.scss']
 });
