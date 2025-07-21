@@ -20,11 +20,11 @@
     "@tresjs/nuxt": "^4.0.0",
     "@tresjs/post-processing": "^2.4.0",
     "better-sqlite3": "^11.10.0",
+    "codemod": "^0.18.7",
     "date-fns": "^4.1.0",
     "gsap": "^3.13.0",
-    "konva": "^9.3.20",
     "mitt": "^3.0.1",
-    "nuxt": "^3.17.5",
+    "nuxt": "^4.0.1",
     "path": "^0.12.7",
     "sass": "^1.89.2",
     "shiki": "^1.16.3",
@@ -38,8 +38,9 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.4.1",
+    "@nuxt/eslint": "^1.6.0",
     "eslint": "^9.14.0",
     "sass-loader": "^13.0.0"
-  }
+  },
+  "packageManager": "yarn@4.9.2"
 }

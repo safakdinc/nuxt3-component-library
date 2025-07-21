@@ -4,13 +4,9 @@ import { resolve } from 'path';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: '2025-07-21',
   devtools: true,
   ssr: false,
-  components: {
-    global: true,
-    dirs: ['~/components']
-  },
   extends: ['./layers/pantherui'],
 
   modules: ['@nuxt/content', '@nuxt/image', '@nuxt/eslint', '@tresjs/nuxt'],

@@ -1,5 +1,4 @@
 import pluginVue from 'eslint-plugin-vue';
-import globals from 'globals';
 
 export default [
   // add more generic rulesets here, such as:
