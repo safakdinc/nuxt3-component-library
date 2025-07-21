@@ -7,7 +7,15 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-21',
   devtools: true,
   ssr: false,
+
+  // Set the source directory to 'app'
+  srcDir: 'app/',
+
   extends: ['./layers/pantherui'],
+  components: {
+    global: true,
+    dirs: ['~/components']
+  },
 
   modules: ['@nuxt/content', '@nuxt/image', '@nuxt/eslint', '@tresjs/nuxt'],
 
@@ -45,5 +53,5 @@ export default defineNuxtConfig({
     preset: 'netlify'
   },
 
-  css: ['./main.css', './assets/css/transitions.scss']
+  css: ['~/main.css', '~/assets/css/transitions.scss']
 });
