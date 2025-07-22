@@ -15,7 +15,7 @@ export default [
         'error',
         {
           singleQuote: true,
-          printWidth: 140,
+          printWidth: 100,
           jsxSingleQuote: false,
           bracketSpacing: true,
           jsxBracketSameLine: false,

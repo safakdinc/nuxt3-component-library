@@ -1,16 +1,16 @@
 <template>
   <div class="w-full justify-center flex p-[16px] lg:p-[64px]">
-    <HoverContainer>
-      <HoverCard
-        v-for="(framework, index) in frameworks"
-        :key="index"
-        class="aspect-square p-4 flex flex-col items-center justify-center bg-[var(--background-fade)]">
-        <div class="flex-1 flex items-center justify-center">
-          <img :src="framework.img" :alt="framework.name" class="h-full max-h-[100px] aspect-square object-center object-contain mb-4" />
-        </div>
-        <div class="text-lg font-bold mb-2">{{ framework.name }}</div>
-        <div class="text-sm text-gray-500 text-center">{{ framework.description }}</div>
-      </HoverCard>
+    <!-- Using the ResponsiveWrapper approach -->
+    <HoverContainer :items="frameworks" :item-min-width="220" :max-columns="3" :row-padding="16" :col-padding="16">
+      <template #default="{ item, index }">
+        <HoverCard class="aspect-square p-4 flex flex-col items-center justify-center bg-[var(--background-fade)] h-full w-full">
+          <div class="flex-1 flex items-center justify-center">
+            <img :src="item.img" :alt="item.name" class="h-full max-h-[100px] aspect-square object-center object-contain mb-4" />
+          </div>
+          <div class="text-lg font-bold mb-2">{{ item.name }}</div>
+          <div class="text-sm text-gray-500 text-center">{{ item.description }}</div>
+        </HoverCard>
+      </template>
     </HoverContainer>
   </div>
 </template>
@@ -45,7 +45,7 @@ const frameworks = [
   {
     name: 'Solid.js',
     img: 'https://www.solidjs.com/img/logo/without-wordmark/logo.png',
-    description: 'A declarative, efficient, and flexible JavaScript library for building user interfaces.'
+    description: 'A declarative, efficient, and flexible JavaScript library.'
   }
 ];
 </script>
