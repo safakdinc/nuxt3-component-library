@@ -9,22 +9,22 @@ TextReveal:
     - Default
     - Description
   props:
-    - name: 'triggerElement'
-      type: 'String'
-      default: 'null'
-      description: 'CSS selector for the scrollable container. If null, defaults to window.'
-    - name: 'class'
-      type: 'String'
-      default: 'h-[100vh] sticky top-0'
-      description: 'CSS classes to apply to the text container.'
+    - name: "triggerElement"
+      type: "String"
+      default: "null"
+      description: "CSS selector for the scrollable container. If null, defaults to window."
+    - name: "class"
+      type: "String"
+      default: "h-[100vh] sticky top-0"
+      description: "CSS classes to apply to the text container."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content to be revealed. Typically text content.'
+    - name: "default"
+      description: "Content to be revealed. Typically text content."
 ---
 
 ## Usage

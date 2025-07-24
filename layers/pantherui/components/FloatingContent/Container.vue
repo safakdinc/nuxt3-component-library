@@ -5,20 +5,20 @@
 </template>
 
 <script setup>
-import gsap from 'gsap';
-import { onMounted, ref, onUnmounted } from 'vue';
-import * as THREE from 'three';
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
+import gsap from "gsap";
+import { onMounted, ref, onUnmounted } from "vue";
+import * as THREE from "three";
+import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
 
 const props = defineProps({
   horizontalMoveMultiplier: {
     type: Number,
-    default: 2
+    default: 2,
   },
   verticalMoveMultiplier: {
     type: Number,
-    default: 2
-  }
+    default: 2,
+  },
 });
 
 const container = ref();
@@ -31,7 +31,7 @@ const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 1000);
 camera.lookAt(0, 0, 0);
 
 const css3DRenderer = new CSS3DRenderer();
-css3DRenderer.domElement.classList.add('absolute', 'top-0', 'left-0');
+css3DRenderer.domElement.classList.add("absolute", "top-0", "left-0");
 
 function updateDimensions() {
   if (container.value) {
@@ -51,31 +51,35 @@ onMounted(() => {
     container.value.appendChild(css3DRenderer.domElement);
     updateDimensions();
 
-    const items = container.value.querySelectorAll('.globe-item');
-    items.forEach(item => {
-      const htmlElement = document.createElement('div');
+    const items = container.value.querySelectorAll(".globe-item");
+    items.forEach((item) => {
+      const htmlElement = document.createElement("div");
       htmlElement.innerHTML = item.innerHTML;
       const cssObject = new CSS3DObject(htmlElement);
       const positions = getInitialPositions(item);
-      cssObject.position.set(calculatePosition(positions.x), calculatePosition(positions.y), calculatePosition(positions.z));
+      cssObject.position.set(
+        calculatePosition(positions.x),
+        calculatePosition(positions.y),
+        calculatePosition(positions.z),
+      );
       scene.add(cssObject);
     });
 
     const animate = () => {
       requestAnimationFrame(animate);
-      getCSS3DObjects().forEach(object => {
+      getCSS3DObjects().forEach((object) => {
         object.lookAt(0, 0, radius.value / 15);
       });
       css3DRenderer.render(scene, camera);
     };
     animate();
 
-    window.addEventListener('resize', updateDimensions);
+    window.addEventListener("resize", updateDimensions);
   }
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateDimensions);
+  window.removeEventListener("resize", updateDimensions);
 });
 
 function mapRange(value, in_min, in_max, out_min, out_max) {
@@ -92,11 +96,11 @@ function calculateCameraPosition() {
 }
 
 function getInitialPositions(item) {
-  const element = item.querySelector('.item');
+  const element = item.querySelector(".item");
   return {
-    x: parseFloat(element.getAttribute('data-initial-x')),
-    y: parseFloat(element.getAttribute('data-initial-y')),
-    z: parseFloat(element.getAttribute('data-initial-z'))
+    x: parseFloat(element.getAttribute("data-initial-x")),
+    y: parseFloat(element.getAttribute("data-initial-y")),
+    z: parseFloat(element.getAttribute("data-initial-z")),
   };
 }
 
@@ -111,16 +115,18 @@ function mouseMove(event) {
   gsap.to(scene.rotation, {
     duration: 2,
     y: rotationY,
-    ease: 'back.out(1.7)'
+    ease: "back.out(1.7)",
   });
   const scaleFactor = (event.clientY - rect.top - height.value / 2) / height.value / 3.5;
 
-  getCSS3DObjects().forEach(object => {
+  getCSS3DObjects().forEach((object) => {
     const positions = getInitialPositions(object.element);
     gsap.to(object.position, {
       duration: 2,
-      y: calculatePosition(positions.y) + radius.value * (scaleFactor * props.verticalMoveMultiplier),
-      ease: 'back.out(1.7)'
+      y:
+        calculatePosition(positions.y) +
+        radius.value * (scaleFactor * props.verticalMoveMultiplier),
+      ease: "back.out(1.7)",
     });
   });
 }
@@ -129,23 +135,23 @@ function resetPositions() {
   gsap.to(scene.rotation, {
     duration: 2,
     y: 0,
-    ease: 'back.out(1.7)'
+    ease: "back.out(1.7)",
   });
-  getCSS3DObjects().forEach(object => {
+  getCSS3DObjects().forEach((object) => {
     const positions = getInitialPositions(object.element);
     gsap.to(object.position, {
       duration: 2,
       x: calculatePosition(positions.x),
       y: calculatePosition(positions.y),
       z: calculatePosition(positions.z),
-      ease: 'back.out(1.7)'
+      ease: "back.out(1.7)",
     });
   });
 }
 
 function getCSS3DObjects() {
   const css3DObjects = [];
-  scene.traverse(object => {
+  scene.traverse((object) => {
     if (object instanceof CSS3DObject) {
       css3DObjects.push(object);
     }

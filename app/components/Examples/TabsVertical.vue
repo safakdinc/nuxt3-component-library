@@ -5,7 +5,8 @@
       :active="activeTab"
       background="lightgreen"
       class="my-custom-class"
-      @handleClick="handleTabClick" />
+      @handleClick="handleTabClick"
+    />
     <div class="content ml-4">
       <h2>{{ tabContents[activeTab].title }}</h2>
       <p>{{ tabContents[activeTab].content }}</p>
@@ -16,13 +17,13 @@
 <script setup>
 const activeTab = ref(0);
 const tabContents = [
-  { title: 'Dashboard', content: 'Overview of your main metrics and KPIs.' },
-  { title: 'Analytics', content: 'Detailed analysis of your data and trends.' },
-  { title: 'Reports', content: 'Generate and view various reports here.' },
-  { title: 'Users', content: 'Manage user accounts and permissions.' }
+  { title: "Dashboard", content: "Overview of your main metrics and KPIs." },
+  { title: "Analytics", content: "Detailed analysis of your data and trends." },
+  { title: "Reports", content: "Generate and view various reports here." },
+  { title: "Users", content: "Manage user accounts and permissions." },
 ];
 
-const handleTabClick = index => {
+const handleTabClick = (index) => {
   activeTab.value = index;
 };
 </script>

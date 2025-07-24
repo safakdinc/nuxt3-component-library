@@ -7,25 +7,53 @@
       <div class="text-[var(--text-gray)] mb-[24px]">
         <p>{{ page.description }}</p>
       </div>
-      <div class="w-full h-[1px] absolute bottom-0 left-0" style="background-color: rgb(255 255 255/ 0.3)"></div>
+      <div
+        class="w-full h-[1px] absolute bottom-0 left-0"
+        style="background-color: rgb(255 255 255/ 0.3)"
+      ></div>
     </div>
     <ContentRenderer :value="page" class="flex flex-col gap-[8px] content-renderer-wrapper" />
+    <div class="w-full grid grid-cols-8 gap-8 mt-[48px]">
+      <div class="col-span-8 sm:col-span-4 md:col-span-3">
+        <NavigateButton v-if="prev" :right="false" :data="prev"></NavigateButton>
+      </div>
+      <div class="col-span-2 hidden md:block"></div>
+      <div class="col-span-8 sm:col-span-4 md:col-span-3">
+        <NavigateButton v-if="next" :data="next"></NavigateButton>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import '@/assets/css/content.scss';
+import "@/assets/css/content.scss";
 
 const { path } = useRoute();
 const route = useRoute();
 
 const slugs = useRoute().params.slug;
 
-// Old: const { data: page } = await useAsyncData(`content-${path}`, () => queryContent(path).findOne());
-// New: Use queryCollection and specify the collection name 'docs' (or whatever you named it in content.config.ts)
+// Get the current page
 const { data: page } = await useAsyncData(`content-${path}`, () =>
-  queryCollection('docs')
-    .path(`/docs${slugs.map(slug => `/${slug}`).join('')}`)
-    .first()
+  queryCollection("docs")
+    .path(`/docs${slugs.map((slug) => `/${slug}`).join("")}`)
+    .first(),
 );
+
+console.log("Current page:", page.value);
+
+// Get surrounding pages for navigation
+const { data: surroundings } = await useAsyncData("surround", () => {
+  // Use the current page's _path for navigation
+  if (!page.value?.path) return null;
+  return queryCollectionItemSurroundings("docs", page.value.path, {
+    before: 1,
+    after: 1,
+    fields: ["title", "description"],
+  });
+});
+console.log("Surroundings:", surroundings.value);
+// Extract prev and next from surroundings
+const prev = computed(() => surroundings.value?.[0]);
+const next = computed(() => surroundings.value?.[1]);
 </script>

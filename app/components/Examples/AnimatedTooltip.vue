@@ -4,7 +4,9 @@
       <template #tooltip>
         <div class="text-nowrap">（￣︶￣）</div>
       </template>
-      <div class="transition-transform hover:scale-[1.15] duration-300 ease-out">Hover for Tooltip</div>
+      <div class="transition-transform hover:scale-[1.15] duration-300 ease-out">
+        Hover for Tooltip
+      </div>
     </AnimatedTooltip>
   </div>
 </template>

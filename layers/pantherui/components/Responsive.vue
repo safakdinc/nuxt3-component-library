@@ -1,7 +1,12 @@
 <template>
   <div ref="gridContainer" class="flex flex-col w-full" :style="containerStyle">
     <div class="w-full flex flex-wrap justify-center" :style="gridStyle">
-      <div v-for="(item, index) in items" :key="`item-${index}`" class="grid-item" :style="itemStyle">
+      <div
+        v-for="(item, index) in items"
+        :key="`item-${index}`"
+        class="grid-item"
+        :style="itemStyle"
+      >
         <slot :item="item" :index="index"></slot>
       </div>
     </div>
@@ -9,10 +14,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch, readonly } from 'vue';
-import { useDebounceFn } from '@vueuse/core';
-import gsap from 'gsap';
-import Flip from 'gsap/dist/Flip';
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch, readonly } from "vue";
+import { useDebounceFn } from "@vueuse/core";
+import gsap from "gsap";
+import Flip from "gsap/dist/Flip";
 
 gsap.registerPlugin(Flip);
 
@@ -50,7 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
   itemMaxWidth: 250,
   rowPadding: 16,
   colPadding: 16,
-  maxColumns: null
+  maxColumns: null,
 });
 
 const gridContainer = ref<HTMLElement | null>(null);
@@ -60,18 +65,18 @@ const itemWidth = ref(props.itemMinWidth);
 // Computed styles for better performance
 const containerStyle = computed(() => ({
   gap: `${props.rowPadding}px`,
-  maxWidth: props.maxColumns ? `${props.itemMaxWidth * props.maxColumns}px` : '100%'
+  maxWidth: props.maxColumns ? `${props.itemMaxWidth * props.maxColumns}px` : "100%",
 }));
 
 const gridStyle = computed(() => ({
-  gap: `${props.colPadding}px`
+  gap: `${props.colPadding}px`,
 }));
 
 const itemStyle = computed(() => ({
   width: `${itemWidth.value}px`,
   minWidth: `${props.itemMinWidth}px`,
   maxWidth: `${itemWidth.value}px`,
-  flexShrink: 0
+  flexShrink: 0,
 }));
 
 // Optimized grid calculation
@@ -116,7 +121,7 @@ onMounted(async () => {
     resizeObserver.observe(gridContainer.value);
   } else {
     // Fallback for older browsers
-    window.addEventListener('resize', debouncedCalculateLayout);
+    window.addEventListener("resize", debouncedCalculateLayout);
   }
 
   calculateLayout();
@@ -126,17 +131,17 @@ onBeforeUnmount(() => {
   if (resizeObserver) {
     resizeObserver.disconnect();
   } else {
-    window.removeEventListener('resize', debouncedCalculateLayout);
+    window.removeEventListener("resize", debouncedCalculateLayout);
   }
 });
 
 // Watch items changes more efficiently
-watch(() => props.items.length, calculateLayout, { flush: 'post' });
+watch(() => props.items.length, calculateLayout, { flush: "post" });
 
 defineExpose({
   calculateLayout,
   containerWidth: readonly(containerWidth),
-  itemWidth: readonly(itemWidth)
+  itemWidth: readonly(itemWidth),
 });
 </script>
 

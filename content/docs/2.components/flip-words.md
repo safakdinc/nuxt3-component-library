@@ -9,26 +9,26 @@ FlipWordDefault:
     - Default
     - Description
   props:
-    - name: 'class'
-      type: 'String'
-      default: 'none'
-      description: 'Additional CSS classes to apply to the component.'
-    - name: 'words'
-      type: 'Array'
+    - name: "class"
+      type: "String"
+      default: "none"
+      description: "Additional CSS classes to apply to the component."
+    - name: "words"
+      type: "Array"
       default: "['One', 'Two', 'Three']"
-      description: 'An array of words to cycle through.'
-    - name: 'intervals'
-      type: 'Number'
-      default: '2000'
-      description: 'The time in milliseconds between word changes.'
-    - name: 'duration'
-      type: 'Number'
-      default: '0.6'
-      description: 'The duration of the animation in seconds.'
-    - name: 'ease'
-      type: 'String'
+      description: "An array of words to cycle through."
+    - name: "intervals"
+      type: "Number"
+      default: "2000"
+      description: "The time in milliseconds between word changes."
+    - name: "duration"
+      type: "Number"
+      default: "0.6"
+      description: "The duration of the animation in seconds."
+    - name: "ease"
+      type: "String"
       default: "'power3.out'"
-      description: 'The easing function for the animation.'
+      description: "The easing function for the animation."
 
 FlipWordFaded:
   head:
@@ -37,30 +37,30 @@ FlipWordFaded:
     - Default
     - Description
   props:
-    - name: 'class'
-      type: 'String'
-      default: 'none'
-      description: 'Additional CSS classes to apply to the component.'
-    - name: 'words'
-      type: 'Array'
+    - name: "class"
+      type: "String"
+      default: "none"
+      description: "Additional CSS classes to apply to the component."
+    - name: "words"
+      type: "Array"
       default: "['One', 'Two', 'Three']"
-      description: 'An array of words to cycle through.'
-    - name: 'intervals'
-      type: 'Number'
-      default: '500'
-      description: 'The time in milliseconds between word changes.'
-    - name: 'duration'
-      type: 'Number'
-      default: '0.6'
-      description: 'The duration of the animation in seconds.'
-    - name: 'ease'
-      type: 'String'
+      description: "An array of words to cycle through."
+    - name: "intervals"
+      type: "Number"
+      default: "500"
+      description: "The time in milliseconds between word changes."
+    - name: "duration"
+      type: "Number"
+      default: "0.6"
+      description: "The duration of the animation in seconds."
+    - name: "ease"
+      type: "String"
       default: "'power3.out'"
-      description: 'The easing function for the animation.'
-    - name: 'start'
-      type: 'Boolean'
-      default: 'true'
-      description: 'Whether the animation should start immediately.'
+      description: "The easing function for the animation."
+    - name: "start"
+      type: "Boolean"
+      default: "true"
+      description: "Whether the animation should start immediately."
 ---
 
 ### Usage Example

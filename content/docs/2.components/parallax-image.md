@@ -9,14 +9,14 @@ ParallaxImage:
     - Default
     - Description
   props:
-    - name: 'src'
-      type: 'String'
-      default: 'null'
-      description: 'The source URL of the image to be displayed.'
-    - name: 'scrub'
-      type: 'Boolean, Number'
-      default: 'true'
-      description: 'Determines if the parallax effect should be tied directly to scroll position.'
+    - name: "src"
+      type: "String"
+      default: "null"
+      description: "The source URL of the image to be displayed."
+    - name: "scrub"
+      type: "Boolean, Number"
+      default: "true"
+      description: "Determines if the parallax effect should be tied directly to scroll position."
 ---
 
 ## Usage

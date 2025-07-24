@@ -1,6 +1,10 @@
 <template>
   <Transition name="modal">
-    <div v-if="isOpen" class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[1001] pointer-events-none">
+    <div
+      v-if="isOpen"
+      class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[1001]
+        pointer-events-none"
+    >
       <div class="pointer-events-auto"><slot></slot></div>
     </div>
   </Transition>
@@ -16,24 +20,24 @@
 const props = defineProps({
   open: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
 const isOpen = ref(props.open);
 
 watch(
   () => props.open,
-  newVal => {
+  (newVal) => {
     isOpen.value = newVal;
-  }
+  },
 );
 
-const emits = defineEmits(['closeModal']);
+const emits = defineEmits(["closeModal"]);
 
 function closeModal() {
   isOpen.value = false;
-  emits('closeModal');
+  emits("closeModal");
 }
 </script>
 

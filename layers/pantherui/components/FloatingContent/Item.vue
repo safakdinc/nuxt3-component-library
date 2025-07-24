@@ -5,7 +5,8 @@
       class="relative item"
       :data-initial-x="props.positions.x"
       :data-initial-y="props.positions.y"
-      :data-initial-z="props.positions.z">
+      :data-initial-z="props.positions.z"
+    >
       <slot></slot>
     </div>
   </div>
@@ -19,9 +20,9 @@ const props = defineProps({
     default: {
       x: 0,
       y: 0,
-      z: 0
-    }
-  }
+      z: 0,
+    },
+  },
 });
 </script>
 

@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import * as THREE from 'three';
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import * as THREE from "three";
+import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const container = ref(null);
@@ -24,7 +24,7 @@ scene.add(cylinder);
 const radius = window.innerWidth / 1.8;
 const items = [1, 2, 3, 4, 5, 6];
 const imageUrl =
-  'https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+  "https://plus.unsplash.com/premium_photo-1677511580659-f5fa0675a547?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 onMounted(() => {
   const width = container.value.clientWidth;
@@ -39,16 +39,16 @@ onMounted(() => {
   addScrollTrigger();
   animate();
 
-  window.addEventListener('resize', onWindowResize);
+  window.addEventListener("resize", onWindowResize);
 });
 
 function addObjects() {
   items.forEach((_, index) => {
-    const element = document.createElement('div');
-    element.style.width = '650px';
-    element.style.height = '450px';
+    const element = document.createElement("div");
+    element.style.width = "650px";
+    element.style.height = "450px";
     element.style.backgroundImage = `url(${imageUrl})`;
-    element.style.backgroundSize = 'cover';
+    element.style.backgroundSize = "cover";
     const object = new CSS3DObject(element);
     const angle = (index * Math.PI) / 3;
     console.log(angle);
@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
   if (container.value) {
     container.value.removeChild(renderer.domElement);
   }
-  window.removeEventListener('resize', onWindowResize);
+  window.removeEventListener("resize", onWindowResize);
 });
 
 const scrollContainer = ref();
@@ -84,21 +84,21 @@ function addScrollTrigger() {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: scrollContainer.value,
-      start: 'top top',
-      end: 'bottom bottom',
+      start: "top top",
+      end: "bottom bottom",
       scrub: true,
-      markers: true
-    }
+      markers: true,
+    },
   });
   tl.to(cylinder.rotation, {
-    y: -Math.PI * 2
+    y: -Math.PI * 2,
   });
   tl.to(
     cylinder.position,
     {
-      y: (450 / 3) * 2.5 * items.length
+      y: (450 / 3) * 2.5 * items.length,
     },
-    '<'
+    "<",
   );
 }
 </script>

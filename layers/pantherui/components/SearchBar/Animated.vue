@@ -8,14 +8,25 @@
       '--text-color': props.text_color,
       '--search-btn-color': props.search_btn_color,
       '--cancel-btn-color': props.cancel_btn_color,
-      '--cancel-btn-hover-color': props.cancel_btn_hover_color
-    }">
-    <input type="text" ref="search_input" class="input" v-model="inputValue" :placeholder="placeholder" />
+      '--cancel-btn-hover-color': props.cancel_btn_hover_color,
+    }"
+  >
+    <input
+      type="text"
+      ref="search_input"
+      class="input"
+      v-model="inputValue"
+      :placeholder="placeholder"
+    />
 
     <div class="cancel-btn" ref="cancel_btn" @click="searchBoxClose">
       <i class="fa-solid fa-xmark"></i>
     </div>
-    <button class="search-btn flex items-center justify-center" @click="searchBoxOpen" ref="search_btn">
+    <button
+      class="search-btn flex items-center justify-center"
+      @click="searchBoxOpen"
+      ref="search_btn"
+    >
       <i class="fa-solid fa-search"></i>
     </button>
   </div>
@@ -25,44 +36,44 @@
 useHead({
   link: [
     {
-      rel: 'stylesheet',
-      href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
-    }
-  ]
+      rel: "stylesheet",
+      href: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css",
+    },
+  ],
 });
-const emits = defineEmits(['handleInput']);
+const emits = defineEmits(["handleInput"]);
 const props = defineProps({
   placeholder: {
     type: String,
-    default: 'Type to Search..'
+    default: "Type to Search..",
   },
   cancel_btn_color: {
     type: String,
-    default: 'white'
+    default: "white",
   },
   cancel_btn_hover_color: {
     type: String,
-    default: '#9E9E9E'
+    default: "#9E9E9E",
   },
   search_btn_color: {
     type: String,
-    default: 'white'
+    default: "white",
   },
   background: {
     type: String,
-    default: '#191919'
+    default: "#191919",
   },
   background_hover: {
     type: String,
-    default: '#303030'
+    default: "#303030",
   },
   text_color: {
     type: String,
-    default: 'white'
-  }
+    default: "white",
+  },
 });
 
-const inputValue = ref('');
+const inputValue = ref("");
 
 const search_btn = ref();
 const cancel_btn = ref();
@@ -70,19 +81,19 @@ const search_box = ref();
 const search_input = ref();
 
 function searchBoxOpen() {
-  search_box.value.classList.add('active');
-  search_input.value.classList.add('active');
-  search_btn.value.classList.add('active');
-  cancel_btn.value.classList.add('active');
+  search_box.value.classList.add("active");
+  search_input.value.classList.add("active");
+  search_btn.value.classList.add("active");
+  cancel_btn.value.classList.add("active");
 }
 function searchBoxClose() {
-  search_box.value.classList.remove('active');
-  search_input.value.classList.remove('active');
-  search_btn.value.classList.remove('active');
-  cancel_btn.value.classList.remove('active');
+  search_box.value.classList.remove("active");
+  search_input.value.classList.remove("active");
+  search_btn.value.classList.remove("active");
+  cancel_btn.value.classList.remove("active");
 }
 watchEffect(() => {
-  emits('handleInput', inputValue.value);
+  emits("handleInput", inputValue.value);
 });
 </script>
 
@@ -136,7 +147,10 @@ watchEffect(() => {
     text-align: center;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.68, -0.25, 0.265, 1.25), background-color ease-in-out 0.5s, color ease-in-out 0.5s;
+    transition:
+      all 0.5s cubic-bezier(0.68, -0.25, 0.265, 1.25),
+      background-color ease-in-out 0.5s,
+      color ease-in-out 0.5s;
     &:hover {
       background-color: var(--background-hover);
     }

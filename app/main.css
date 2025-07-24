@@ -1,4 +1,4 @@
-@import 'tailwindcss' source('../');
+@import "tailwindcss" source("../");
 
 @theme static {
   /* Primary Colors */
@@ -61,12 +61,12 @@ body {
 }
 
 @font-face {
-  font-family: 'graphIk';
-  src: url('./assets/fonts/GraphikRegular.otf') format('opentype');
+  font-family: "graphIk";
+  src: url("./assets/fonts/GraphikRegular.otf") format("opentype");
 }
 
 .grahpikFont {
-  font-family: 'graphIk';
+  font-family: "graphIk";
   letter-spacing: 0px;
 }
 

@@ -8,12 +8,12 @@
 const props = defineProps({
   cols: {
     type: Number,
-    default: 12
+    default: 12,
   },
   rows: {
     type: Number,
-    default: 1
-  }
+    default: 1,
+  },
 });
 </script>
 

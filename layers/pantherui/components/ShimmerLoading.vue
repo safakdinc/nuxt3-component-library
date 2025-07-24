@@ -8,12 +8,12 @@
 const props = defineProps({
   background: {
     type: String,
-    default: '#c2c2c2'
+    default: "#c2c2c2",
   },
   shimmer: {
     type: String,
-    default: '#ffffff'
-  }
+    default: "#ffffff",
+  },
 });
 </script>
 
@@ -37,7 +37,12 @@ const props = defineProps({
   transform: translateX(-100%) translateY(-100%);
   animation: shimmer 1s infinite ease;
   mask-image: linear-gradient(-45deg, transparent 30%, rgba(0, 0, 0, 1) 70%, transparent 100%);
-  background-image: linear-gradient(-45deg, rgba(255, 255, 255, 0) 40%, var(--shimmer) 50%, rgba(255, 255, 255, 0) 60%);
+  background-image: linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0) 40%,
+    var(--shimmer) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
 }
 @keyframes shimmer {
   from {

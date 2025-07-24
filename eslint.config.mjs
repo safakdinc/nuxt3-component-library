@@ -1,49 +1,32 @@
-import pluginVue from 'eslint-plugin-vue';
+import pluginVue from "eslint-plugin-vue";
+import { withNuxt } from "./.nuxt/eslint.config.mjs";
 
-export default [
-  // add more generic rulesets here, such as:
-  // js.configs.recommended,
-  ...pluginVue.configs['flat/recommended'],
+export default withNuxt({
+  files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,vue}"],
 
-  // ...pluginVue.configs['flat/vue2-recommended'], // Use this if you are using Vue.js 2.x.
-  {
-    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx,vue}'],
-    rules: {
-      ...typescript.configs['recommended'].rules,
-      // Formatting rules based on Prettier settings
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          printWidth: 100,
-          jsxSingleQuote: false,
-          bracketSpacing: true,
-          jsxBracketSameLine: false,
-          trailingComma: 'none',
-          arrowParens: 'avoid',
-          endOfLine: 'auto'
-        }
-      ],
-      // Additional rules can be added here
-      '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_'
-        }
-      ]
-    },
-    languageOptions: {
-      parser: parser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module'
+  ...pluginVue.configs["flat/recommended"],
+  rules: {
+    ...typescript.configs["recommended"].rules,
+    // Formatting rules based on Prettier settings
+    // Additional rules can be added here
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
       },
-      globals: {
-        browser: true,
-        node: true
-      }
-    }
-  }
-];
+    ],
+  },
+  languageOptions: {
+    parser: parser,
+    parserOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+    },
+    globals: {
+      browser: true,
+      node: true,
+    },
+  },
+});

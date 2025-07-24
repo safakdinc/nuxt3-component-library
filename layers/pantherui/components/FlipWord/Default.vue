@@ -1,6 +1,8 @@
 <template>
   <div class="relative overflow-hidden h-fit w-fit parent" ref="container">
-    <div class="opacity-0 w-fit pointer-events-none" :class="props.class">{{ props.words[index] }}</div>
+    <div class="opacity-0 w-fit pointer-events-none" :class="props.class">
+      {{ props.words[index] }}
+    </div>
     <div class="absolute top-0 flex flex-col gap-[8px] h-full" :class="props.class">
       <div v-for="word in props.words" :key="word" class="box" ref="boxes">
         {{ word }}
@@ -10,9 +12,9 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import gsap from 'gsap';
-import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { ref, onMounted } from "vue";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 // Register the ScrollToPlugin
 gsap.registerPlugin(ScrollToPlugin);
@@ -21,20 +23,20 @@ const props = defineProps({
   class: String,
   words: {
     type: Array,
-    default: ['One', 'Two', 'Three']
+    default: ["One", "Two", "Three"],
   },
   intervals: {
     type: Number,
-    default: 2000
+    default: 2000,
   },
   duration: {
     type: Number,
-    default: 0.6
+    default: 0.6,
   },
   ease: {
     type: String,
-    default: 'power3.out'
-  }
+    default: "power3.out",
+  },
 });
 
 const container = ref();
@@ -47,7 +49,7 @@ onMounted(() => {
 
 function startAnimation() {
   const tl = gsap.timeline({
-    repeat: -1
+    repeat: -1,
   });
   boxes.value.forEach((box, index) => {
     if (index != 0) {
@@ -56,9 +58,9 @@ function startAnimation() {
         {
           duration: props.duration,
           ease: props.ease,
-          scrollTo: { y: getDistance(index) }
+          scrollTo: { y: getDistance(index) },
         },
-        `>${props.intervals / 1000}`
+        `>${props.intervals / 1000}`,
       );
     }
   });
@@ -67,9 +69,9 @@ function startAnimation() {
     {
       duration: props.duration,
       ease: props.ease,
-      scrollTo: { y: 0 }
+      scrollTo: { y: 0 },
     },
-    `>${props.intervals / 1000}`
+    `>${props.intervals / 1000}`,
   );
 }
 

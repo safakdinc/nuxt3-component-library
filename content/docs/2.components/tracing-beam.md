@@ -7,18 +7,18 @@ TracingBeam:
     - Prop
     - Description
   props:
-    - name: 'triggerElement'
-      description: 'Selector for the scrollable element. Defaults to window if not provided.'
-    - name: 'class'
-      description: 'Additional CSS classes to apply to the component.'
+    - name: "triggerElement"
+      description: "Selector for the scrollable element. Defaults to window if not provided."
+    - name: "class"
+      description: "Additional CSS classes to apply to the component."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content to be displayed alongside the tracing beam.'
+    - name: "default"
+      description: "Content to be displayed alongside the tracing beam."
 ---
 
 ## Usage

@@ -8,7 +8,8 @@
           :words="['animations', 'transitions', 'effects', 'movements']"
           :intervals="1500"
           :duration="0.4"
-          ease="back.out(2.5)"></FlipWordDefault>
+          ease="back.out(2.5)"
+        ></FlipWordDefault>
       </div>
       <div>with <code>FlipWordDefault</code></div>
     </div>
@@ -22,7 +23,8 @@
           :intervals="1000"
           :duration="0.5"
           ease="power1.out"
-          :start="true"></FlipWordFaded>
+          :start="true"
+        ></FlipWordFaded>
       </div>
       <div>fades</div>
     </div>

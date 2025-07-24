@@ -5,21 +5,21 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject } from "vue";
 const props = defineProps({
   translateZ: {
     type: Number,
-    default: 30
+    default: 30,
   },
   boxShadow: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
-const isHovered = inject('isHovered');
+const isHovered = inject("isHovered");
 const styleObject = computed(() => ({
-  transform: isHovered.value ? `translateZ(${props.translateZ}px)` : 'translateZ(0px)',
-  transition: 'all 0.4s ease' // Apply transition to transform property
+  transform: isHovered.value ? `translateZ(${props.translateZ}px)` : "translateZ(0px)",
+  transition: "all 0.4s ease", // Apply transition to transform property
 }));
 </script>
 

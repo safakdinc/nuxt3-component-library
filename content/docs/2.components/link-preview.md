@@ -9,26 +9,26 @@ LinkPreview:
     - Default
     - Description
   props:
-    - name: 'url'
-      type: 'String'
+    - name: "url"
+      type: "String"
       default: '"https://astrilya.com"'
-      description: 'The URL of the website to preview.'
-    - name: 'width'
-      type: 'Number'
-      default: '800'
-      description: 'The width of the preview image.'
-    - name: 'height'
-      type: 'Number'
-      default: '800'
-      description: 'The height of the preview image.'
+      description: "The URL of the website to preview."
+    - name: "width"
+      type: "Number"
+      default: "800"
+      description: "The width of the preview image."
+    - name: "height"
+      type: "Number"
+      default: "800"
+      description: "The height of the preview image."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the link text or element.'
+    - name: "default"
+      description: "Content for the link text or element."
 ---
 
 ## Usage

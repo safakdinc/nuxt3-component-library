@@ -1,6 +1,12 @@
 <template>
-  <button class="px-[16px] py-[8px] rounded-lg button cursor-pointer relative overflow-hidden h-fit" @click="emits('handleClick')">
-    <div class="shimmer w-full h-full absolute top-0" :style="{ '--color': props.shimmerColor }"></div>
+  <button
+    class="px-[16px] py-[8px] rounded-lg button cursor-pointer relative overflow-hidden h-fit"
+    @click="emits('handleClick')"
+  >
+    <div
+      class="shimmer w-full h-full absolute top-0"
+      :style="{ '--color': props.shimmerColor }"
+    ></div>
     <slot></slot>
   </button>
 </template>
@@ -9,15 +15,15 @@
 const props = defineProps({
   shimmerColor: {
     type: String,
-    default: 'rgb(255, 255, 255)'
+    default: "rgb(255, 255, 255)",
   },
   background: {
     type: String,
-    default: 'black'
+    default: "black",
   },
-  class: String
+  class: String,
 });
-const emits = defineEmits(['handleClick']);
+const emits = defineEmits(["handleClick"]);
 </script>
 
 <style lang="scss" scoped>

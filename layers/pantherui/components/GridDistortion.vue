@@ -6,14 +6,14 @@
 </template>
 
 <script setup>
-import * as THREE from 'three';
-import { onMounted, onBeforeUnmount, ref } from 'vue';
+import * as THREE from "three";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const props = defineProps({
   src: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 const container = ref(null);
@@ -81,14 +81,14 @@ const init = () => {
   renderer = new THREE.WebGLRenderer();
   renderer.setSize(width, height);
   container.value.appendChild(renderer.domElement);
-  renderer.domElement.style.position = 'absolute';
+  renderer.domElement.style.position = "absolute";
 
   // Create texture loader
   const textureLoader = new THREE.TextureLoader();
 
   // Load texture
   // Note: Replace this URL with your actual image URL
-  texture = textureLoader.load(props.src, loadedTexture => {
+  texture = textureLoader.load(props.src, (loadedTexture) => {
     // Calculate aspect ratio of the loaded texture
     const imageAspect = loadedTexture.image.width / loadedTexture.image.height;
     const containerAspect = width / height;
@@ -107,10 +107,10 @@ const init = () => {
 
     // Create plane with calculated dimensions
     let shaderUniforms = {
-      u_mouse: { type: 'v2', value: new THREE.Vector2() },
-      u_prevMouse: { type: 'v2', value: new THREE.Vector2() },
-      u_aberrationIntensity: { type: 'f', value: 0.0 },
-      u_texture: { type: 't', value: texture }
+      u_mouse: { type: "v2", value: new THREE.Vector2() },
+      u_prevMouse: { type: "v2", value: new THREE.Vector2() },
+      u_aberrationIntensity: { type: "f", value: 0.0 },
+      u_texture: { type: "t", value: texture },
     };
 
     const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
@@ -120,8 +120,8 @@ const init = () => {
       new THREE.ShaderMaterial({
         uniforms: shaderUniforms,
         vertexShader,
-        fragmentShader
-      })
+        fragmentShader,
+      }),
     );
     scene.add(planeMesh);
 
@@ -186,10 +186,10 @@ onMounted(() => {
     init();
     animateScene();
   }, 500);
-  window.addEventListener('resize', handleResize);
-  container.value.addEventListener('mousemove', handleMouseMove);
-  container.value.addEventListener('mouseenter', handleMouseEnter);
-  container.value.addEventListener('mouseleave', handleMouseLeave);
+  window.addEventListener("resize", handleResize);
+  container.value.addEventListener("mousemove", handleMouseMove);
+  container.value.addEventListener("mouseenter", handleMouseEnter);
+  container.value.addEventListener("mouseleave", handleMouseLeave);
 });
 
 function handleMouseMove(event) {
@@ -217,7 +217,7 @@ function handleMouseLeave() {
 }
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
+  window.removeEventListener("resize", handleResize);
 
   // Clean up Three.js resources
   if (planeMesh) {

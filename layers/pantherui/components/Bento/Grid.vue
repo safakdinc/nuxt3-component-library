@@ -8,12 +8,12 @@
 const props = defineProps({
   colSpan: {
     type: Number,
-    default: 1
+    default: 1,
   },
   rowSpan: {
     type: Number,
-    default: 1
-  }
+    default: 1,
+  },
 });
 </script>
 

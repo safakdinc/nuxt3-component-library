@@ -10,7 +10,8 @@
         <img
           v-if="item !== '/docks/safari.png'"
           :src="item"
-          class="w-[50px] dock-items aspect-square rounded-md overflow-hidden object-cover" />
+          class="w-[50px] dock-items aspect-square rounded-md overflow-hidden object-cover"
+        />
         <div v-else>
           <div class="dock-center aspect-square w-[50px] absolute top-0 left-1/2 -translate-x-1/2">
             <div class="video-element w-full aspect-[1203/753] opacity-0">
@@ -28,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
-import ScrollTrigger from 'gsap/dist/ScrollTrigger';
-import gsap from 'gsap';
-import Flip from 'gsap/dist/Flip';
+import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import Flip from "gsap/dist/Flip";
 
 gsap.registerPlugin(Flip, ScrollTrigger);
 
@@ -39,99 +40,104 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  scroller: () => document.documentElement
+  scroller: () => document.documentElement,
 });
 
-const items = ['/docks/zen.png', '/docks/hyprland.png', '/docks/safari.png', '/docks/steam.png', '/docks/discord.webp'];
+const items = [
+  "/docks/zen.png",
+  "/docks/hyprland.png",
+  "/docks/safari.png",
+  "/docks/steam.png",
+  "/docks/discord.webp",
+];
 
 const isMockup = ref(false);
 
 const DURATION = 0.4;
 
-const logo = useTemplateRef('logo');
+const logo = useTemplateRef("logo");
 
 function moveToCenter() {
   isMockup.value = true;
 
-  const video = document.querySelector('.video-element') as HTMLVideoElement;
-  const screenCenter = document.querySelector('.screen-center') as HTMLDivElement;
+  const video = document.querySelector(".video-element") as HTMLVideoElement;
+  const screenCenter = document.querySelector(".screen-center") as HTMLDivElement;
 
   // Capture initial state
   const state = Flip.getState(video);
 
   screenCenter.appendChild(video);
-  gsap.to('.placeholder-box', { width: '0px', duration: DURATION });
+  gsap.to(".placeholder-box", { width: "0px", duration: DURATION });
   gsap.to(video, {
     opacity: 1,
     duration: DURATION,
     onComplete: () => {
       // Remove Tailwind class and clear GSAP properties
-      video.classList.remove('opacity-0');
-      gsap.set(video, { clearProps: 'opacity' });
-    }
+      video.classList.remove("opacity-0");
+      gsap.set(video, { clearProps: "opacity" });
+    },
   });
   gsap.to(logo.value, {
     scale: 0,
     opacity: 0,
-    duration: DURATION
+    duration: DURATION,
   });
   Flip.from(state, {
     duration: DURATION,
-    ease: 'power2.out',
+    ease: "power2.out",
     scale: true,
-    absolute: false
+    absolute: false,
   });
 }
 
 function moveBackToDock() {
   isMockup.value = false;
 
-  const video = document.querySelector('.video-element') as HTMLVideoElement;
-  const dockCenter = document.querySelector('.dock-center') as HTMLDivElement;
+  const video = document.querySelector(".video-element") as HTMLVideoElement;
+  const dockCenter = document.querySelector(".dock-center") as HTMLDivElement;
 
   // Capture initial state
   const state = Flip.getState(video);
 
-  gsap.to('.placeholder-box', { width: '50px', duration: DURATION });
+  gsap.to(".placeholder-box", { width: "50px", duration: DURATION });
   dockCenter.appendChild(video);
   gsap.to(video, {
     opacity: 0,
     duration: DURATION,
     onComplete: () => {
       // Add back Tailwind class
-      video.classList.add('opacity-0');
-      gsap.set(video, { clearProps: 'opacity' });
-    }
+      video.classList.add("opacity-0");
+      gsap.set(video, { clearProps: "opacity" });
+    },
   });
 
   gsap.to(logo.value, {
     scale: 1,
     opacity: 1,
 
-    duration: DURATION
+    duration: DURATION,
   });
 
   Flip.from(state, {
     duration: DURATION,
-    ease: 'power2.out',
+    ease: "power2.out",
     scale: true,
-    absolute: false
+    absolute: false,
   });
 }
 
 onMounted(() => {
   // Create ScrollTrigger for Flip animation
   ScrollTrigger.create({
-    trigger: '.red-box',
-    start: 'top top',
-    end: '+=3000 bottom',
-    markers: true,
+    trigger: ".red-box",
+    start: "top top",
+    end: "+=2000 bottom",
     pin: true,
     scroller: props.scroller || window,
     onEnter: moveToCenter,
     onLeave: moveBackToDock,
     onEnterBack: moveToCenter,
-    onLeaveBack: moveBackToDock
+    onLeaveBack: moveBackToDock,
   });
 });
 </script>

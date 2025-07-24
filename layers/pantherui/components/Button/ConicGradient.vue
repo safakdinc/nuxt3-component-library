@@ -1,10 +1,15 @@
 <template>
-  <button @click="emits('handleClick')" class="w-fit h-fit rounded-lg flex conic-border" style="color: var(--text-color)">
+  <button
+    @click="emits('handleClick')"
+    class="w-fit h-fit rounded-lg flex conic-border"
+    style="color: var(--text-color)"
+  >
     <div class="background z-[-1]"></div>
     <div
       :class="props.class"
       class="w-fit h-fit flex gap-3 rounded-[inherit] px-[16px] py-[8px] z-10"
-      :style="{ 'background-color': props.backgroundColor }">
+      :style="{ 'background-color': props.backgroundColor }"
+    >
       <slot></slot>
     </div>
   </button>
@@ -14,14 +19,14 @@
 const props = defineProps({
   backgroundColor: {
     type: String,
-    default: 'black'
+    default: "black",
   },
   class: {
     type: String,
-    default: ''
-  }
+    default: "",
+  },
 });
-const emits = defineEmits(['handleClick']);
+const emits = defineEmits(["handleClick"]);
 </script>
 
 <style scoped>
@@ -58,7 +63,7 @@ const emits = defineEmits(['handleClick']);
 }
 
 @property --a {
-  syntax: '<angle>';
+  syntax: "<angle>";
   inherits: false;
   initial-value: 0deg;
 }

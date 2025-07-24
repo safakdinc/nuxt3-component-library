@@ -10,9 +10,9 @@
 
 <script setup>
 const props = defineProps({
-  class: String
+  class: String,
 });
-const emits = defineEmits(['handleClick']);
+const emits = defineEmits(["handleClick"]);
 </script>
 
 <style lang="scss" scoped>

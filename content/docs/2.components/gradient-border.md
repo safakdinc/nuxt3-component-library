@@ -9,26 +9,26 @@ BorderGradient:
     - Default
     - Description
   props:
-    - name: 'background'
-      type: 'String'
+    - name: "background"
+      type: "String"
       default: "'black'"
-      description: 'The background color of the inner content area.'
-    - name: 'class'
-      type: 'String'
-      default: 'undefined'
-      description: 'Additional CSS classes to apply to the inner content area.'
-    - name: 'wrapperClass'
-      type: 'String'
-      default: 'undefined'
-      description: 'Additional CSS classes to apply to the outer wrapper.'
+      description: "The background color of the inner content area."
+    - name: "class"
+      type: "String"
+      default: "undefined"
+      description: "Additional CSS classes to apply to the inner content area."
+    - name: "wrapperClass"
+      type: "String"
+      default: "undefined"
+      description: "Additional CSS classes to apply to the outer wrapper."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content to be displayed inside the gradient border.'
+    - name: "default"
+      description: "Content to be displayed inside the gradient border."
 ---
 
 ### Usage Example

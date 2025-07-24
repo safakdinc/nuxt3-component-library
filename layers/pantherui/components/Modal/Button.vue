@@ -3,7 +3,11 @@
     <slot name="button"></slot>
   </div>
   <Transition name="modal">
-    <div v-if="open" class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[1001] pointer-events-none">
+    <div
+      v-if="open"
+      class="fixed top-0 left-0 w-full h-full flex justify-center items-center z-[1001]
+        pointer-events-none"
+    >
       <div class="pointer-events-auto"><slot></slot></div>
     </div>
   </Transition>
@@ -19,20 +23,20 @@
 const props = defineProps({
   open: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 });
 
-const emits = defineEmits(['handleOpen', 'handleClose']);
+const emits = defineEmits(["handleOpen", "handleClose"]);
 const open = ref(props.open);
 
 function openModal() {
   open.value = true;
-  emits('handleOpen');
+  emits("handleOpen");
 }
 function closeModal() {
   open.value = false;
-  emits('handleClose');
+  emits("handleClose");
 }
 </script>
 

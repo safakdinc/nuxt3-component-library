@@ -10,8 +10,9 @@
           '--md': props.md,
           '--lg': props.lg,
           '--xl': props.xl,
-          '--xxl': props.xxl
-        }">
+          '--xxl': props.xxl,
+        }"
+      >
         <slot></slot>
       </div>
     </Transition>
@@ -27,38 +28,38 @@
 const props = defineProps({
   open: {
     type: Boolean,
-    default: false
+    default: false,
   },
   defaultWidth: {
     type: String,
-    default: '80%'
+    default: "80%",
   },
   sm: {
     type: String,
-    default: '300px'
+    default: "300px",
   },
   md: {
     type: String,
-    default: '300px'
+    default: "300px",
   },
   lg: {
     type: String,
-    default: '300px'
+    default: "300px",
   },
   xl: {
     type: String,
-    default: '300px'
+    default: "300px",
   },
   xxl: {
     type: String,
-    default: '300px'
-  }
+    default: "300px",
+  },
 });
 
-const emits = defineEmits(['handleClose']);
+const emits = defineEmits(["handleClose"]);
 
 function close() {
-  emits('handleClose');
+  emits("handleClose");
 }
 </script>
 

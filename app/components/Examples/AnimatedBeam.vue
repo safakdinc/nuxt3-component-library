@@ -1,23 +1,65 @@
 <template>
-  <div class="flex-1 flex items-center justify-center min-h-full px-[8px] lg:px-[120px]">
-    <div ref="container" class="w-full flex flex-col h-full items-center justify-center relative">
-      <AnimatedBeam :container="container" :from="div2" :to="div3" :curvature="-240" class=""> </AnimatedBeam>
-      <AnimatedBeam :container="container" :from="div2" :to="div1" :reverse="true" :curvature="-40" class=""> </AnimatedBeam>
-      <AnimatedBeam :container="container" :from="div3" :to="div1" :reverse="true" :curvature="-40" class=""> </AnimatedBeam>
-      <div class="w-full flex justify-center">
-        <div ref="div1" class="w-10 aspect-square rounded-full bg-blue-400"></div>
+  <div
+    class="flex-1 flex items-center justify-between space-y-8 max-w-[750px] min-h-full px-[8px]
+      lg:px-[120px]"
+  >
+    <animated-beam-wrapper class="flex-1 h-full flex items-center justify-between">
+      <div class="w-full h-full flex items-center justify-between">
+        <div class="flex flex-col gap-10">
+          <div ref="item" v-for="item in row1" class="w-14 aspect-square rounded-full bg-white p-2">
+            <img
+              :src="'/animatedbeam/' + item"
+              class="w-full h-full object-contain object-center"
+            />
+          </div>
+        </div>
+        <img
+          ref="center"
+          src="/animatedbeam/panther.png"
+          class="w-20 aspect-square rounded-full object-cover object-center"
+        />
+
+        <div class="flex flex-col gap-10">
+          <div ref="item" v-for="item in row2" class="w-14 aspect-square rounded-full bg-white p-2">
+            <img
+              :src="'/animatedbeam/' + item"
+              class="w-full h-full object-contain object-center"
+            />
+          </div>
+        </div>
       </div>
-      <div class="w-full flex justify-between h-fit">
-        <div ref="div2" class="w-10 aspect-square rounded-full bg-primary-fade"></div>
-        <div ref="div3" class="w-10 aspect-square rounded-full bg-primary"></div>
-      </div>
-    </div>
+      <AnimatedBeamLine
+        v-for="(el, index) in item"
+        :key="index"
+        :from="el"
+        :to="center"
+        :curvature="calculateCurvature(index)"
+      />
+    </animated-beam-wrapper>
   </div>
 </template>
 
 <script setup>
-const container = ref();
-const div1 = ref();
-const div2 = ref();
-const div3 = ref();
+const row1 = ["/pinia.png", "/vue.png", "/nuxt.png"];
+const row2 = ["/supabase.png", "/threejs.png", "/tailwind.png"];
+
+const item = ref();
+
+function calculateCurvature(index) {
+  const itemsPerRow = item.value.length / 2;
+  const positionInRow = index % itemsPerRow;
+
+  const middleIndex = (itemsPerRow - 1) / 2;
+  2;
+  const curvature = (middleIndex - positionInRow) * -30;
+
+  return curvature;
+}
+
+onMounted(() => {
+  nextTick(() => {
+    console.log("Items:", item.value);
+  });
+});
+const center = useTemplateRef("center");
 </script>

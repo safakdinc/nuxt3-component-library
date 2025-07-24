@@ -7,12 +7,12 @@ HeroParallax:
     - Prop
     - Description
   props:
-    - name: 'items'
-      description: 'An array of objects containing image data (img, name, link). Default is an empty array.'
-    - name: 'triggerElement'
-      description: 'Selector for the scrollable element. Defaults to window if not provided.'
-    - name: 'class'
-      description: 'Additional CSS classes to apply to the component. Default is an empty string.'
+    - name: "items"
+      description: "An array of objects containing image data (img, name, link). Default is an empty array."
+    - name: "triggerElement"
+      description: "Selector for the scrollable element. Defaults to window if not provided."
+    - name: "class"
+      description: "Additional CSS classes to apply to the component. Default is an empty string."
 
 Slots:
   head:

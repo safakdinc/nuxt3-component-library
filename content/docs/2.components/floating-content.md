@@ -9,14 +9,14 @@ FloatingContentContainer:
     - Default
     - Description
   props:
-    - name: 'horizontalMoveMultiplier'
-      type: 'Number'
-      default: '2'
-      description: 'Multiplier for adjusting the horizontal rotation of the container when the mouse moves.'
-    - name: 'verticalMoveMultiplier'
-      type: 'Number'
-      default: '2'
-      description: 'Multiplier for adjusting the vertical movement of the items when the mouse moves.'
+    - name: "horizontalMoveMultiplier"
+      type: "Number"
+      default: "2"
+      description: "Multiplier for adjusting the horizontal rotation of the container when the mouse moves."
+    - name: "verticalMoveMultiplier"
+      type: "Number"
+      default: "2"
+      description: "Multiplier for adjusting the vertical movement of the items when the mouse moves."
 
 FloatingContentItem:
   head:
@@ -25,22 +25,22 @@ FloatingContentItem:
     - Default
     - Description
   props:
-    - name: 'class'
-      type: 'String'
-      default: 'null'
-      description: 'Custom class to apply to the FloatingContentItem wrapper.'
-    - name: 'positions'
-      type: 'Object'
-      default: '{ x: 0, y: 0, z: 0 }'
-      description: 'Initial 3D positions (x, y, z) of the item in relation to the container.'
+    - name: "class"
+      type: "String"
+      default: "null"
+      description: "Custom class to apply to the FloatingContentItem wrapper."
+    - name: "positions"
+      type: "Object"
+      default: "{ x: 0, y: 0, z: 0 }"
+      description: "Initial 3D positions (x, y, z) of the item in relation to the container."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the floating content container or item.'
+    - name: "default"
+      description: "Content for the floating content container or item."
 ---
 
 ## Usage Example

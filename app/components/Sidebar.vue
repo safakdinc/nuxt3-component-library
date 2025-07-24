@@ -2,10 +2,16 @@
   <Transition name="sidebar">
     <div
       v-show="(sidebarOpen && windowSmall) || !windowSmall"
-      class="max-w-[240px] w-[240px] h-full overflow-auto overflow-x-hidden fixed top-0 left-0 md:top-[var(--navbar-height)] md:sticky bg-black md:bg-transparent z-[1002] md:z-10"
-      :class="{ maxScreenHeight: !windowSmall }">
+      class="max-w-[240px] w-[240px] h-full overflow-auto overflow-x-hidden fixed top-0 left-0
+        md:top-[var(--navbar-height)] md:sticky bg-black md:bg-transparent z-[1002] md:z-10"
+      :class="{ maxScreenHeight: !windowSmall }"
+    >
       <div class="flex flex-col gap-[24px] px-[16px] py-[24px]">
-        <div v-for="section in navigation[0]?.children" :key="section.path" class="flex flex-col gap-[8px]">
+        <div
+          v-for="section in navigation[0]?.children"
+          :key="section.path"
+          class="flex flex-col gap-[8px]"
+        >
           <div v-if="section.title" class="font-semibold">
             <NuxtLink v-if="section.path" :to="section.path" class="group-title-link">
               {{ section.title }}
@@ -13,8 +19,16 @@
             <span v-else>{{ section.title }}</span>
           </div>
 
-          <div v-if="section.children && section.children.length > 0" class="flex flex-col gap-[12px] link-group">
-            <NuxtLink class="link" :to="item.path" v-for="item in section.children" :key="item.path">
+          <div
+            v-if="section.children && section.children.length > 0"
+            class="flex flex-col gap-[12px] link-group"
+          >
+            <NuxtLink
+              class="link"
+              :to="item.path"
+              v-for="item in section.children"
+              :key="item.path"
+            >
               <div class="text-sm">{{ item.title }}</div>
             </NuxtLink>
           </div>
@@ -27,14 +41,17 @@
       @click="toggleSidebar"
       v-show="sidebarOpen && windowSmall"
       class="w-full h-full fixed md:hidden z-[1000] top-0 left-0"
-      style="backdrop-filter: blur(2px); background-color: rgba(0, 0, 0, 0.3)"></div>
+      style="backdrop-filter: blur(2px); background-color: rgba(0, 0, 0, 0.3)"
+    ></div>
   </Transition>
 </template>
 
 <script setup>
-import { useWindowSize } from '@vueuse/core';
+import { useWindowSize } from "@vueuse/core";
 
-const { data: navigation } = await useAsyncData('navigation', () => queryCollectionNavigation('docs'));
+const { data: navigation } = await useAsyncData("navigation", () =>
+  queryCollectionNavigation("docs"),
+);
 const { width } = useWindowSize();
 
 const sidebarOpen = ref(false);
@@ -48,7 +65,7 @@ const windowSmall = computed(() => width.value < 768);
 
 const { $listen } = useNuxtApp();
 
-$listen('sidebar:toggle', toggleSidebar);
+$listen("sidebar:toggle", toggleSidebar);
 
 function toggleSidebar() {
   sidebarOpen.value = !sidebarOpen.value;

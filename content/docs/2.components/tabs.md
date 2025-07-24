@@ -9,26 +9,26 @@ TabsHorizontal:
     - Default
     - Description
   props:
-    - name: 'active'
-      type: 'Number'
-      default: '0'
-      description: 'Index of the active tab'
-    - name: 'tabs'
-      type: 'Array'
+    - name: "active"
+      type: "Number"
+      default: "0"
+      description: "Index of the active tab"
+    - name: "tabs"
+      type: "Array"
       default: "['Tab 1', 'Tab 2']"
-      description: 'Array of tab labels'
-    - name: 'background'
-      type: 'String'
-      default: 'aliceblue'
-      description: 'Background color of the active tab indicator'
-    - name: 'class'
-      type: 'String'
+      description: "Array of tab labels"
+    - name: "background"
+      type: "String"
+      default: "aliceblue"
+      description: "Background color of the active tab indicator"
+    - name: "class"
+      type: "String"
       default: '""'
-      description: 'Additional CSS classes to apply to the container'
-    - name: 'tabClass'
-      type: 'String'
+      description: "Additional CSS classes to apply to the container"
+    - name: "tabClass"
+      type: "String"
       default: '""'
-      description: 'Additional CSS classes to apply to the tabs'
+      description: "Additional CSS classes to apply to the tabs"
 
 TabsVertical:
   head:
@@ -37,34 +37,34 @@ TabsVertical:
     - Default
     - Description
   props:
-    - name: 'active'
-      type: 'Number'
-      default: '0'
-      description: 'Index of the active tab'
-    - name: 'tabs'
-      type: 'Array'
+    - name: "active"
+      type: "Number"
+      default: "0"
+      description: "Index of the active tab"
+    - name: "tabs"
+      type: "Array"
       default: '["Tab 1", "Tab 2"]'
-      description: 'Array of tab labels'
-    - name: 'background'
-      type: 'String'
-      default: 'aliceblue'
-      description: 'Background color of the active tab indicator'
-    - name: 'class'
-      type: 'String'
+      description: "Array of tab labels"
+    - name: "background"
+      type: "String"
+      default: "aliceblue"
+      description: "Background color of the active tab indicator"
+    - name: "class"
+      type: "String"
       default: '""'
-      description: 'Additional CSS classes to apply to the container'
-    - name: 'tabClass'
-      type: 'String'
+      description: "Additional CSS classes to apply to the container"
+    - name: "tabClass"
+      type: "String"
       default: '""'
-      description: 'Additional CSS classes to apply to the tabs'
+      description: "Additional CSS classes to apply to the tabs"
 
 Events:
   head:
     - Event
     - Description
   props:
-    - name: 'handleClick'
-      description: 'Emitted when a tab is clicked, with the index of the clicked tab'
+    - name: "handleClick"
+      description: "Emitted when a tab is clicked, with the index of the clicked tab"
 ---
 
 ## TabsHorizontal

@@ -9,10 +9,10 @@ ModalButton:
     - Default
     - Description
   props:
-    - name: 'open'
-      type: 'Boolean'
-      default: 'false'
-      description: 'Controls the initial open state of the modal.'
+    - name: "open"
+      type: "Boolean"
+      default: "false"
+      description: "Controls the initial open state of the modal."
 
 ModalDefault:
   head:
@@ -21,28 +21,28 @@ ModalDefault:
     - Default
     - Description
   props:
-    - name: 'open'
-      type: 'Boolean'
-      default: 'false'
-      description: 'Controls the initial open state of the modal.'
+    - name: "open"
+      type: "Boolean"
+      default: "false"
+      description: "Controls the initial open state of the modal."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the modal body (ModalDefault only).'
-    - name: 'button'
-      description: 'Content for the button that opens the modal (ModalButton only).'
+    - name: "default"
+      description: "Content for the modal body (ModalDefault only)."
+    - name: "button"
+      description: "Content for the button that opens the modal (ModalButton only)."
 
 Events:
   head:
     - Event
     - Description
   props:
-    - name: 'handleClose'
-      description: 'Emitted when the modal is closed (ModalButton only).'
+    - name: "handleClose"
+      description: "Emitted when the modal is closed (ModalButton only)."
 ---
 
 ### `ModalDefault` Example

@@ -7,30 +7,30 @@ ThreeDPin:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the main card.'
-    - name: 'pin'
-      description: 'Content for the pin element.'
+    - name: "default"
+      description: "Content for the main card."
+    - name: "pin"
+      description: "Content for the pin element."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the main card.'
-    - name: 'pin'
-      description: 'Content for the pin element.'
+    - name: "default"
+      description: "Content for the main card."
+    - name: "pin"
+      description: "Content for the pin element."
 
 Events:
   head:
     - Event
     - Description
   props:
-    - name: 'mouseenter'
-      description: 'Emitted when the mouse enters the component.'
-    - name: 'mouseleave'
-      description: 'Emitted when the mouse leaves the component.'
+    - name: "mouseenter"
+      description: "Emitted when the mouse enters the component."
+    - name: "mouseleave"
+      description: "Emitted when the mouse leaves the component."
 ---
 
 ## Usage

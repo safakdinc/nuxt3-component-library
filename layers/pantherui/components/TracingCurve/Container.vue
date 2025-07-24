@@ -5,27 +5,28 @@
       :key="index"
       :title="data.item.title"
       :subtitle="data.item.subtitle"
-      :texts="data.item.texts"></TracingCurveItem>
+      :texts="data.item.texts"
+    ></TracingCurveItem>
   </div>
   <div ref="threeContainer" class="three-container"></div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import * as THREE from 'three';
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ref, onMounted } from "vue";
+import * as THREE from "three";
+import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 const props = defineProps({
   curveData: {
     type: Array,
-    required: true
+    required: true,
   },
   triggerElement: {
-    default: window
-  }
+    default: window,
+  },
 });
 
 const threeContainer = ref(null);
@@ -46,7 +47,7 @@ onMounted(() => {
     let object = {
       start: { x: data.line.start.x, y: data.line.start.y, z: data.line.start.z },
       end: { x: data.line.end.x, y: data.line.end.y, z: data.line.end.z },
-      curvature: { x: data.line.curvature.x, y: data.line.curvature.y }
+      curvature: { x: data.line.curvature.x, y: data.line.curvature.y },
     };
     lines.value.push(object);
   });
@@ -78,7 +79,7 @@ function addCustomDivsToLines(line, bbox, index, item) {
 }
 
 function createMultipleCurvedLines() {
-  let items = itemsContainer.value.querySelectorAll('.item');
+  let items = itemsContainer.value.querySelectorAll(".item");
   let lastBbox = { x: 0, y: 0, width: 900, height: 90 };
   lines.value.forEach((line, index) => {
     const { svgElement, bbox } = createSVGElement(line.start, line.end, line.curvature, index);
@@ -91,32 +92,32 @@ function createMultipleCurvedLines() {
 }
 
 function createSVGElement(start, end, curvature, index) {
-  const svgNamespace = 'http://www.w3.org/2000/svg';
-  const svgElement = document.createElementNS(svgNamespace, 'svg');
-  svgElement.classList.add('overflow-visible');
-  svgElement.setAttribute('width', '100%');
-  svgElement.setAttribute('height', '100%');
-  svgElement.style.position = 'absolute';
-  svgElement.style.top = '0';
-  svgElement.style.left = '0';
-  svgElement.style.width = '100%';
-  svgElement.style.height = '100%';
+  const svgNamespace = "http://www.w3.org/2000/svg";
+  const svgElement = document.createElementNS(svgNamespace, "svg");
+  svgElement.classList.add("overflow-visible");
+  svgElement.setAttribute("width", "100%");
+  svgElement.setAttribute("height", "100%");
+  svgElement.style.position = "absolute";
+  svgElement.style.top = "0";
+  svgElement.style.left = "0";
+  svgElement.style.width = "100%";
+  svgElement.style.height = "100%";
 
-  const path = document.createElementNS(svgNamespace, 'path');
+  const path = document.createElementNS(svgNamespace, "path");
   const d = calculateCurvedPath(start, end, curvature);
-  path.setAttribute('d', d);
-  path.setAttribute('stroke', 'white');
-  path.setAttribute('stroke-width', '4');
-  path.setAttribute('fill', 'none');
+  path.setAttribute("d", d);
+  path.setAttribute("stroke", "white");
+  path.setAttribute("stroke-width", "4");
+  path.setAttribute("fill", "none");
 
   svgElement.appendChild(path);
 
-  const orangePath = document.createElementNS(svgNamespace, 'path');
+  const orangePath = document.createElementNS(svgNamespace, "path");
   orangePath.classList.add(`orange-path-${index}`);
-  orangePath.setAttribute('d', d);
-  orangePath.setAttribute('stroke', 'orange');
-  orangePath.setAttribute('stroke-width', '4');
-  orangePath.setAttribute('fill', 'none');
+  orangePath.setAttribute("d", d);
+  orangePath.setAttribute("stroke", "orange");
+  orangePath.setAttribute("stroke-width", "4");
+  orangePath.setAttribute("fill", "none");
   svgElement.appendChild(orangePath);
 
   document.body.appendChild(svgElement);
@@ -144,7 +145,7 @@ function calculateCurvedPath(start, end, curvature) {
 }
 
 function setupScrollTrigger() {
-  const items = threeContainer.value.querySelectorAll('.item');
+  const items = threeContainer.value.querySelectorAll(".item");
   lines.value.forEach((_, index) => {
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -156,8 +157,8 @@ function setupScrollTrigger() {
         onEnter: () => open(items[index]),
         onEnterBack: () => open(items[index]),
         onLeaveBack: () => close(items[index]),
-        onLeave: () => close(items[index])
-      }
+        onLeave: () => close(items[index]),
+      },
     });
 
     const orangeLine = document.querySelector(`.orange-path-${index}`);
@@ -166,132 +167,132 @@ function setupScrollTrigger() {
 
       gsap.set(orangeLine, {
         strokeDasharray: length,
-        strokeDashoffset: length
+        strokeDashoffset: length,
       });
 
       tl.to(orangeLine, {
         strokeDashoffset: 0,
-        ease: 'none'
+        ease: "none",
       });
     }
 
-    let container = items[index].querySelector('.container');
-    let circle = items[index].querySelector('.circle');
-    let line = items[index].querySelector('.line');
-    let text = items[index].querySelector('.text');
-    let paragraph = items[index].querySelectorAll('.paragraph');
+    let container = items[index].querySelector(".container");
+    let circle = items[index].querySelector(".circle");
+    let line = items[index].querySelector(".line");
+    let text = items[index].querySelector(".text");
+    let paragraph = items[index].querySelectorAll(".paragraph");
 
     gsap.set(container, {
-      translateY: 85
+      translateY: 85,
     });
     gsap.set(circle, {
-      scale: 0
+      scale: 0,
     });
     gsap.set(line, {
-      maxHeight: 0
+      maxHeight: 0,
     });
     gsap.set(text, {
-      opacity: 0
+      opacity: 0,
     });
     gsap.set(paragraph, {
       opacity: 0,
-      translateX: -20
+      translateX: -20,
     });
   });
 }
 
 function open(item) {
-  let container = item.querySelector('.container');
-  let circle = item.querySelector('.circle');
-  let line = item.querySelector('.line');
-  let text = item.querySelector('.text');
-  let paragraph = item.querySelectorAll('.paragraph');
+  let container = item.querySelector(".container");
+  let circle = item.querySelector(".circle");
+  let line = item.querySelector(".line");
+  let text = item.querySelector(".text");
+  let paragraph = item.querySelectorAll(".paragraph");
   const tl = gsap.timeline();
   let duration = 0.15;
   tl.to(container, {
     translateY: 0,
-    duration: duration
+    duration: duration,
   });
   tl.to(
     circle,
     {
       scale: 1,
-      duration: duration
+      duration: duration,
     },
-    '<'
+    "<",
   );
   tl.to(
     line,
     {
       maxHeight: 170,
-      duration: duration
+      duration: duration,
     },
-    '<'
+    "<",
   );
   tl.to(
     text,
     {
       opacity: 1,
-      duration: duration
+      duration: duration,
     },
-    '<'
+    "<",
   );
   tl.to(
     paragraph,
     {
       opacity: 1,
       translateX: 0,
-      duration: duration
+      duration: duration,
     },
-    '<+=0.1'
+    "<+=0.1",
   );
 }
 
 function close(item) {
-  let container = item.querySelector('.container');
+  let container = item.querySelector(".container");
 
-  let circle = item.querySelector('.circle');
-  let line = item.querySelector('.line');
-  let text = item.querySelector('.text');
-  let paragraph = item.querySelectorAll('.paragraph');
+  let circle = item.querySelector(".circle");
+  let line = item.querySelector(".line");
+  let text = item.querySelector(".text");
+  let paragraph = item.querySelectorAll(".paragraph");
   const tl = gsap.timeline();
   let duration = 0.15;
   tl.to(container, {
     translateY: line.getBoundingClientRect().height / 2,
-    duration: duration
+    duration: duration,
   });
   tl.to(
     circle,
     {
       scale: 0,
-      duration: duration
+      duration: duration,
     },
-    '<'
+    "<",
   );
   tl.to(
     line,
     {
       maxHeight: 0,
-      duration: duration
+      duration: duration,
     },
-    '<'
+    "<",
   );
   tl.to(
     text,
     {
       opacity: 0,
-      duration: 0.02
+      duration: 0.02,
     },
-    '<'
+    "<",
   );
   tl.to(
     paragraph,
     {
       opacity: 0,
       translateX: -20,
-      duration: 0.02
+      duration: 0.02,
     },
-    '<+=0.1'
+    "<+=0.1",
   );
 }
 
@@ -301,34 +302,34 @@ function createScrollTrigger() {
   tl.fromTo(
     camera.position,
     {
-      z: -100
+      z: -100,
     },
     {
       z: lines.value.length * 600,
-      ease: 'none'
-    }
+      ease: "none",
+    },
   );
   tl.pause();
   setTimeout(() => {
     ScrollTrigger.create({
       animation: tl,
       trigger: threeContainer.value,
-      start: 'top top',
+      start: "top top",
       end: `+=${(lines.value.length + 1) * 800}`,
       scrub: 1,
       pin: true,
       pinSpacing: true,
-      scroller: props.triggerElement
+      scroller: props.triggerElement,
     });
   }, 10);
 }
 
 onMounted(() => {
-  window.addEventListener('resize', updateDimensions);
+  window.addEventListener("resize", updateDimensions);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', updateDimensions);
+  window.removeEventListener("resize", updateDimensions);
 });
 
 function updateDimensions() {}

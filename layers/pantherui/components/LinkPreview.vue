@@ -3,7 +3,8 @@
     <div class="absolute bottom-[130%] left-[50%] w-[250px] aspect-[4/2] image">
       <img
         :src="`https://api.microlink.io/?url=${props.url}&screenshot=true&meta=false&embed=screenshot.url&colorScheme=dark&viewport.width=${props.width}&viewport.height=${props.height}`"
-        class="w-full h-full rounded-lg object-cover object-top" />
+        class="w-full h-full rounded-lg object-cover object-top"
+      />
     </div>
     <div class="link"><slot></slot></div>
   </NuxtLink>
@@ -13,17 +14,17 @@
 const props = defineProps({
   url: {
     type: String,
-    default: '',
-    required: true
+    default: "",
+    required: true,
   },
   width: {
     type: Number,
-    default: 1200
+    default: 1200,
   },
   height: {
     type: Number,
-    default: 1200
-  }
+    default: 1200,
+  },
 });
 </script>
 

@@ -9,34 +9,34 @@ HoverContainer:
     - Default
     - Description
   props:
-    - name: 'items'
-      type: 'Array'
-      default: 'required'
-      description: 'Array of items to display in the hover container.'
-    - name: 'itemMinWidth'
-      type: 'Number'
-      default: '200'
-      description: 'Minimum width for each item in pixels.'
-    - name: 'itemMaxWidth'
-      type: 'Number'
-      default: '300'
-      description: 'Maximum width for each item in pixels.'
-    - name: 'rowPadding'
-      type: 'Number'
-      default: '16'
-      description: 'Vertical spacing between rows in pixels.'
-    - name: 'colPadding'
-      type: 'Number'
-      default: '16'
-      description: 'Horizontal spacing between columns in pixels.'
-    - name: 'maxColumns'
-      type: 'Number'
-      default: 'null'
-      description: 'Maximum number of columns per row. Works together with itemMaxWidth.'
-    - name: 'class'
-      type: 'String'
-      default: 'null'
-      description: 'A custom CSS class to style the hover container.'
+    - name: "items"
+      type: "Array"
+      default: "required"
+      description: "Array of items to display in the hover container."
+    - name: "itemMinWidth"
+      type: "Number"
+      default: "200"
+      description: "Minimum width for each item in pixels."
+    - name: "itemMaxWidth"
+      type: "Number"
+      default: "300"
+      description: "Maximum width for each item in pixels."
+    - name: "rowPadding"
+      type: "Number"
+      default: "16"
+      description: "Vertical spacing between rows in pixels."
+    - name: "colPadding"
+      type: "Number"
+      default: "16"
+      description: "Horizontal spacing between columns in pixels."
+    - name: "maxColumns"
+      type: "Number"
+      default: "null"
+      description: "Maximum number of columns per row. Works together with itemMaxWidth."
+    - name: "class"
+      type: "String"
+      default: "null"
+      description: "A custom CSS class to style the hover container."
 
 HoverCard:
   head:
@@ -45,14 +45,14 @@ HoverCard:
     - Default
     - Description
   props:
-    - name: 'class'
-      type: 'String'
-      default: 'null'
-      description: 'A custom CSS class to style the hover card.'
-    - name: 'customization'
-      type: 'CustomizationProps'
-      default: 'default values'
-      description: 'Object containing customization options for the hover effect.'
+    - name: "class"
+      type: "String"
+      default: "null"
+      description: "A custom CSS class to style the hover card."
+    - name: "customization"
+      type: "CustomizationProps"
+      default: "default values"
+      description: "Object containing customization options for the hover effect."
 
 CustomizationProps:
   head:
@@ -61,46 +61,46 @@ CustomizationProps:
     - Default
     - Description
   props:
-    - name: 'borderIntensity'
-      type: 'Number'
-      default: '0.4'
-      description: 'Intensity of the border effect (0-1).'
-    - name: 'glowIntensity'
-      type: 'Number'
-      default: '0.06'
-      description: 'Intensity of the glow effect (0-0.2).'
-    - name: 'borderColor'
-      type: 'String'
-      default: 'white'
-      description: 'Color of the border effect (white, blue, purple, green, red, gold).'
-    - name: 'glowColor'
-      type: 'String'
-      default: 'white'
-      description: 'Color of the glow effect (white, blue, purple, green, red, gold).'
-    - name: 'animationSpeed'
-      type: 'Number'
-      default: '0.4'
-      description: 'Speed of animations in seconds.'
-    - name: 'borderRadius'
-      type: 'Number'
-      default: '10'
-      description: 'Border radius in pixels.'
-    - name: 'effectSize'
-      type: 'Number'
-      default: '500'
-      description: 'Size of the hover effect in pixels.'
-    - name: 'effectType'
-      type: 'String'
-      default: 'radial'
-      description: 'Type of effect (radial, linear, spotlight).'
+    - name: "borderIntensity"
+      type: "Number"
+      default: "0.4"
+      description: "Intensity of the border effect (0-1)."
+    - name: "glowIntensity"
+      type: "Number"
+      default: "0.06"
+      description: "Intensity of the glow effect (0-0.2)."
+    - name: "borderColor"
+      type: "String"
+      default: "white"
+      description: "Color of the border effect (white, blue, purple, green, red, gold)."
+    - name: "glowColor"
+      type: "String"
+      default: "white"
+      description: "Color of the glow effect (white, blue, purple, green, red, gold)."
+    - name: "animationSpeed"
+      type: "Number"
+      default: "0.4"
+      description: "Speed of animations in seconds."
+    - name: "borderRadius"
+      type: "Number"
+      default: "10"
+      description: "Border radius in pixels."
+    - name: "effectSize"
+      type: "Number"
+      default: "500"
+      description: "Size of the hover effect in pixels."
+    - name: "effectType"
+      type: "String"
+      default: "radial"
+      description: "Type of effect (radial, linear, spotlight)."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the hover container. Receives item and index as slot props.'
+    - name: "default"
+      description: "Content for the hover container. Receives item and index as slot props."
 ---
 
 ## Usage Example
@@ -195,7 +195,7 @@ The `HoverContainer` uses a scoped slot that provides access to item data and in
 ```vue
 <HoverContainer :items="frameworks">
   <template #default="{ item }">
-    <HoverCard 
+    <HoverCard
       :customization="{
         borderColor: 'blue',
         glowColor: 'purple',
@@ -257,7 +257,7 @@ interface CustomizationProps {
   animationSpeed?: number; // Animation duration in seconds
   borderRadius?: number; // Card border radius in pixels
   effectSize?: number; // Hover effect size in pixels
-  effectType?: 'radial' | 'linear' | 'spotlight'; // Effect type
+  effectType?: "radial" | "linear" | "spotlight"; // Effect type
 }
 ```
 

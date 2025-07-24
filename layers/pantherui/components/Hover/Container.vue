@@ -1,12 +1,18 @@
 <template>
-  <div :class="twMerge('w-full flex justify-center', props.class)" @mousemove="mouseMove" @mouseenter="mouseEnter" @mouseleave="mouseLeave">
+  <div
+    :class="twMerge('w-full flex justify-center', props.class)"
+    @mousemove="mouseMove"
+    @mouseenter="mouseEnter"
+    @mouseleave="mouseLeave"
+  >
     <Responsive
       :items="props.items"
       :item-min-width="props.itemMinWidth"
       :item-max-width="props.itemMaxWidth"
       :row-padding="props.rowPadding"
       :max-columns="props.maxColumns"
-      :col-padding="props.colPadding">
+      :col-padding="props.colPadding"
+    >
       <template #default="{ item, index }">
         <slot :item="item" :index="index"></slot>
       </template>
@@ -15,35 +21,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { twMerge } from 'tailwind-merge';
+import { ref } from "vue";
+import { twMerge } from "tailwind-merge";
 
 const props = defineProps({
   items: {
     type: Array,
-    required: true
+    required: true,
   },
   itemMinWidth: {
     type: Number,
-    default: 200
+    default: 200,
   },
   itemMaxWidth: {
     type: Number,
-    default: 300
+    default: 300,
   },
   rowPadding: {
     type: Number,
-    default: 16
+    default: 16,
   },
   colPadding: {
     type: Number,
-    default: 16
+    default: 16,
   },
   maxColumns: {
     type: Number,
-    default: null
+    default: null,
   },
-  class: String
+  class: String,
 });
 
 // Hover effect logic
@@ -65,7 +71,7 @@ function mouseLeave() {
 }
 
 // Provide hover context for child components
-provide('clientX', x);
-provide('clientY', y);
-provide('isHovered', isHovered);
+provide("clientX", x);
+provide("clientY", y);
+provide("isHovered", isHovered);
 </script>
