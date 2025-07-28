@@ -5,7 +5,7 @@
     <ParallaxImage
       class="w-full md:w-1/2 aspect-square"
       :trigger-element="'.preview'"
-      src="https://images.pexels.com/photos/1910236/pexels-photo-1910236.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      src="https://images.pexels.com/photos/3308588/pexels-photo-3308588.jpeg"
     ></ParallaxImage>
     <div class="h-[40vh] w-full"></div>
   </div>

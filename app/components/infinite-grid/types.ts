@@ -114,6 +114,8 @@ export interface TileClickEventDetail {
   groupIndex: number;
   /** Index of the clicked tile within its group */
   tileIndex: number;
+  /** Direct index into the cardData array */
+  cardIndex: number;
   /** The card data associated with the clicked tile */
   cardData: CardData;
 }
@@ -125,7 +127,7 @@ export interface CardTexturePair {
   /** Canvas texture containing the card's main content */
   foreground: Texture | null;
   /** Canvas texture containing the blurred background image */
-  background: Texture | null;
+  background?: Texture | null;
 }
 
 /**

@@ -7,7 +7,7 @@
           justify-between py-2 items-center z-[1000]"
       >
         <div class="flex h-full items-center justify-between logo gap-[32px] interFont">
-          <NuxtLink to="/" class="text-2xl md-text font-bold hidden sm:block">Title</NuxtLink>
+          <NuxtLink to="/" class="text-2xl md-text font-bold hidden sm:block">Panther UI</NuxtLink>
           <NuxtLink to="/docs/components" class="link-button text-[var(--text-gray)] font-[500]"
             >Components</NuxtLink
           >

@@ -149,7 +149,7 @@ function createVideoElement(
         // Force play the video to ensure it starts
         if (options.autoplay !== false) {
           await video.play();
-          console.log("Video started playing:", src);
+          //console.log("Video started playing:", src);
         }
         resolve(video);
       } catch (error) {
@@ -164,21 +164,21 @@ function createVideoElement(
       reject(new Error(`Failed to load video: ${src}`));
     });
 
-    video.addEventListener("canplay", () => {
-      console.log("Video can play:", src);
-    });
+    // video.addEventListener("canplay", () => {
+    //   console.log("Video can play:", src);
+    // });
 
-    video.addEventListener("playing", () => {
-      console.log("Video is playing:", src);
-    });
+    // video.addEventListener("playing", () => {
+    //   console.log("Video is playing:", src);
+    // });
 
-    video.addEventListener("pause", () => {
-      console.log("Video paused:", src);
-    });
+    // video.addEventListener("pause", () => {
+    //   console.log("Video paused:", src);
+    // });
 
-    video.addEventListener("ended", () => {
-      console.log("Video ended:", src);
-    });
+    // video.addEventListener("ended", () => {
+    //   console.log("Video ended:", src);
+    // });
 
     // Start loading the video
     video.src = src;
@@ -229,7 +229,12 @@ export async function generateForegroundTexture(
   const cacheKey = `${data.title}-${data.tags?.join("-")}-image`;
 
   if (textureCache.has(cacheKey)) {
-    return textureCache.get(cacheKey)!;
+    const cachedTexture = textureCache.get(cacheKey)!;
+    // Ensure the texture is properly bound to prevent lazy initialization warnings
+    if (cachedTexture.image) {
+      cachedTexture.needsUpdate = true;
+    }
+    return cachedTexture;
   }
 
   const { canvas, ctx } = createCanvasContext();
@@ -357,7 +362,14 @@ export async function generateForegroundTexture(
     image: canvas,
     generateMipmaps: false,
     flipY: false,
+    wrapS: renderer.gl.CLAMP_TO_EDGE,
+    wrapT: renderer.gl.CLAMP_TO_EDGE,
+    minFilter: renderer.gl.LINEAR,
+    magFilter: renderer.gl.LINEAR,
   });
+
+  // Force texture upload to prevent lazy initialization
+  texture.needsUpdate = true;
 
   textureCache.set(cacheKey, texture);
   return texture;
@@ -479,48 +491,48 @@ export async function generateVideoForegroundTexture(
     ctx.fillText(truncatedTitle, padding, padding);
     // Tags (exactly same as image version)
     let currentXForTags = padding;
-    const tagFontSize = 16;
-    const tagPaddingX = 15;
-    const tagPaddingY = 8;
-    const tagGap = 10;
-    const tagsY = cardHeight - padding - tagFontSize - tagPaddingY;
+    // const tagFontSize = 16;
+    // const tagPaddingX = 15;
+    // const tagPaddingY = 8;
+    // const tagGap = 10;
+    // const tagsY = cardHeight - padding - tagFontSize - tagPaddingY;
 
-    data.tags.forEach((tagText) => {
-      ctx.font = `${tagFontSize}px Helvetica, Arial, sans-serif`;
-      ctx.textBaseline = "middle";
+    // data.tags.forEach((tagText) => {
+    //   ctx.font = `${tagFontSize}px Helvetica, Arial, sans-serif`;
+    //   ctx.textBaseline = "middle";
 
-      const textToDraw = `#${tagText.toUpperCase()}`;
-      const tagMetrics = ctx.measureText(textToDraw);
-      const tagLabelWidth = tagMetrics.width;
-      const tagShapeWidth = tagLabelWidth + tagPaddingX;
-      const tagShapeHeight = tagFontSize + tagPaddingY;
+    //   const textToDraw = `#${tagText.toUpperCase()}`;
+    //   const tagMetrics = ctx.measureText(textToDraw);
+    //   const tagLabelWidth = tagMetrics.width;
+    //   const tagShapeWidth = tagLabelWidth + tagPaddingX;
+    //   const tagShapeHeight = tagFontSize + tagPaddingY;
 
-      // Draw rounded rectangle for tag shape (same as image version)
-      ctx.fillStyle = "rgba(248,250, 252, 0.15)";
-      drawRoundedRect(
-        ctx,
-        currentXForTags,
-        tagsY,
-        tagShapeWidth,
-        tagShapeHeight,
-        tagShapeHeight / 2,
-      );
-      ctx.fill();
+    //   // Draw rounded rectangle for tag shape (same as image version)
+    //   ctx.fillStyle = "rgba(248,250, 252, 0.15)";
+    //   drawRoundedRect(
+    //     ctx,
+    //     currentXForTags,
+    //     tagsY,
+    //     tagShapeWidth,
+    //     tagShapeHeight,
+    //     tagShapeHeight / 2,
+    //   );
+    //   ctx.fill();
 
-      // Draw tag text (same as image version)
-      ctx.fillStyle = "white";
-      ctx.textAlign = "center";
-      ctx.fillText(textToDraw, currentXForTags + tagShapeWidth / 2, tagsY + tagShapeHeight / 2);
+    //   // Draw tag text (same as image version)
+    //   ctx.fillStyle = "white";
+    //   ctx.textAlign = "center";
+    //   ctx.fillText(textToDraw, currentXForTags + tagShapeWidth / 2, tagsY + tagShapeHeight / 2);
 
-      currentXForTags += tagShapeWidth + tagGap;
-    });
+    //   currentXForTags += tagShapeWidth + tagGap;
+    // });
 
-    // Date (exactly same as image version)
-    ctx.font = "20px Arial, sans-serif";
-    ctx.fillStyle = "rgba(255, 255, 255, 1)";
-    ctx.textAlign = "right";
-    ctx.textBaseline = "bottom";
-    ctx.fillText(data.date, cardWidth - padding, cardHeight - padding);
+    // // Date (exactly same as image version)
+    // ctx.font = "20px Arial, sans-serif";
+    // ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    // ctx.textAlign = "right";
+    // ctx.textBaseline = "bottom";
+    // ctx.fillText(data.date, cardWidth - padding, cardHeight - padding);
   };
 
   // Draw initial frame
@@ -530,7 +542,14 @@ export async function generateVideoForegroundTexture(
     image: canvas,
     generateMipmaps: false,
     flipY: false,
+    wrapS: renderer.gl.CLAMP_TO_EDGE,
+    wrapT: renderer.gl.CLAMP_TO_EDGE,
+    minFilter: renderer.gl.LINEAR,
+    magFilter: renderer.gl.LINEAR,
   });
+
+  // Force texture upload to prevent lazy initialization
+  texture.needsUpdate = true;
 
   // Store for continuous updates
   videoTextures.set(cacheKey, {
@@ -625,7 +644,14 @@ export async function generateBackgroundTexture(
     image: canvas,
     generateMipmaps: false,
     flipY: false,
+    wrapS: renderer.gl.CLAMP_TO_EDGE,
+    wrapT: renderer.gl.CLAMP_TO_EDGE,
+    minFilter: renderer.gl.LINEAR,
+    magFilter: renderer.gl.LINEAR,
   });
+
+  // Force texture upload to prevent lazy initialization
+  backgroundTexture.needsUpdate = true;
 
   return backgroundTexture;
 }
@@ -870,6 +896,41 @@ export function disposeVideoResources(): void {
 }
 
 /**
+ * Disposes of all texture caches to prevent WebGL context conflicts
+ * This should be called when changing pages or reinitializing the grid
+ * to prevent "illegal feedback" warnings from texture reuse across contexts
+ */
+export function disposeAllTextureCaches(): void {
+  // Clear all texture caches
+  textureCache.clear();
+
+  // Dispose video textures properly
+  videoTextures.forEach((textureData) => {
+    if (textureData.texture) {
+      // The OGL Texture disposal is handled by the WebGL context cleanup
+      // but we need to clear our references
+      textureData.texture = null as any;
+    }
+    if (textureData.video && textureData.video.parentNode) {
+      textureData.video.parentNode.removeChild(textureData.video);
+    }
+  });
+  videoTextures.clear();
+
+  // Clean up video elements
+  videoCache.forEach((video) => {
+    video.pause();
+    video.src = "";
+    if (video.parentNode) {
+      video.parentNode.removeChild(video);
+    }
+  });
+  videoCache.clear();
+
+  console.log("All texture caches disposed to prevent WebGL context conflicts");
+}
+
+/**
  * Checks if a card data contains video content
  */
 export function hasVideoContent(data: CardData): boolean {
@@ -930,11 +991,11 @@ export async function generateCardTextures(
   renderer: Renderer,
 ): Promise<{
   foreground: Texture;
-  background: Texture;
+  //background: Texture;
 }> {
-  const [foreground, background] = await Promise.all([
+  const [foreground,] = await Promise.all([
     generateForegroundTexture(data, renderer),
-    generateBackgroundTexture(data, renderer),
+    //generateBackgroundTexture(data, renderer),
   ]);
-  return { foreground, background };
+  return { foreground, };
 }

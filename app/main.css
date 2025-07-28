@@ -42,7 +42,7 @@
 }
 
 body {
-  --background: #090909;
+  --background: rgb(9, 9, 9);
   --background-fade: #18181b;
   --primary: rgb(23, 137, 97);
   --primary-fade: #22e27f;

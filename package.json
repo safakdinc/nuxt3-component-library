@@ -22,6 +22,7 @@
     "@tresjs/nuxt": "^4.0.0",
     "@tresjs/post-processing": "^2.4.0",
     "better-sqlite3": "^11.10.0",
+    "clsx": "^2.1.1",
     "codemod": "^0.18.7",
     "date-fns": "^4.1.0",
     "gsap": "^3.13.0",

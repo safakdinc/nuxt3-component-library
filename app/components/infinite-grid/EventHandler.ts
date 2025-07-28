@@ -75,6 +75,7 @@ export interface EventHandlerHost {
   animateInertiaScroll(vx?: number | string, vy?: number | string): void;
   getTileKeyFromMesh(mesh: Mesh): string;
   getCardDataForTile(groupIndex: number, tileIndex: number): CardData;
+  getCardTextureIndex(groupIndex: number, tileIndex: number): number;
   getInteractiveMeshes(): Mesh[];
   updatePointerCoordinates(clientX: number, clientY: number): void;
   performRaycast(): Mesh[];
@@ -151,7 +152,7 @@ export class EventHandler {
 
     if (this.host.camera) {
       gsap.to(this.host.camera.position, {
-        z: this.host.options.baseCameraZ * 1.3,
+        z: this.host.options.baseCameraZ * 1,
         duration: 0.3,
         ease: "power2.out",
         overwrite: true,
@@ -175,7 +176,7 @@ export class EventHandler {
     // Check if movement is significant enough to disable click
     const movementDistance = Math.sqrt(
       Math.pow(clientX - this.host.startPosition.x, 2) +
-        Math.pow(clientY - this.host.startPosition.y, 2),
+      Math.pow(clientY - this.host.startPosition.y, 2),
     );
 
     if (movementDistance > this.host.maxClickMovement) {
@@ -295,7 +296,7 @@ export class EventHandler {
       if (this.host.currentHoveredTileKey) {
         const prevMesh = this.host.backgroundMeshMap.get(this.host.currentHoveredTileKey);
         if (prevMesh) {
-          this.host.fadeOutBackground(prevMesh);
+          //this.host.fadeOutBackground(prevMesh);
         }
       }
 
@@ -303,7 +304,7 @@ export class EventHandler {
       if (newHoveredTileKey) {
         const newMesh = this.host.backgroundMeshMap.get(newHoveredTileKey);
         if (newMesh) {
-          this.host.fadeInBackground(newMesh);
+          //this.host.fadeInBackground(newMesh);
         }
       }
 
@@ -367,10 +368,14 @@ export class EventHandler {
         // Get the card data for the clicked tile
         const cardData = this.host.getCardDataForTile(userData.groupIndex, userData.tileIndex);
 
+        // Calculate the direct index into the cardData array
+        const cardIndex = this.host.getCardTextureIndex(userData.groupIndex, userData.tileIndex);
+
         // Create and dispatch custom event
         const eventDetail: TileClickEventDetail = {
           groupIndex: userData.groupIndex,
           tileIndex: userData.tileIndex,
+          cardIndex: cardIndex,
           cardData: cardData,
         };
 

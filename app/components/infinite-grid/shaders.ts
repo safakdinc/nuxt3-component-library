@@ -59,30 +59,23 @@ void main() {
     float distanceToCenter = length(shiftedUv);
 
     // Lens distortion effect
-    // NOTE: The original shader had 'distortion * dot(shiftedUv)'.
-    // If distortion is a vec2, dot product will result in a scalar.
-    // If you intend distortion to scale both X and Y independently based on distance,
-    // you might need something like: shiftedUv *= (0.88 + distortion.x * abs(shiftedUv.x) + distortion.y * abs(shiftedUv.y));
-    // For now, I'll keep the dot product as it was in your provided shader,
-    // which applies uniform distortion based on radial distance.
-    shiftedUv *= (0.88 + distortion.x * dot(shiftedUv, shiftedUv)); // Assuming distortion.x controls the scalar distortion factor
+    shiftedUv *= (0.88 + distortion.x * dot(shiftedUv, shiftedUv));
     vec2 transformedUv = shiftedUv * 0.5 + 0.5;
 
     // Vignette effect
-    // Corrected 'vignetteOffset * 0.799' and '(vignetteDarkness + vignetteOffset)' if that was the intent.
-    // The second parameter to smoothstep is the "edge" where it starts.
-    // I'll interpret your intent as scaling the effect based on a combined factor.
-    float vignetteIntensity = smoothstep(vignetteOffset, vignetteDarkness, distanceToCenter); // Simplified as common vignette
-    // If your original intention for vignette was 'smoothstep(0.8, vignetteOffset * 0.799, (vignetteDarkness + vignetteOffset) * distanceToCenter);'
-    // this would be a more complex interaction. Let's start with a standard vignette.
+    float vignetteIntensity = smoothstep(vignetteOffset, vignetteDarkness, distanceToCenter);
 
-    // Sample render texture and output fragment
-    vec3 color = texture2D(tDiffuse, transformedUv).rgb * (1.0 - vignetteIntensity); // Apply darkening based on intensity
-    // The original '* vignetteIntensity' would brighten. Vignettes usually darken.
-    // If you want a more subtle darkening, adjust the '(1.0 - vignetteIntensity)''.
-    gl_FragColor = vec4(color, 1.);
+    // Define the vignette base color (rgb(9,9,9) normalized to 0-1 range)
+    vec3 vignetteColor = vec3(9.0/255.0, 9.0/255.0, 9.0/255.0);
+
+    // Sample render texture
+    vec3 originalColor = texture2D(tDiffuse, transformedUv).rgb;
+
+    // Blend between original color and vignette color based on intensity
+    vec3 color = mix(originalColor, vignetteColor, vignetteIntensity);
+
+    gl_FragColor = vec4(color, 1.0);
 }`;
-
 export const postProcessVertexShader = /* glsl */ `
 attribute vec2 uv;
 attribute vec3 position;

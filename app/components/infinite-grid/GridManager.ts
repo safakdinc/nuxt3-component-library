@@ -164,7 +164,7 @@ export class GridManager {
           const tileKey = this.getTileKey(groupIndex, tileIndex);
 
           // Create background mesh (for blur effects)
-          this.createBackgroundMesh(gl, groupObject, groupIndex, tileIndex, tileKey, x, y);
+          //this.createBackgroundMesh(gl, groupObject, groupIndex, tileIndex, tileKey, x, y);
 
           // Create foreground mesh (for content display)
           this.createForegroundMesh(gl, groupObject, groupIndex, tileIndex, tileKey, x, y);
@@ -374,8 +374,7 @@ export class GridManager {
 
     const texturePromises = this.host.cardData.map(async (card): Promise<CardTexturePair> => {
       const foreground = await generateForegroundTexture(card, this.host.renderer!);
-      const background = await generateBackgroundTexture(card, this.host.renderer!);
-      return { foreground, background };
+      return { foreground, };
     });
 
     this.host.cardTextures = await Promise.all(texturePromises);
@@ -448,13 +447,13 @@ export class GridManager {
           }
 
           // Update background mesh texture
-          const backgroundMesh = this.host.backgroundMeshMap.get(tileKey);
-          if (backgroundMesh && backgroundMesh.program) {
-            const newBackgroundTexture = this.getCardBackgroundTexture(groupIndex, tileIndex);
-            if (newBackgroundTexture) {
-              backgroundMesh.program.uniforms.map.value = newBackgroundTexture;
-            }
-          }
+          // const backgroundMesh = this.host.backgroundMeshMap.get(tileKey);
+          // if (backgroundMesh && backgroundMesh.program) {
+          //   const newBackgroundTexture = this.getCardBackgroundTexture(groupIndex, tileIndex);
+          //   if (newBackgroundTexture) {
+          //     backgroundMesh.program.uniforms.map.value = newBackgroundTexture;
+          //   }
+          // }
         }
       }
     });
@@ -486,7 +485,7 @@ export class GridManager {
 
     // Clear mesh maps
     this.host.foregroundMeshMap.clear();
-    this.host.backgroundMeshMap.clear();
+    //this.host.backgroundMeshMap.clear();
 
     // Clear uniforms and textures
     this.host.staticUniforms.clear();

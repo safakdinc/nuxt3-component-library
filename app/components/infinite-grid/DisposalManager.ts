@@ -22,6 +22,7 @@ import type { CardTexturePair, TileGroupData } from "./types.ts";
 import { CustomPostProcessShader } from "./PostProcessShader";
 import { EventHandler } from "./EventHandler";
 import { GridManager } from "./GridManager";
+import { disposeAllTextureCaches } from "./createTexture";
 
 /**
  * Interface defining the required properties that the DisposalManager
@@ -126,7 +127,10 @@ export class DisposalManager {
     // Step 7: Clear data structures
     this.clearDataStructures();
 
-    // Step 8: Clean up animation systems
+    // Step 8: Dispose texture caches to prevent context conflicts
+    this.disposeTextureCaches();
+
+    // Step 9: Clean up animation systems
     this.cleanupAnimationSystems();
   }
 
@@ -297,6 +301,14 @@ export class DisposalManager {
   }
 
   /**
+   * Disposes of all texture caches to prevent WebGL context conflicts
+   * This prevents "illegal feedback" warnings when textures are reused across contexts
+   */
+  private disposeTextureCaches(): void {
+    disposeAllTextureCaches();
+  }
+
+  /**
    * Performs a partial cleanup that preserves the core structure
    * but clears dynamic content. Useful for reinitialization scenarios.
    */
@@ -315,6 +327,9 @@ export class DisposalManager {
     this.host.foregroundMeshMap.clear();
     this.host.backgroundMeshMap.clear();
     this.host.staticUniforms.clear();
+
+    // Clear texture caches to prevent context conflicts on reinit
+    this.disposeTextureCaches();
   }
 
   /**

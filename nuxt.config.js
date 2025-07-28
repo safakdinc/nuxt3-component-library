@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-21",
-  devtools: true,
+  devtools: { enabled: true },
   ssr: false,
 
   // Set the source directory to 'app'
@@ -44,6 +44,13 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      sourcemap: false, // Disable source maps in production to avoid WASM issues
+    },
+    define: {
+      // Disable source map warnings in development
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+    },
     optimizeDeps: {
       include: [
         "gsap",
@@ -55,6 +62,15 @@ export default defineNuxtConfig({
         "tailwind-merge",
         "three",
       ],
+      exclude: ["@shikijs/wasm"], // Exclude problematic WASM modules
+    },
+    worker: {
+      format: "es", // Use ES modules for workers
+    },
+    server: {
+      fs: {
+        allow: [".."], // Allow serving files from parent directories
+      },
     },
   },
 

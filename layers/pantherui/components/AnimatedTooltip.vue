@@ -6,8 +6,7 @@
     @mouseleave="handleMouseLeave"
   >
     <div
-      class="absolute left-[50%] translate-x-[-50%] p-3 pointer-events-none group-hover:opacity-100
-        opacity-0 transition-all duration-300 ease-in-out scale-0 group-hover:scale-100"
+      class="absolute left-[50%] translate-x-[-50%] p-3 pointer-events-none tooltip-container"
       :style="{
         bottom: `calc(100% + ${props.offset}px)`,
       }"
@@ -88,18 +87,18 @@ function handleMouseLeave() {
   }
 }
 
-.tooltip-enter-active,
-.tooltip-leave-active {
-}
-.tooltip-enter-from,
-.tooltip-leave-to {
-  transform: translateY(50%) translateX(-50%) scale(0.4);
-  opacity: 1;
-}
-.tooltip-enter-to,
-.tooltip-leave-from {
-  transform: translateY(0) translateX(-50%) scale(1);
-  opacity: 1;
-  pointer-events: none;
+.group {
+  .tooltip-container {
+    scale: 0;
+    transform-origin: center bottom;
+    transition:
+      scale 0.3s ease-out,
+      opacity 0.3s ease-out;
+  }
+  &:hover .tooltip-container {
+    opacity: 1;
+    scale: 1;
+    transition: scale 0.3s var(--transition);
+  }
 }
 </style>

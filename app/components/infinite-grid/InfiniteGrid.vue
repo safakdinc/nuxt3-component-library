@@ -7,7 +7,7 @@ import { ref, onMounted, onBeforeUnmount, watch, computed } from "vue";
 import { InfiniteGridClass } from "./InfiniteGridClass";
 import type { InfiniteGridOptions, CardData } from "./types";
 
-interface Props {
+export interface Props {
   cardData: CardData[];
   options?: Partial<InfiniteGridOptions>;
   onTilesLoaded?: () => void;
@@ -21,8 +21,8 @@ const emit = defineEmits(["tileClicked"]);
 
 // Define default options for the infinite grid
 const defaultOptions: InfiniteGridOptions = {
-  gridCols: 4,
-  gridRows: 4,
+  gridCols: 5,
+  gridRows: 5,
   gridGap: 0,
   tileSize: 3,
   baseCameraZ: 10,
@@ -49,7 +49,7 @@ let infiniteGridInstance: InfiniteGridClass | null = null;
 
 function handleTileClicked(event: Event) {
   const customEvent = event as CustomEvent;
-  emit("tileClicked", customEvent.detail);
+  emit("tileClicked", customEvent);
 }
 
 onMounted(async () => {
@@ -73,6 +73,7 @@ onBeforeUnmount(() => {
       infiniteGridContainer.value.removeEventListener("tileClicked", handleTileClicked);
     }
     infiniteGridInstance.dispose();
+    console.log("InfiniteGrid instance disposed");
     infiniteGridInstance = null;
   }
 });

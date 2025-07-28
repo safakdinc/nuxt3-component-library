@@ -1,12 +1,16 @@
-<!-- components/ThreeScene.vue -->
+<!-- components/GridDistortion.vue -->
 <template>
-  <div ref="container" class="h-full relative flex justtify-center items-center">
-    <img ref="image" class="h-full opacity-0 pointer-events-none" :src="props.src" />
+  <div ref="container" class="h-full relative flex justify-center items-center">
+    <img
+      ref="image"
+      class="h-full opacity-0 pointer-events-none object-cover object-center"
+      :src="props.src"
+    />
   </div>
 </template>
 
 <script setup>
-import * as THREE from "three";
+import { Renderer, Camera, Transform, Plane, Program, Mesh, Texture, Vec2 } from "ogl";
 import { onMounted, onBeforeUnmount, ref } from "vue";
 
 const props = defineProps({
@@ -19,7 +23,7 @@ const props = defineProps({
 const container = ref(null);
 const image = ref(null);
 
-let scene, camera, renderer, planeMesh, texture;
+let renderer, scene, camera, planeMesh, texture, program;
 
 let easeFactor = 0.02;
 let mousePosition = { x: 0.5, y: 0.5 };
@@ -30,7 +34,14 @@ let lastPosition = { x: 0.5, y: 0.5 };
 let prevPosition = { x: 0.5, y: 0.5 };
 
 const vertexShader = `
+    attribute vec2 uv;
+    attribute vec3 position;
+    
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    
     varying vec2 vUv;
+    
     void main() {
       vUv = uv;
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
@@ -38,14 +49,27 @@ const vertexShader = `
 `;
 
 const fragmentShader = `
+    precision highp float;
+    
     varying vec2 vUv;
     uniform sampler2D u_texture;    
     uniform vec2 u_mouse;
     uniform vec2 u_prevMouse;
     uniform float u_aberrationIntensity;
+    uniform vec2 u_resolution;
+    uniform vec2 u_imageResolution;
 
     void main() {
-        vec2 gridUV = floor(vUv * vec2(20.0, 20.0)) / vec2(20.0, 20.0);
+        // Calculate aspect ratios
+        vec2 ratio = vec2(
+            min((u_resolution.x / u_resolution.y) / (u_imageResolution.x / u_imageResolution.y), 1.0),
+            min((u_resolution.y / u_resolution.x) / (u_imageResolution.y / u_imageResolution.x), 1.0)
+        );
+        
+        // Center and scale UV coordinates to preserve aspect ratio
+        vec2 aspectUv = (vUv - 0.5) * ratio + 0.5;
+        
+        vec2 gridUV = floor(aspectUv * vec2(20.0, 20.0)) / vec2(20.0, 20.0);
         vec2 centerOfPixel = gridUV + vec2(1.0/20.0, 1.0/20.0);
         
         vec2 mouseDirection = u_mouse - u_prevMouse;
@@ -55,7 +79,13 @@ const fragmentShader = `
         float strength = smoothstep(0.3, 0.0, pixelDistanceToMouse);
  
         vec2 uvOffset = strength * - mouseDirection * 0.2;
-        vec2 uv = vUv - uvOffset;
+        vec2 uv = aspectUv - uvOffset;
+
+        // Check if UV is within valid range to prevent texture bleeding
+        if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
+            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+            return;
+        }
 
         vec4 colorR = texture2D(u_texture, uv + vec2(strength * u_aberrationIntensity * 0.01, 0.0));
         vec4 colorG = texture2D(u_texture, uv);
@@ -66,119 +96,98 @@ const fragmentShader = `
 `;
 
 const init = () => {
-  // Create scene
-  scene = new THREE.Scene();
-
   // Get container dimensions
   const width = container.value.offsetWidth;
   const height = container.value.offsetHeight;
 
+  // Create renderer
+  renderer = new Renderer({ width, height });
+  container.value.appendChild(renderer.gl.canvas);
+  renderer.gl.canvas.style.position = "absolute";
+
   // Create camera
-  camera = new THREE.PerspectiveCamera(80, width / height, 0.01, 10);
+  camera = new Camera(renderer.gl, { fov: 80 });
   camera.position.z = 1;
 
-  // Create renderer with container dimensions
-  renderer = new THREE.WebGLRenderer();
-  renderer.setSize(width, height);
-  container.value.appendChild(renderer.domElement);
-  renderer.domElement.style.position = "absolute";
-
-  // Create texture loader
-  const textureLoader = new THREE.TextureLoader();
+  // Create scene
+  scene = new Transform();
 
   // Load texture
-  // Note: Replace this URL with your actual image URL
-  texture = textureLoader.load(props.src, (loadedTexture) => {
+  texture = new Texture(renderer.gl);
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = () => {
+    texture.image = img;
+
     // Calculate aspect ratio of the loaded texture
-    const imageAspect = loadedTexture.image.width / loadedTexture.image.height;
+    const imageAspect = img.width / img.height;
     const containerAspect = width / height;
 
-    // Adjust plane size to maintain image aspect ratio
-    let planeWidth = 2;
-    let planeHeight = 2;
+    // Always use a square plane and handle aspect ratio in the shader
+    const planeWidth = 2;
+    const planeHeight = 2;
 
-    if (imageAspect > containerAspect) {
-      // Image is wider than container
-      planeHeight = planeWidth / imageAspect;
-    } else {
-      // Image is taller than container
-      planeWidth = planeHeight * imageAspect;
-    }
+    // Create plane geometry and program
+    const geometry = new Plane(renderer.gl, { width: planeWidth, height: planeHeight });
 
-    // Create plane with calculated dimensions
-    let shaderUniforms = {
-      u_mouse: { type: "v2", value: new THREE.Vector2() },
-      u_prevMouse: { type: "v2", value: new THREE.Vector2() },
-      u_aberrationIntensity: { type: "f", value: 0.0 },
-      u_texture: { type: "t", value: texture },
-    };
+    program = new Program(renderer.gl, {
+      vertex: vertexShader,
+      fragment: fragmentShader,
+      uniforms: {
+        u_mouse: { value: new Vec2(0.5, 0.5) },
+        u_prevMouse: { value: new Vec2(0.5, 0.5) },
+        u_aberrationIntensity: { value: 0.0 },
+        u_texture: { value: texture },
+        u_resolution: { value: new Vec2(width, height) },
+        u_imageResolution: { value: new Vec2(img.width, img.height) },
+      },
+    });
 
-    const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
-
-    planeMesh = new THREE.Mesh(
-      geometry,
-      new THREE.ShaderMaterial({
-        uniforms: shaderUniforms,
-        vertexShader,
-        fragmentShader,
-      }),
-    );
-    scene.add(planeMesh);
+    planeMesh = new Mesh(renderer.gl, { geometry, program });
+    planeMesh.setParent(scene);
 
     // Render the scene
-    renderer.render(scene, camera);
-  });
+    renderer.render({ scene, camera });
+  };
+  img.src = props.src;
 };
 
 function animateScene() {
   requestAnimationFrame(animateScene);
+
+  if (!planeMesh || !program) return;
+
   mousePosition.x += (targetMousePosition.x - mousePosition.x) * easeFactor;
   mousePosition.y += (targetMousePosition.y - mousePosition.y) * easeFactor;
 
-  planeMesh.material.uniforms.u_mouse.value.set(mousePosition.x, 1.0 - mousePosition.y);
-
-  planeMesh.material.uniforms.u_prevMouse.value.set(prevPosition.x, 1.0 - prevPosition.y);
+  program.uniforms.u_mouse.value.set(mousePosition.x, 1.0 - mousePosition.y);
+  program.uniforms.u_prevMouse.value.set(prevPosition.x, 1.0 - prevPosition.y);
 
   aberrationIntensity = Math.max(0.0, aberrationIntensity - 0.05);
+  program.uniforms.u_aberrationIntensity.value = aberrationIntensity;
 
-  planeMesh.material.uniforms.u_aberrationIntensity.value = aberrationIntensity;
-
-  renderer.render(scene, camera);
+  renderer.render({ scene, camera });
 }
 
 // Handle window resize
 const handleResize = () => {
-  if (!container.value) return;
+  if (!container.value || !renderer) return;
 
   const width = container.value.clientWidth;
   const height = container.value.clientHeight;
 
-  // Update camera
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
-
   // Update renderer
   renderer.setSize(width, height);
 
-  // Update plane size if texture is loaded
-  if (plane && texture) {
-    const imageAspect = texture.image.width / texture.image.height;
-    const containerAspect = width / height;
+  // Update camera
+  camera.perspective({ fov: 80, aspect: width / height });
 
-    let planeWidth = 2;
-    let planeHeight = 2;
-
-    if (imageAspect > containerAspect) {
-      planeHeight = planeWidth / imageAspect;
-    } else {
-      planeWidth = planeHeight * imageAspect;
-    }
-
-    plane.geometry.dispose();
-    plane.geometry = new THREE.PlaneGeometry(planeWidth, planeHeight);
+  // Update resolution uniform
+  if (program && program.uniforms.u_resolution) {
+    program.uniforms.u_resolution.value.set(width, height);
   }
 
-  renderer.render(scene, camera);
+  renderer.render({ scene, camera });
 };
 
 onMounted(() => {
@@ -219,17 +228,18 @@ function handleMouseLeave() {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", handleResize);
 
-  // Clean up Three.js resources
-  if (planeMesh) {
-    scene.remove(planeMesh);
-    planeMesh.geometry.dispose();
-    planeMesh.material.dispose();
+  // Clean up OGL resources
+  if (planeMesh && planeMesh.geometry) {
+    planeMesh.geometry = null;
+  }
+  if (program) {
+    program = null;
   }
   if (texture) {
-    texture.dispose();
+    texture = null;
   }
   if (renderer) {
-    renderer.dispose();
+    renderer = null;
   }
 });
 </script>

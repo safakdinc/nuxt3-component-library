@@ -404,6 +404,7 @@ export class InfiniteGridClass implements EventHandlerHost, DisposableHost, Grid
     // Set canvas styles
     this.renderer.gl.canvas.style.width = "100%";
     this.renderer.gl.canvas.style.height = "100%";
+    this.renderer.gl.clearColor(9 / 255, 9 / 255, 9 / 255, 1); // Transparent background
 
     this.container.appendChild(this.renderer.gl.canvas);
   }
@@ -642,6 +643,16 @@ export class InfiniteGridClass implements EventHandlerHost, DisposableHost, Grid
    */
   public getCardDataForTile(groupIndex: number, tileIndex: number): CardData {
     return this.gridManager.getCardDataForTile(groupIndex, tileIndex);
+  }
+
+  /**
+   * Gets the card texture index for a specific tile
+   * @param groupIndex - The group index of the tile
+   * @param tileIndex - The tile index within the group
+   * @returns The index into the cardData array
+   */
+  public getCardTextureIndex(groupIndex: number, tileIndex: number): number {
+    return this.gridManager.getCardTextureIndex(groupIndex, tileIndex);
   }
 
   private render(): void {

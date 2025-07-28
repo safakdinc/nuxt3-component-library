@@ -28,7 +28,7 @@ const cards = [
     title: "Safari Adventure in Kenya",
     description: "Witness the Great Migration",
     ctaText: "Reserve",
-    src: "https://amazingmemoriessafaris.com/wp-content/uploads/2016/11/amboseli-safaris.jpg",
+    src: "https://cdn.pixabay.com/photo/2019/12/12/23/44/safari-4691832_960_720.jpg",
     content:
       "Embark on an unforgettable safari adventure in Kenya, home to some of Africa's most spectacular wildlife and landscapes. Witness the awe-inspiring Great Migration in the Masai Mara, where millions of wildebeest and zebra traverse the savanna in search of fresh grazing lands. Spot the 'Big Five' - lion, leopard, elephant, rhino, and buffalo - in their natural habitats. Visit traditional Maasai villages to learn about local cultures and customs. From hot air balloon rides over the plains to guided bush walks, Kenya offers a truly immersive and exhilarating safari experience.",
   },
