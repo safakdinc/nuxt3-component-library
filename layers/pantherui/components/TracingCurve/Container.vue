@@ -11,334 +11,384 @@
   <div ref="threeContainer" class="three-container"></div>
 </template>
 
-<script setup>
-import { ref, onMounted } from "vue";
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, type Ref } from "vue";
 import * as THREE from "three";
 import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { CustomEase } from "gsap/CustomEase";
 
-gsap.registerPlugin(ScrollTrigger);
-const props = defineProps({
-  curveData: {
-    type: Array,
-    required: true,
-  },
-  triggerElement: {
-    default: window,
-  },
-});
+gsap.registerPlugin(ScrollTrigger, CustomEase);
 
-const threeContainer = ref(null);
-const itemsContainer = ref();
+interface CurveLine {
+  start: { x: number; y: number; z: number };
+  end: { x: number; y: number; z: number };
+  curvature: { x: number; y: number };
+}
+
+interface CurveItem {
+  title: string;
+  subtitle: string;
+  texts: string[];
+}
+
+interface CurveData {
+  line: CurveLine;
+  item: CurveItem;
+}
+
+const props = defineProps<{
+  curveData: CurveData[];
+  triggerElement?: any;
+}>();
+
+const threeContainer = ref<HTMLElement | null>(null);
+const itemsContainer = ref<HTMLElement | null>(null);
+
 const scene = new THREE.Scene();
-
 const renderer = new CSS3DRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.set(window.innerWidth / 3, window.innerWidth / 3.5, 0);
-camera.rotation.x = Math.PI / -4;
+const lines: Ref<CurveLine[]> = ref([]);
 
-const lines = ref([]);
+const ANIMATION_DURATION = 0.15;
+const SCROLL_TRIGGER_HEIGHT = 800;
+const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 
-onMounted(() => {
-  props.curveData.forEach((data, index) => {
-    let object = {
-      start: { x: data.line.start.x, y: data.line.start.y, z: data.line.start.z },
-      end: { x: data.line.end.x, y: data.line.end.y, z: data.line.end.z },
-      curvature: { x: data.line.curvature.x, y: data.line.curvature.y },
-    };
-    lines.value.push(object);
-  });
-  threeContainer.value.appendChild(renderer.domElement);
+// Initialize Three.js components
+function initializeThreeJS() {
+  renderer.setSize(window.innerWidth, window.innerHeight);
   scene.rotation.x = Math.PI / -2;
-  setTimeout(() => {
-    setupScrollTrigger();
-    createScrollTrigger();
-  }, 100);
-  createMultipleCurvedLines();
-  animate();
-});
 
-function addCustomDivsToLines(line, bbox, index, item) {
-  const cssObject = new CSS3DObject(item);
-  const itemRect = item.getBoundingClientRect();
-  const itemWidth = itemRect.width;
-  const itemHeight = itemRect.height;
-  cssObject.position.x = line.start.x - threeContainer.value.getBoundingClientRect().width / 2;
-  cssObject.position.y = -(line.start.y - threeContainer.value.getBoundingClientRect().height / 2);
-  cssObject.position.z = 0;
-  cssObject.rotation.x = Math.PI / 4;
-
-  cssObject.position.x += itemWidth / 2;
-  cssObject.position.y += (itemHeight / 2) * Math.sin(Math.PI / 4);
-  cssObject.position.z += (itemHeight / 2) * Math.cos(Math.PI / 4);
-
-  return cssObject;
+  camera.position.set(window.innerWidth / 10, window.innerWidth / 3.5, 0);
+  camera.rotation.x = Math.PI / -4;
 }
 
-function createMultipleCurvedLines() {
-  let items = itemsContainer.value.querySelectorAll(".item");
-  let lastBbox = { x: 0, y: 0, width: 900, height: 90 };
-  lines.value.forEach((line, index) => {
-    const { svgElement, bbox } = createSVGElement(line.start, line.end, line.curvature, index);
-    const cssObject = new CSS3DObject(svgElement);
-    const group = addCustomDivsToLines(line, lastBbox, index, items[index]);
-    lastBbox = bbox;
-    scene.add(group);
-    scene.add(cssObject);
-  });
+// Process curve data into line objects
+function processCurveData(): void {
+  lines.value = props.curveData.map((data) => ({
+    start: { ...data.line.start },
+    end: { ...data.line.end },
+    curvature: { ...data.line.curvature },
+  }));
 }
 
-function createSVGElement(start, end, curvature, index) {
-  const svgNamespace = "http://www.w3.org/2000/svg";
-  const svgElement = document.createElementNS(svgNamespace, "svg");
-  svgElement.classList.add("overflow-visible");
-  svgElement.setAttribute("width", "100%");
-  svgElement.setAttribute("height", "100%");
-  svgElement.style.position = "absolute";
-  svgElement.style.top = "0";
-  svgElement.style.left = "0";
-  svgElement.style.width = "100%";
-  svgElement.style.height = "100%";
+// Calculate curved path for SVG
+function calculateCurvedPath(
+  start: { x: number; y: number },
+  end: { x: number; y: number },
+  curvature: { x: number; y: number },
+): string {
+  const midX = (start.x + end.x) / 2;
+  const controlX = midX + curvature.x;
+  const controlY = start.y - curvature.y;
+  return `M ${start.x},${start.y} Q ${controlX},${controlY} ${end.x},${end.y}`;
+}
 
-  const path = document.createElementNS(svgNamespace, "path");
-  const d = calculateCurvedPath(start, end, curvature);
-  path.setAttribute("d", d);
-  path.setAttribute("stroke", "white");
-  path.setAttribute("stroke-width", "4");
-  path.setAttribute("fill", "none");
+// Create SVG element with path
+function createSVGElement(
+  start: { x: number; y: number },
+  end: { x: number; y: number },
+  curvature: { x: number; y: number },
+  index: number,
+): { svgElement: SVGSVGElement; bbox: DOMRect } {
+  const svgElement = document.createElementNS(SVG_NAMESPACE, "svg");
+  configureSVGElement(svgElement);
 
-  svgElement.appendChild(path);
+  const pathData = calculateCurvedPath(start, end, curvature);
 
-  const orangePath = document.createElementNS(svgNamespace, "path");
+  // Create white base path
+  const basePath = createSVGPath(pathData, "white", "4");
+  svgElement.appendChild(basePath);
+
+  // Create orange animated path
+  const orangePath = createSVGPath(pathData, "orange", "4");
   orangePath.classList.add(`orange-path-${index}`);
-  orangePath.setAttribute("d", d);
-  orangePath.setAttribute("stroke", "orange");
-  orangePath.setAttribute("stroke-width", "4");
-  orangePath.setAttribute("fill", "none");
   svgElement.appendChild(orangePath);
 
+  // Get bounding box
   document.body.appendChild(svgElement);
-  let bbox = orangePath.getBBox();
+  const bbox = orangePath.getBBox();
   svgElement.remove();
 
   return { svgElement, bbox };
 }
 
-function calculateCurvedPath(start, end, curvature) {
-  const startX = start.x;
-  const startY = start.y;
-  const endX = end.x;
-  const endY = end.y;
+// Configure SVG element properties
+function configureSVGElement(svgElement: SVGSVGElement): void {
+  svgElement.classList.add("overflow-visible");
+  svgElement.setAttribute("width", "100%");
+  svgElement.setAttribute("height", "100%");
 
-  // Calculate midpoint for x-axis
-  const midX = (startX + endX) / 2;
-
-  // Calculate control point
-  const controlX = midX + curvature.x;
-  const controlY = startY - curvature.y; // You can adjust this if you want the curve to go up or down
-
-  const d = `M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`;
-  return d;
+  Object.assign(svgElement.style, {
+    position: "absolute",
+    top: "0",
+    left: "0",
+    width: "100%",
+    height: "100%",
+  });
 }
 
-function setupScrollTrigger() {
-  const items = threeContainer.value.querySelectorAll(".item");
-  lines.value.forEach((_, index) => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: threeContainer.value,
-        start: `top+=${index * 800} top`,
-        end: `top+=${(index + 1) * 800}`,
-        scrub: true,
-        scroller: props.triggerElement,
-        onEnter: () => open(items[index]),
-        onEnterBack: () => open(items[index]),
-        onLeaveBack: () => close(items[index]),
-        onLeave: () => close(items[index]),
+// Create SVG path element
+function createSVGPath(pathData: string, color: string, strokeWidth: string): SVGPathElement {
+  const path = document.createElementNS(SVG_NAMESPACE, "path");
+  path.setAttribute("d", pathData);
+  path.setAttribute("stroke", color);
+  path.setAttribute("stroke-width", strokeWidth);
+  path.setAttribute("fill", "none");
+  return path;
+}
+
+// Position CSS3D object for items
+function createCSS3DObjectForItem(
+  line: CurveLine,
+  item: Element | null | undefined,
+): CSS3DObject | null {
+  if (!item || !threeContainer.value) return null;
+  // Cast to HTMLElement for CSS3DObject
+  const cssObject = new CSS3DObject(item as HTMLElement);
+  const itemRect = (item as HTMLElement).getBoundingClientRect();
+  const containerRect = threeContainer.value.getBoundingClientRect();
+  // Base position
+  cssObject.position.x = line.start.x - containerRect.width / 2;
+  cssObject.position.y = -(line.start.y - containerRect.height / 2);
+  cssObject.position.z = 0;
+  cssObject.rotation.x = Math.PI / 4;
+  // Adjust for item dimensions
+  cssObject.position.x += itemRect.width / 2;
+  cssObject.position.y += (itemRect.height / 2) * Math.sin(Math.PI / 4);
+  cssObject.position.z += (itemRect.height / 2) * Math.cos(Math.PI / 4);
+  return cssObject;
+}
+
+// Create and add all curved lines to scene
+function createCurvedLines(): void {
+  const items = itemsContainer.value?.querySelectorAll(".item") ?? [];
+  lines.value.forEach((line, index) => {
+    const { svgElement } = createSVGElement(line.start, line.end, line.curvature, index);
+    // Cast svgElement to HTMLElement for CSS3DObject
+    const svgObject = new CSS3DObject(svgElement as unknown as HTMLElement);
+    const itemObject = createCSS3DObjectForItem(line, items[index]);
+    scene.add(svgObject);
+    if (itemObject) scene.add(itemObject);
+  });
+}
+
+// Calculate cumulative camera position
+function calculateCumulativePosition(index: number): { x: number; y: number } {
+  const totalMovement = { x: 0, y: 0 };
+  for (let i = 0; i <= index; i++) {
+    const data = props.curveData[i];
+    if (!data) continue;
+    totalMovement.x += data.line.end.x - data.line.start.x;
+    totalMovement.y += data.line.end.y - data.line.start.y;
+  }
+  return {
+    x: totalMovement.x / 1.4,
+    y: totalMovement.y,
+  };
+}
+
+// Create custom ease for animation
+function createCustomEase(
+  index: number,
+  totalX: number,
+  totalY: number,
+  curvature: { x: number; y: number },
+): { customEaseXName: string; customEaseYName: string } {
+  const customEaseXName = `customX-${index}`;
+  const customEaseYName = `customY-${index}`;
+  let xPath = "M0,0 L1,1";
+  if (Math.abs(totalX) > 10) {
+    const normalizedControlX = Math.max(0.1, Math.min(0.9, curvature.x / totalX + 0.5));
+    xPath = `M0,0 Q${normalizedControlX},0.3 1,1`;
+  }
+  let yPath = "M0,0 L1,1";
+  if (Math.abs(totalY) > 10) {
+    const normalizedControlY = Math.max(0.1, Math.min(0.9, curvature.y / totalY + 0.5));
+    yPath = `M0,0 Q${normalizedControlY},0.3 1,1`;
+  }
+  if (!CustomEase.get(customEaseXName)) {
+    CustomEase.create(customEaseXName, xPath);
+  }
+  if (!CustomEase.get(customEaseYName)) {
+    CustomEase.create(customEaseYName, yPath);
+  }
+  return { customEaseXName, customEaseYName };
+}
+
+// Animate item opening
+function animateItemOpen(item: Element): void {
+  const elements = getItemElements(item);
+  const tl = gsap.timeline();
+  tl.to(elements.container, { translateY: 0, duration: ANIMATION_DURATION })
+    .to(elements.circle, { scale: 1, duration: ANIMATION_DURATION }, "<")
+    .to(elements.line, { maxHeight: 170, duration: ANIMATION_DURATION }, "<")
+    .to(elements.text, { opacity: 1, duration: ANIMATION_DURATION }, "<")
+    .to(
+      elements.paragraphs,
+      {
+        opacity: 1,
+        translateX: 0,
+        duration: ANIMATION_DURATION,
       },
-    });
+      "<+=0.1",
+    );
+}
 
-    const orangeLine = document.querySelector(`.orange-path-${index}`);
-    if (orangeLine) {
-      const length = orangeLine.getTotalLength();
+// Animate item closing
+function animateItemClose(item: Element): void {
+  const elements = getItemElements(item);
+  const tl = gsap.timeline();
+  const lineHeight = elements.line.getBoundingClientRect().height / 2;
+  tl.to(elements.container, { translateY: lineHeight, duration: ANIMATION_DURATION })
+    .to(elements.circle, { scale: 0, duration: ANIMATION_DURATION }, "<")
+    .to(elements.line, { maxHeight: 0, duration: ANIMATION_DURATION }, "<")
+    .to(elements.text, { opacity: 0, duration: 0.02 }, "<")
+    .to(
+      elements.paragraphs,
+      {
+        opacity: 0,
+        translateX: -20,
+        duration: 0.02,
+      },
+      "<+=0.1",
+    );
+}
 
-      gsap.set(orangeLine, {
-        strokeDasharray: length,
-        strokeDashoffset: length,
-      });
+// Get item DOM elements
+function getItemElements(item: Element): {
+  container: Element;
+  circle: Element;
+  line: Element;
+  text: Element;
+  paragraphs: NodeListOf<Element>;
+} {
+  return {
+    container: item.querySelector(".container")!,
+    circle: item.querySelector(".circle")!,
+    line: item.querySelector(".line")!,
+    text: item.querySelector(".text")!,
+    paragraphs: item.querySelectorAll(".paragraph"),
+  };
+}
 
-      tl.to(orangeLine, {
-        strokeDashoffset: 0,
-        ease: "none",
-      });
-    }
-
-    let container = items[index].querySelector(".container");
-    let circle = items[index].querySelector(".circle");
-    let line = items[index].querySelector(".line");
-    let text = items[index].querySelector(".text");
-    let paragraph = items[index].querySelectorAll(".paragraph");
-
-    gsap.set(container, {
-      translateY: 85,
-    });
-    gsap.set(circle, {
-      scale: 0,
-    });
-    gsap.set(line, {
-      maxHeight: 0,
-    });
-    gsap.set(text, {
-      opacity: 0,
-    });
-    gsap.set(paragraph, {
-      opacity: 0,
-      translateX: -20,
-    });
+// Initialize item states
+function initializeItemStates(): void {
+  const items = threeContainer.value?.querySelectorAll(".item") ?? [];
+  items.forEach((item) => {
+    const elements = getItemElements(item);
+    gsap.set(elements.container, { translateY: 85 });
+    gsap.set(elements.circle, { scale: 0 });
+    gsap.set(elements.line, { maxHeight: 0 });
+    gsap.set(elements.text, { opacity: 0 });
+    gsap.set(elements.paragraphs, { opacity: 0, translateX: -20 });
   });
 }
 
-function open(item) {
-  let container = item.querySelector(".container");
-  let circle = item.querySelector(".circle");
-  let line = item.querySelector(".line");
-  let text = item.querySelector(".text");
-  let paragraph = item.querySelectorAll(".paragraph");
-  const tl = gsap.timeline();
-  let duration = 0.15;
-  tl.to(container, {
-    translateY: 0,
-    duration: duration,
+// Create scroll trigger for individual line
+function createLineScrollTrigger(index: number): void {
+  const items = threeContainer.value?.querySelectorAll(".item") ?? [];
+  const orangeLine = document.querySelector(`.orange-path-${index}`) as SVGPathElement | null;
+  if (!orangeLine) return;
+  const length = orangeLine.getTotalLength();
+  const lineData = props.curveData[index]?.line;
+  const totalMovement = calculateCumulativePosition(index);
+  gsap.set(orangeLine, {
+    strokeDasharray: length,
+    strokeDashoffset: length,
   });
-  tl.to(
-    circle,
-    {
-      scale: 1,
-      duration: duration,
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: threeContainer.value,
+      start: `top+=${index * SCROLL_TRIGGER_HEIGHT} top`,
+      end: `top+=${(index + 1) * SCROLL_TRIGGER_HEIGHT}`,
+      scrub: true,
+      scroller: props.triggerElement,
+      onEnter: () => items[index] && animateItemOpen(items[index]),
+      onEnterBack: () => items[index] && animateItemOpen(items[index]),
+      onLeaveBack: () => items[index] && animateItemClose(items[index]),
+      onLeave: () => items[index] && animateItemClose(items[index]),
     },
-    "<",
-  );
-  tl.to(
-    line,
-    {
-      maxHeight: 170,
-      duration: duration,
-    },
-    "<",
-  );
-  tl.to(
-    text,
-    {
-      opacity: 1,
-      duration: duration,
-    },
-    "<",
-  );
-  tl.to(
-    paragraph,
-    {
-      opacity: 1,
-      translateX: 0,
-      duration: duration,
-    },
-    "<+=0.1",
-  );
-}
-
-function close(item) {
-  let container = item.querySelector(".container");
-
-  let circle = item.querySelector(".circle");
-  let line = item.querySelector(".line");
-  let text = item.querySelector(".text");
-  let paragraph = item.querySelectorAll(".paragraph");
-  const tl = gsap.timeline();
-  let duration = 0.15;
-  tl.to(container, {
-    translateY: line.getBoundingClientRect().height / 2,
-    duration: duration,
   });
+  tl.to(orangeLine, { strokeDashoffset: 0, ease: "none" });
   tl.to(
-    circle,
-    {
-      scale: 0,
-      duration: duration,
-    },
-    "<",
-  );
-  tl.to(
-    line,
-    {
-      maxHeight: 0,
-      duration: duration,
-    },
-    "<",
-  );
-  tl.to(
-    text,
-    {
-      opacity: 0,
-      duration: 0.02,
-    },
-    "<",
-  );
-  tl.to(
-    paragraph,
-    {
-      opacity: 0,
-      translateX: -20,
-      duration: 0.02,
-    },
-    "<+=0.1",
-  );
-}
-
-function createScrollTrigger() {
-  const tl = gsap.timeline();
-
-  tl.fromTo(
     camera.position,
     {
-      z: -100,
+      x: totalMovement.x,
+      ease: "power2.out",
     },
+    "<",
+  ).to(
+    camera.position,
     {
-      z: lines.value.length * 600,
-      ease: "none",
+      z: totalMovement.y,
+      ease: "power2.out",
     },
+    "<",
   );
-  tl.pause();
-  setTimeout(() => {
-    ScrollTrigger.create({
-      animation: tl,
-      trigger: threeContainer.value,
-      start: "top top",
-      end: `+=${(lines.value.length + 1) * 800}`,
-      scrub: 1,
-      pin: true,
-      pinSpacing: true,
-      scroller: props.triggerElement,
-    });
-  }, 10);
 }
 
+// Setup all scroll triggers
+function setupScrollTriggers(): void {
+  initializeItemStates();
+  lines.value.forEach((_, index) => {
+    createLineScrollTrigger(index);
+  });
+}
+
+// Create main scroll trigger for pinning
+function createMainScrollTrigger(): void {
+  const tl = gsap.timeline();
+  tl.pause();
+  ScrollTrigger.create({
+    animation: tl,
+    trigger: threeContainer.value,
+    start: "top top",
+    end: `+=${(lines.value.length + 1) * SCROLL_TRIGGER_HEIGHT}`,
+    scrub: 1,
+    pin: true,
+    pinSpacing: true,
+    scroller: props.triggerElement,
+  });
+}
+
+// Handle window resize
+function handleResize(): void {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  ScrollTrigger.refresh();
+}
+
+// Animation loop
+function animate(): void {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+
+// Component lifecycle
+
 onMounted(() => {
-  window.addEventListener("resize", updateDimensions);
+  initializeThreeJS();
+  processCurveData();
+  if (threeContainer.value) {
+    threeContainer.value.appendChild(renderer.domElement);
+  }
+  setTimeout(() => {
+    setupScrollTriggers();
+    createMainScrollTrigger();
+  }, 100);
+  createCurvedLines();
+  animate();
+  window.addEventListener("resize", handleResize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener("resize", updateDimensions);
+  window.removeEventListener("resize", handleResize);
 });
-
-function updateDimensions() {}
-
-function animate() {
-  requestAnimationFrame(animate);
-
-  renderer.render(scene, camera);
-}
 </script>
 
 <style scoped>
