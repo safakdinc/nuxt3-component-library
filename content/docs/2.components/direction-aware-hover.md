@@ -9,34 +9,34 @@ DirectionAwareHover:
     - Default
     - Description
   props:
-    - name: 'img'
-      type: 'String'
-      default: 'Required'
-      description: 'URL of the image to be displayed.'
-    - name: 'imageAlt'
-      type: 'String'
+    - name: "img"
+      type: "String"
+      default: "Required"
+      description: "URL of the image to be displayed."
+    - name: "imageAlt"
+      type: "String"
       default: "'Hover image'"
-      description: 'Alt text for the image.'
-    - name: 'class'
-      type: 'String'
+      description: "Alt text for the image."
+    - name: "class"
+      type: "String"
       default: "''"
-      description: 'Additional CSS classes for the main container.'
-    - name: 'childrenClass'
-      type: 'String'
+      description: "Additional CSS classes for the main container."
+    - name: "childrenClass"
+      type: "String"
       default: "''"
-      description: 'CSS classes for the content container.'
-    - name: 'imageClass'
-      type: 'String'
+      description: "CSS classes for the content container."
+    - name: "imageClass"
+      type: "String"
       default: "''"
-      description: 'Additional CSS classes for the image.'
+      description: "Additional CSS classes for the image."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content to be displayed over the image on hover.'
+    - name: "default"
+      description: "Content to be displayed over the image on hover."
 ---
 
 ## Usage

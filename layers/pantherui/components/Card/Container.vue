@@ -1,5 +1,11 @@
 <template>
-  <div ref="container" class="card" @mousemove="mouseMove" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
+  <div
+    ref="container"
+    class="card"
+    @mousemove="mouseMove"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
+  >
     <slot></slot>
   </div>
 </template>
@@ -8,12 +14,12 @@
 const props = defineProps({
   multiplierX: {
     type: Number,
-    default: 20
+    default: 20,
   },
   multiplierY: {
     type: Number,
-    default: 10
-  }
+    default: 10,
+  },
 });
 const container = ref();
 function mouseMove() {
@@ -23,8 +29,8 @@ function mouseMove() {
   const height = event.target.offsetHeight / 2;
   const rotateX = ((x - width) / width) * props.multiplierX;
   const rotateY = ((y - height) / height) * props.multiplierY;
-  container.value.style.setProperty('--rotateX', -rotateY + 'deg');
-  container.value.style.setProperty('--rotateY', rotateX + 'deg');
+  container.value.style.setProperty("--rotateX", -rotateY + "deg");
+  container.value.style.setProperty("--rotateY", rotateX + "deg");
 }
 
 const isHovered = ref(false);
@@ -37,7 +43,7 @@ function handleMouseLeave() {
   isHovered.value = false;
 }
 
-provide('isHovered', isHovered);
+provide("isHovered", isHovered);
 </script>
 
 <style lang="scss" scoped>

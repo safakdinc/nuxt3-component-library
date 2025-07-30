@@ -9,30 +9,30 @@
 </template>
 
 <script setup>
-import gsap from 'gsap';
+import gsap from "gsap";
 
 const props = defineProps({
   class: String,
   words: {
     type: Array,
-    default: ['One', 'Two', 'Three']
+    default: ["One", "Two", "Three"],
   },
   intervals: {
     type: Number,
-    default: 500
+    default: 500,
   },
   duration: {
     type: Number,
-    default: 0.6
+    default: 0.6,
   },
   ease: {
     type: String,
-    default: 'power3.out'
+    default: "power3.out",
   },
   start: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
 const container = ref();
@@ -46,11 +46,11 @@ let tl;
 
 function createTimeline() {
   gsap.set(boxes.value, {
-    y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2
+    y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2,
   });
 
   tl = gsap.timeline({
-    repeat: -1
+    repeat: -1,
   });
 
   props.words.forEach((word, i) => {
@@ -60,9 +60,9 @@ function createTimeline() {
         {
           duration: props.duration,
           ease: props.ease,
-          y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2 - convertEmToPixels() * i
+          y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2 - convertEmToPixels() * i,
         },
-        `>${props.intervals / 1000}`
+        `>${props.intervals / 1000}`,
       );
     }
   });
@@ -72,21 +72,21 @@ function createTimeline() {
     {
       duration: props.duration,
       ease: props.ease,
-      y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2
+      y: boxes.value.offsetHeight / 2 - convertEmToPixels() / 2,
     },
-    `>${props.intervals / 1000}`
+    `>${props.intervals / 1000}`,
   );
 }
 
 watch(
   () => props.start,
-  newVal => {
+  (newVal) => {
     if (newVal) {
       createTimeline();
     } else {
       tl.kill();
     }
-  }
+  },
 );
 
 const prevWidth = ref();
@@ -111,16 +111,21 @@ onMounted(() => {
 
   checkResize();
 
-  window.addEventListener('resize', checkResize);
+  window.addEventListener("resize", checkResize);
 
   onBeforeUnmount(() => {
-    window.removeEventListener('resize', checkResize);
+    window.removeEventListener("resize", checkResize);
   });
 });
 </script>
 
 <style lang="scss" scoped>
 .mask-image {
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 1) 50%,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 </style>

@@ -1,5 +1,10 @@
 <template>
-  <div ref="popoverRoot" @mouseenter="mode === 'hover' && onMouseEnter()" @mouseleave="mode === 'hover' && onMouseLeave()" class="relative">
+  <div
+    ref="popoverRoot"
+    @mouseenter="mode === 'hover' && onMouseEnter()"
+    @mouseleave="mode === 'hover' && onMouseLeave()"
+    class="relative"
+  >
     <div ref="trigger" @click="mode === 'click' && togglePopover()">
       <slot name="trigger" :open="isOpen" :close="closePopover"> </slot>
     </div>
@@ -10,7 +15,8 @@
           v-if="props.arrow"
           ref="arrow"
           data-popper-arrow
-          :class="twMerge('visible block z-[-1] w-2 h-2 absolute rotate-45', props.arrowClass)"></div>
+          :class="twMerge('visible block z-[-1] w-2 h-2 absolute rotate-45', props.arrowClass)"
+        ></div>
         <div class="z-[100]">
           <slot :open="isOpen" :close="closePopover"></slot>
         </div>
@@ -20,53 +26,53 @@
 </template>
 
 <script setup>
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 const props = defineProps({
   mode: {
     type: String,
-    default: 'hover',
-    validator: value => ['click', 'hover'].includes(value)
+    default: "hover",
+    validator: (value) => ["click", "hover"].includes(value),
   },
   open: {
     type: Boolean,
-    default: undefined
+    default: undefined,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   openDelay: {
     type: Number,
-    default: 0
+    default: 0,
   },
   closeDelay: {
     type: Number,
-    default: 0
+    default: 0,
   },
   transitionName: {
     type: String,
-    default: 'popover'
+    default: "popover",
   },
   placement: {
     type: String,
-    default: 'bottom'
+    default: "bottom",
   },
   arrow: {
     type: Boolean,
-    default: true
+    default: true,
   },
   arrowClass: {
     type: String,
-    default: 'bg-gray-500'
+    default: "bg-gray-500",
   },
   offset: {
     type: Number,
-    default: 8
-  }
+    default: 8,
+  },
 });
 
-const emit = defineEmits(['update:open']);
+const emit = defineEmits(["update:open"]);
 
 const isOpen = ref(props.open ?? false);
 const popoverRoot = ref(null);
@@ -87,28 +93,28 @@ const updatePosition = () => {
   let top, left;
 
   switch (props.placement) {
-    case 'top':
+    case "top":
       top = -panelRect.height - props.offset;
       left = (triggerRect.width - panelRect.width) / 2;
       break;
-    case 'bottom':
+    case "bottom":
       top = triggerRect.height + props.offset;
       left = (triggerRect.width - panelRect.width) / 2;
       break;
-    case 'left':
+    case "left":
       top = (triggerRect.height - panelRect.height) / 2;
       left = -panelRect.width - props.offset;
       break;
-    case 'right':
+    case "right":
       top = (triggerRect.height - panelRect.height) / 2;
       left = triggerRect.width + props.offset;
       break;
   }
 
   panelStyle.value = {
-    position: 'absolute',
+    position: "absolute",
     top: `${top}px`,
-    left: `${left}px`
+    left: `${left}px`,
   };
 
   if (props.arrow) {
@@ -116,19 +122,19 @@ const updatePosition = () => {
     let arrowTop, arrowLeft;
 
     switch (props.placement) {
-      case 'top':
+      case "top":
         arrowTop = panelRect.height - arrowSize / 2;
         arrowLeft = panelRect.width / 2;
         break;
-      case 'bottom':
+      case "bottom":
         arrowTop = -arrowSize / 2;
         arrowLeft = panelRect.width / 2;
         break;
-      case 'left':
+      case "left":
         arrowTop = panelRect.height / 2 - arrowSize / 2;
         arrowLeft = panelRect.width - arrowSize / 2;
         break;
-      case 'right':
+      case "right":
         arrowTop = panelRect.height / 2 - arrowSize / 2;
         arrowLeft = -arrowSize / 2;
         break;
@@ -140,15 +146,15 @@ const updatePosition = () => {
 };
 watch(
   () => props.open,
-  newValue => {
+  (newValue) => {
     if (newValue !== undefined) {
       isOpen.value = newValue;
     }
-  }
+  },
 );
 
-watch(isOpen, newValue => {
-  emit('update:open', newValue);
+watch(isOpen, (newValue) => {
+  emit("update:open", newValue);
   if (newValue) {
     nextTick(updatePosition);
   }
@@ -188,7 +194,7 @@ const onMouseLeave = () => {
   closeTimeout = setTimeout(closePopover, props.closeDelay);
 };
 
-const handleClickOutside = event => {
+const handleClickOutside = (event) => {
   if (popoverRoot.value && !popoverRoot.value.contains(event.target)) {
     closePopover();
   }
@@ -198,21 +204,23 @@ onMounted(() => {
   if (panel.value) {
     updatePosition();
   }
-  document.addEventListener('click', handleClickOutside);
-  window.addEventListener('resize', updatePosition);
-  window.addEventListener('scroll', updatePosition);
+  document.addEventListener("click", handleClickOutside);
+  window.addEventListener("resize", updatePosition);
+  window.addEventListener("scroll", updatePosition);
 });
 onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-  window.removeEventListener('resize', updatePosition);
-  window.removeEventListener('scroll', updatePosition);
+  document.removeEventListener("click", handleClickOutside);
+  window.removeEventListener("resize", updatePosition);
+  window.removeEventListener("scroll", updatePosition);
 });
 </script>
 
 <style scoped>
 .popover-enter-active,
 .popover-leave-active {
-  transition: all 0.2s ease-out, left 0s ease;
+  transition:
+    all 0.2s ease-out,
+    left 0s ease;
 }
 .popover-enter-to,
 .popover-leave-from {

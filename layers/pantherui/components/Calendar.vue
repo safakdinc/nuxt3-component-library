@@ -1,10 +1,9 @@
 <template>
   <div
-    class="bg-black h-fit dark:border-[1px] dark:border-gray_border dark:bg-gray_800 rounded-lg shadow-lg p-[16px]"
+    class="bg-black h-fit dark:border-[1px] dark:border-gray_border dark:bg-gray_800 rounded-lg
+      shadow-lg p-[16px]"
   >
-    <div
-      class="flex justify-between space-x-2 py-3 items-center rounded-lg overflow-hidden"
-    >
+    <div class="flex justify-between space-x-2 py-3 items-center rounded-lg overflow-hidden">
       <button
         type="button"
         class="-my-1.5 flex flex-none items-center justify-center p-1.5"
@@ -14,10 +13,7 @@
         <i class="fa fa-chevron-left icon"></i>
       </button>
       <Transition name="slide-left" mode="default">
-        <div
-          :key="currentMonth"
-          class="flex items-center justify-center gap-[8px]"
-        >
+        <div :key="currentMonth" class="flex items-center justify-center gap-[8px]">
           <Popover arrow-color="black" arrowBorderColor="#212121">
             <template #trigger>
               <div class="flex gap-[8px]">
@@ -26,7 +22,8 @@
               </div>
             </template>
             <Glass
-              class="w-52 rounded-lg bg-black border border-[#212121] flex flex-col gap-[8px] items-center p-[8px]"
+              class="w-52 rounded-lg bg-black border border-[#212121] flex flex-col gap-[8px]
+                items-center p-[8px]"
             >
               <span
                 contenteditable
@@ -152,10 +149,7 @@ const days = computed(() => {
   const monthStart = startOfMonth(currentDate.value);
   const dayNumInWeek = getDay(monthStart);
 
-  const calendarStart = subDays(
-    monthStart,
-    dayNumInWeek !== 0 ? dayNumInWeek - 1 : 6
-  );
+  const calendarStart = subDays(monthStart, dayNumInWeek !== 0 ? dayNumInWeek - 1 : 6);
 
   return eachDayOfInterval({
     start: calendarStart,

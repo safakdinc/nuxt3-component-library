@@ -9,24 +9,24 @@ AnimatedTooltip:
     - Default
     - Description
   props:
-    - name: 'offset'
-      type: 'Number'
-      default: '0'
-      description: 'Adjust offset for tooltip position.'
-    - name: 'class'
-      type: 'String'
-      default: 'undefined'
-      description: 'Additional CSS classes to apply to the container.'
+    - name: "offset"
+      type: "Number"
+      default: "0"
+      description: "Adjust offset for tooltip position."
+    - name: "class"
+      type: "String"
+      default: "undefined"
+      description: "Additional CSS classes to apply to the container."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content to be displayed inside the main element.'
-    - name: 'tooltip'
-      description: 'Content to be displayed inside the tooltip.'
+    - name: "default"
+      description: "Content to be displayed inside the main element."
+    - name: "tooltip"
+      description: "Content to be displayed inside the tooltip."
 ---
 
 ## Usage

@@ -9,10 +9,10 @@ GridDistortion:
     - Required
     - Description
   props:
-    - name: 'src'
-      type: 'String'
-      default: 'true'
-      description: 'Source URL of the image to be distorted.'
+    - name: "src"
+      type: "String"
+      default: "true"
+      description: "Source URL of the image to be distorted."
 ---
 
 ## Usage
@@ -35,13 +35,11 @@ GridDistortion:
 ## Features
 
 1. **Responsive Design**
-
    - Automatically adjusts to container size
    - Maintains image aspect ratio
    - Handles window resize events
 
 2. **Interactive Effects**
-
    - Smooth mouse tracking with easing
    - Grid-based pixel displacement
    - Dynamic chromatic aberration

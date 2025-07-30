@@ -5,10 +5,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import * as THREE from 'three';
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { ref, onMounted, onUnmounted } from "vue";
+import * as THREE from "three";
+import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const container = ref(null);
 let scene, camera, renderer, controls;
@@ -16,18 +16,18 @@ let scene, camera, renderer, controls;
 const props = defineProps({
   elements: {
     type: Array,
-    required: true
-  }
+    required: true,
+  },
 });
 
 onMounted(() => {
   initScene();
   animate();
-  window.addEventListener('resize', onWindowResize);
+  window.addEventListener("resize", onWindowResize);
 });
 
 onUnmounted(() => {
-  window.removeEventListener('resize', onWindowResize);
+  window.removeEventListener("resize", onWindowResize);
   controls.dispose();
 });
 
@@ -48,8 +48,8 @@ function initScene() {
 }
 
 function addElementsToScene() {
-  props.elements.forEach(element => {
-    const htmlElement = document.createElement('div');
+  props.elements.forEach((element) => {
+    const htmlElement = document.createElement("div");
     htmlElement.innerHTML = element.html;
     const cssObject = new CSS3DObject(htmlElement);
     cssObject.position.set(element.position.x, element.position.y, element.position.z);

@@ -1,15 +1,23 @@
 // nuxt.config.ts
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { resolve } from 'path';
-import tailwindcss from '@tailwindcss/vite';
+import { resolve } from "path";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-21',
-  devtools: true,
+  compatibilityDate: "2025-07-21",
+  devtools: { enabled: true },
   ssr: false,
-  extends: ['./layers/pantherui'],
 
-  modules: ['@nuxt/content', '@nuxt/image', '@nuxt/eslint', '@tresjs/nuxt'],
+  // Set the source directory to 'app'
+  srcDir: "app/",
+
+  extends: ["./layers/pantherui"],
+  components: {
+    global: true,
+    dirs: ["~/components"],
+  },
+
+  modules: ["@nuxt/content", "@nuxt/image", "@nuxt/eslint", "@tresjs/nuxt"],
 
   content: {
     // Remove the 'sources' section here.
@@ -22,28 +30,53 @@ export default defineNuxtConfig({
     markdown: {
       mdc: true,
       markdown: {
-        remarkPlugins: ['remark-unwrap-images'],
-        rehypePlugins: []
-      }
-    }
+        remarkPlugins: ["remark-unwrap-images"],
+        rehypePlugins: [],
+      },
+    },
   },
   vue: {
     compilerOptions: {
-      isCustomElement: tag => {
-        return tag === 'spline-viewer';
-      }
-    }
+      isCustomElement: (tag) => {
+        return tag === "spline-viewer";
+      },
+    },
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      sourcemap: false, // Disable source maps in production to avoid WASM issues
+    },
+    define: {
+      // Disable source map warnings in development
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
+    },
     optimizeDeps: {
-      include: ['gsap', 'gsap/ScrollTrigger', 'gsap/dist/Flip', 'gsap/ScrollToPlugin', 'split-type', 'shiki', 'tailwind-merge', 'three']
-    }
+      include: [
+        "gsap",
+        "gsap/ScrollTrigger",
+        "gsap/dist/Flip",
+        "gsap/ScrollToPlugin",
+        "split-type",
+        "shiki",
+        "tailwind-merge",
+        "three",
+      ],
+      exclude: ["@shikijs/wasm"], // Exclude problematic WASM modules
+    },
+    worker: {
+      format: "es", // Use ES modules for workers
+    },
+    server: {
+      fs: {
+        allow: [".."], // Allow serving files from parent directories
+      },
+    },
   },
 
   nitro: {
-    preset: 'netlify'
+    preset: "netlify",
   },
 
-  css: ['./main.css', './assets/css/transitions.scss']
+  css: ["~/main.css", "~/assets/css/transitions.scss"],
 });

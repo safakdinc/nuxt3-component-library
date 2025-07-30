@@ -1,17 +1,22 @@
 <template>
-  <div class="rounded-lg" :style="{ backdropFilter: `blur(${props.blur}px)`, background: props.background }"><slot></slot></div>
+  <div
+    class="rounded-lg"
+    :style="{ backdropFilter: `blur(${props.blur}px)`, background: props.background }"
+  >
+    <slot></slot>
+  </div>
 </template>
 
 <script setup>
 const props = defineProps({
   background: {
     type: String,
-    default: 'rgba(0,0,0,0.2)'
+    default: "rgba(0,0,0,0.2)",
   },
   blur: {
     type: Number,
-    default: 10
-  }
+    default: 10,
+  },
 });
 </script>
 

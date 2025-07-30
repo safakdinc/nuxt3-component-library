@@ -7,38 +7,44 @@
       @touchstart="onTouchStart"
       @touchend="onTouchEnd"
       @touchmove="onTouchMove"
-      :class="twMerge('absolute top-[40%] translate-y-[-50%] left-0 w-full h-[80%] z-[100]', controlContainerClass)"></div>
+      :class="
+        twMerge(
+          'absolute top-[40%] translate-y-[-50%] left-0 w-full h-[80%] z-[100]',
+          controlContainerClass,
+        )
+      "
+    ></div>
   </div>
 </template>
 
 <script setup>
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
-import * as THREE from 'three';
-import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
-import gsap from 'gsap';
+import * as THREE from "three";
+import { CSS3DRenderer, CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer";
+import gsap from "gsap";
 
 const props = defineProps({
   items: {
     type: Array,
-    required: true
+    required: true,
   },
   class: {
     type: String,
-    default: ''
+    default: "",
   },
   controlContainerClass: {
     type: String,
-    default: ''
+    default: "",
   },
   width: {
     type: Number,
-    default: 450
+    default: 450,
   },
   height: {
     type: Number,
-    default: 600
-  }
+    default: 600,
+  },
 });
 
 const container = ref(null);
@@ -71,12 +77,12 @@ onMounted(() => {
   scene.add(carousel);
 
   props.items.forEach((image, index) => {
-    const element = document.createElement('div');
+    const element = document.createElement("div");
     element.style.width = `${props.width}px`;
     element.style.height = `${props.height}px`;
-    element.classList.add('rounded-lg');
+    element.classList.add("rounded-lg");
     element.style.backgroundImage = `url(${image})`;
-    element.style.backgroundSize = 'cover';
+    element.style.backgroundSize = "cover";
     const object = new CSS3DObject(element);
     const angle = (index / props.items.length) * Math.PI * 2;
     object.position.setFromSphericalCoords(radius.value, Math.PI / 2, angle);
@@ -90,22 +96,22 @@ onMounted(() => {
   gsap.set(carousel.rotation, {
     x: THREE.MathUtils.degToRad(20),
     y: 0,
-    z: 0
+    z: 0,
   });
   startContinuousRotation();
 
-  window.addEventListener('resize', onWindowResize);
+  window.addEventListener("resize", onWindowResize);
 });
 
 function startContinuousRotation() {
   gsap.to(carousel.rotation, {
     y: carousel.rotation.y + Math.PI * 2,
     duration: 20,
-    ease: 'linear',
+    ease: "linear",
     repeat: -1,
     onUpdate: () => {
       renderer.render(scene, camera);
-    }
+    },
   });
 }
 
@@ -137,10 +143,10 @@ function onMouseMove() {
   let percentage = (mouseDelta / maxDelta) * -50;
   gsap.to(carousel.rotation, {
     y: carousel.rotation.y + (lastPercentage.value - percentage),
-    ease: 'power2.out',
+    ease: "power2.out",
     onUpdate: () => {
       renderer.render(scene, camera);
-    }
+    },
   });
   lastPercentage.value = percentage;
 }
@@ -164,10 +170,10 @@ function onTouchMove(event) {
   let percentage = (touchDelta / maxDelta) * -15;
   gsap.to(carousel.rotation, {
     y: carousel.rotation.y + (lastPercentage.value - percentage),
-    ease: 'power2.out',
+    ease: "power2.out",
     onUpdate: () => {
       renderer.render(scene, camera);
-    }
+    },
   });
   lastPercentage.value = percentage;
 }
@@ -194,7 +200,7 @@ onBeforeUnmount(() => {
     container.value.removeChild(renderer.domElement);
   }
   if (process.client) {
-    window.removeEventListener('resize', onWindowResize);
+    window.removeEventListener("resize", onWindowResize);
     gsap.killTweensOf(carousel.rotation);
   }
 });

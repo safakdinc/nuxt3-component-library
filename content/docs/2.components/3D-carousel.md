@@ -9,22 +9,22 @@ description: A Vue component that creates an interactive 3D carousel using Three
     - Default
     - Description
   props:
-    - name: 'items'
-      type: 'Array'
-      default: '[]'
-      description: 'An array of image URLs to display in the carousel. Required.'
-    - name: 'class'
-      type: 'String'
-      default: 'empty'
-      description: 'Additional CSS classes to apply to the component.'
-    - name: 'width'
-      type: 'Number'
-      default: '450'
-      description: 'Width value for each carousel item.'
-    - name: 'height'
-      type: 'Number'
-      default: '600'
-      description: 'Height value for each carousel item.'
+    - name: "items"
+      type: "Array"
+      default: "[]"
+      description: "An array of image URLs to display in the carousel. Required."
+    - name: "class"
+      type: "String"
+      default: "empty"
+      description: "Additional CSS classes to apply to the component."
+    - name: "width"
+      type: "Number"
+      default: "450"
+      description: "Width value for each carousel item."
+    - name: "height"
+      type: "Number"
+      default: "600"
+      description: "Height value for each carousel item."
 
 Slots:
   head:

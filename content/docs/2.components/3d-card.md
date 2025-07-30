@@ -9,14 +9,14 @@ CardContainer:
     - Default
     - Description
   props:
-    - name: 'multiplierX'
-      type: 'Number'
-      default: '20'
-      description: 'Multiplier for the X-axis rotation effect.'
-    - name: 'multiplierY'
-      type: 'Number'
-      default: '10'
-      description: 'Multiplier for the Y-axis rotation effect.'
+    - name: "multiplierX"
+      type: "Number"
+      default: "20"
+      description: "Multiplier for the X-axis rotation effect."
+    - name: "multiplierY"
+      type: "Number"
+      default: "10"
+      description: "Multiplier for the Y-axis rotation effect."
 
 CardItem:
   head:
@@ -25,22 +25,22 @@ CardItem:
     - Default
     - Description
   props:
-    - name: 'translateZ'
-      type: 'Number'
-      default: '30'
-      description: 'The Z-axis translation distance in pixels when hovered.'
-    - name: 'boxShadow'
-      type: 'Boolean'
-      default: 'false'
-      description: 'Whether to apply a box shadow effect when hovered.'
+    - name: "translateZ"
+      type: "Number"
+      default: "30"
+      description: "The Z-axis translation distance in pixels when hovered."
+    - name: "boxShadow"
+      type: "Boolean"
+      default: "false"
+      description: "Whether to apply a box shadow effect when hovered."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Content for the card container or card item.'
+    - name: "default"
+      description: "Content for the card container or card item."
 ---
 
 ### Usage Example

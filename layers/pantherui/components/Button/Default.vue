@@ -1,11 +1,14 @@
 <template>
-  <button class="px-[16px] py-[8px] rounded-lg button cursor-pointer h-fit" @click="emits('handleClick')">
+  <button
+    class="px-[16px] py-[8px] rounded-lg button cursor-pointer h-fit"
+    @click="emits('handleClick')"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script setup>
-const emits = defineEmits(['handleClick']);
+const emits = defineEmits(["handleClick"]);
 </script>
 
 <style lang="scss" scoped>

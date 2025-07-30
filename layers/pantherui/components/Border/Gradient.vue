@@ -5,22 +5,23 @@
     <div
       :class="props.class"
       class="overflow-hidden w-full h-full rounded-[inherit] px-[16px] py-[8px]"
-      :style="{ background: props.background }">
+      :style="{ background: props.background }"
+    >
       <slot></slot>
     </div>
   </div>
 </template>
 
 <script setup>
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 const props = defineProps({
   background: {
     type: String,
-    default: 'black'
+    default: "black",
   },
   class: String,
-  wrapperClass: String
+  wrapperClass: String,
 });
 </script>
 
@@ -41,9 +42,11 @@ const props = defineProps({
   filter: blur(15px);
   animation: backgroundShift 5s infinite alternate;
   background-size: 400% 400%;
-  background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+  background-image:
+    radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
     radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
-    radial-gradient(circle farthest-side at 100% 100%, #ffc414, transparent), radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    radial-gradient(circle farthest-side at 100% 100%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
 }
 
 .gradient-border {
@@ -53,9 +56,11 @@ const props = defineProps({
   transition: opacity 0.5s ease;
   animation: backgroundShift 5s infinite alternate;
   background-size: 400% 400%;
-  background-image: radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
+  background-image:
+    radial-gradient(circle farthest-side at 0 100%, #00ccb1, transparent),
     radial-gradient(circle farthest-side at 100% 0, #7b61ff, transparent),
-    radial-gradient(circle farthest-side at 100% 100%, #ffc414, transparent), radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
+    radial-gradient(circle farthest-side at 100% 100%, #ffc414, transparent),
+    radial-gradient(circle farthest-side at 0 0, #1ca0fb, #141316);
 }
 @keyframes backgroundShift {
   0% {

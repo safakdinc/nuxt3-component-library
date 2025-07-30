@@ -9,34 +9,34 @@ ExpandableCard:
     - Default
     - Description
   props:
-    - name: 'cardInfo'
-      type: 'Object'
-      default: 'required'
-      description: 'Object containing card information (title, description, image source, CTA text).'
-    - name: 'buttonClass'
-      type: 'String'
-      default: 'null'
-      description: 'Custom CSS class for the CTA button.'
-    - name: 'backgroundClass'
-      type: 'String'
-      default: 'null'
-      description: 'Custom CSS class for the card background.'
+    - name: "cardInfo"
+      type: "Object"
+      default: "required"
+      description: "Object containing card information (title, description, image source, CTA text)."
+    - name: "buttonClass"
+      type: "String"
+      default: "null"
+      description: "Custom CSS class for the CTA button."
+    - name: "backgroundClass"
+      type: "String"
+      default: "null"
+      description: "Custom CSS class for the card background."
 
 Slots:
   head:
     - Slot
     - Description
   props:
-    - name: 'default'
-      description: 'Default slot for custom content.'
+    - name: "default"
+      description: "Default slot for custom content."
 
 Events:
   head:
     - Event
     - Description
   props:
-    - name: 'handleClick'
-      description: 'Emitted when the CTA button is clicked while the card is expanded.'
+    - name: "handleClick"
+      description: "Emitted when the CTA button is clicked while the card is expanded."
 ---
 
 ## Usage

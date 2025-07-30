@@ -3,31 +3,31 @@
 </template>
 
 <script setup>
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const props = defineProps({
   src: {
     type: String,
-    default: ''
+    default: "",
   },
   scrub: {
     type: [Boolean, Number],
-    default: true
+    default: true,
   },
   triggerElement: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
 });
 
 const image = ref();
 
 onMounted(() => {
   let scrollerElement = document.querySelector(props.triggerElement) || window;
-  ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' });
+  ScrollTrigger.config({ autoRefreshEvents: "visibilitychange,DOMContentLoaded,load" });
   ScrollTrigger.scrollerProxy(scrollerElement, {
     scrollTop(value) {
       if (arguments.length) {
@@ -37,22 +37,22 @@ onMounted(() => {
     },
     getBoundingClientRect() {
       return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-    }
+    },
   });
 
   gsap.to(image.value, {
-    objectPosition: 'center 0%',
-    ease: 'none',
+    objectPosition: "center 0%",
+    ease: "none",
     scrollTrigger: {
       trigger: image.value,
-      start: 'top bottom',
-      end: 'bottom top',
+      start: "top bottom",
+      end: "bottom top",
       scrub: props.scrub,
-      scroller: scrollerElement
-    }
+      scroller: scrollerElement,
+    },
   });
 
-  ScrollTrigger.addEventListener('refreshInit', () => {
+  ScrollTrigger.addEventListener("refreshInit", () => {
     ScrollTrigger.refresh();
   });
 });

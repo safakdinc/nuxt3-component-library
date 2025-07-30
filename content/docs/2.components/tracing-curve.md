@@ -4,14 +4,14 @@ description: A Vue component that creates an interactive 3D curved line animatio
 
 TracingCurveContainer:
   props:
-    - name: 'curveData'
-      type: 'Array'
+    - name: "curveData"
+      type: "Array"
       default: []
-      description: 'An array of objects containing line and item data for each curve.'
-    - name: 'triggerElement'
-      type: 'String | Window'
-      default: 'window'
-      description: 'The element to use as the scroll trigger. Can be a CSS selector string or the window object.'
+      description: "An array of objects containing line and item data for each curve."
+    - name: "triggerElement"
+      type: "String | Window"
+      default: "window"
+      description: "The element to use as the scroll trigger. Can be a CSS selector string or the window object."
 ---
 
 ## Usage

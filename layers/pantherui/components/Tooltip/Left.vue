@@ -1,8 +1,5 @@
 <template>
-  <button
-    @click="emits('handleClick')"
-    class="tooltip group flex justify-center items-center"
-  >
+  <button @click="emits('handleClick')" class="tooltip group flex justify-center items-center">
     <div
       @pointerenter="
         () => {
@@ -19,11 +16,9 @@
       <slot></slot>
     </div>
 
-    <span
-      class="tooltiptext"
-      :style="{ '--tooltipBackground': props.tooltipBackground }"
-      >{{ text }}</span
-    >
+    <span class="tooltiptext" :style="{ '--tooltipBackground': props.tooltipBackground }">{{
+      text
+    }}</span>
   </button>
 </template>
 

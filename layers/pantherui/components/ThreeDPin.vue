@@ -1,10 +1,19 @@
 <template>
   <div class="relative main" @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave">
-    <div :class="twMerge('w-full h-full absolute top-0 left-0 flex flex-col items-center pin-container', props.class)">
+    <div
+      :class="
+        twMerge(
+          'w-full h-full absolute top-0 left-0 flex flex-col items-center pin-container',
+          props.class,
+        )
+      "
+    >
       <div class="pin">
         <slot name="pin"></slot>
       </div>
-      <div class="w-full flex-1 flex flex-col items-center z-[2] pin-accesories pointer-events-none">
+      <div
+        class="w-full flex-1 flex flex-col items-center z-[2] pin-accesories pointer-events-none"
+      >
         <div class="stripe"></div>
         <div class="dot"></div>
         <div class="box">
@@ -21,14 +30,14 @@
 </template>
 
 <script setup>
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 const props = defineProps({
-  class: String
+  class: String,
 });
 
 const isHovered = ref(false);
-provide('isHovered', isHovered);
+provide("isHovered", isHovered);
 function handleMouseEnter() {
   isHovered.value = true;
 }
@@ -108,7 +117,9 @@ function handleMouseLeave() {
 }
 
 .card {
-  transition: transform 0.7s ease, opacity 0.7s ease;
+  transition:
+    transform 0.7s ease,
+    opacity 0.7s ease;
   transform-style: preserve-3d;
   perspective: 1000px;
   z-index: 1;

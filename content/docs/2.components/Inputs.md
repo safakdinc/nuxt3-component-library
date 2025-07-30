@@ -9,26 +9,26 @@ FloatingLabel:
     - Default
     - Description
   props:
-    - name: 'label'
-      type: 'String'
+    - name: "label"
+      type: "String"
       default: '"Label"'
-      description: 'Text to be displayed as the floating label.'
-    - name: 'type'
-      type: 'String'
+      description: "Text to be displayed as the floating label."
+    - name: "type"
+      type: "String"
       default: '"text"'
-      description: 'Type of the input field (e.g., text, password, email).'
-    - name: 'underlineColor'
-      type: 'String'
+      description: "Type of the input field (e.g., text, password, email)."
+    - name: "underlineColor"
+      type: "String"
       default: '"aliceblue"'
-      description: 'Color of the animated underline when the input is focused.'
+      description: "Color of the animated underline when the input is focused."
 
 Events:
   head:
     - Event
     - Description
   props:
-    - name: 'handleInput'
-      description: 'Emitted when the input value changes.'
+    - name: "handleInput"
+      description: "Emitted when the input value changes."
 ---
 
 ## Usage

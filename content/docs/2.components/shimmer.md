@@ -7,9 +7,9 @@ ShimmerLoading:
     - Prop
     - Description
   props:
-    - name: 'background'
+    - name: "background"
       description: 'Background color of the loading element. Default is "#c2c2c2".'
-    - name: 'shimmer'
+    - name: "shimmer"
       description: 'Color of the shimmer effect. Default is "#ffffff".'
 ---
 

@@ -5,13 +5,25 @@
     </div>
 
     <!-- Conditionally Render Preview or Code -->
-    <div class="flex flex-col gap-[8px] overflow-hidden rounded-md" style="border: 1px solid rgb(255 255 255 / 0.3)">
-      <div v-show="isPreview" class="w-full flex justify-center preview min-h-[50vh] max-h-[80vh] overflow-x-hidden overflow-y-auto">
-        <component :is="resolveComponent('examples-' + props.component)"></component>
+    <div
+      class="flex flex-col gap-[8px] overflow-hidden rounded-md"
+      style="border: 1px solid rgb(255 255 255 / 0.3)"
+    >
+      <div
+        v-show="isPreview"
+        class="w-full flex justify-center preview min-h-[50vh] max-h-[80vh] overflow-x-hidden
+          overflow-y-auto"
+      >
+        <component :is="resolveComponent('Examples' + props.component)"></component>
       </div>
       <div v-show="!isPreview" class="relative text-sm">
-        <button @click="copyClipBoard" class="absolute top-[4px] right-[12px] px-[12px] py-[6px] copy-code rounded-md">
-          <div><i class="fa-solid text-2xl" :class="{ 'fa-check': copied, 'fa-copy': !copied }"></i></div>
+        <button
+          @click="copyClipBoard"
+          class="absolute top-[4px] right-[12px] px-[12px] py-[6px] copy-code rounded-md"
+        >
+          <div>
+            <i class="fa-solid text-2xl" :class="{ 'fa-check': copied, 'fa-copy': !copied }"></i>
+          </div>
         </button>
         <div class="w-full overflow-hidden" v-html="highlightedCode"></div>
       </div>
@@ -20,36 +32,36 @@
 </template>
 
 <script setup>
-import { createHighlighter } from 'shiki';
+import { createHighlighter } from "shiki";
 
 const props = defineProps({
   component: {
     type: String,
-    required: false
-  }
+    required: false,
+  },
 });
 
 const isPreview = ref(true);
-const highlightedCode = ref('');
+const highlightedCode = ref("");
 
 function handleClick(value) {
   isPreview.value = value === 0;
 }
 
-const sourceCode = ref('');
+const sourceCode = ref("");
 
 onMounted(async () => {
   const highlighter = await createHighlighter({
-    themes: ['material-theme-darker'],
-    langs: ['vue']
+    themes: ["material-theme-darker"],
+    langs: ["vue"],
   });
 
-  const module = await import(`../components/examples/${props.component}.vue?raw`);
+  const module = await import(`../components/Examples/${props.component}.vue?raw`);
   sourceCode.value = module.default;
 
   highlightedCode.value = highlighter.codeToHtml(sourceCode.value, {
-    lang: 'vue',
-    theme: 'material-theme-darker'
+    lang: "vue",
+    theme: "material-theme-darker",
   });
 });
 

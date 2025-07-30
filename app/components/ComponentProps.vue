@@ -12,7 +12,12 @@
             <code>{{ prop.name }}</code>
           </td>
           <td v-if="prop.type">
-            <div class="py-[4px] px-[8px] rounded-md w-fit" style="background-color: rgb(37, 37, 37)">{{ prop.type }}</div>
+            <div
+              class="py-[4px] px-[8px] rounded-md w-fit"
+              style="background-color: rgb(37, 37, 37)"
+            >
+              {{ prop.type }}
+            </div>
           </td>
           <td v-if="prop.default">
             <code>{{ prop.default }}</code>
@@ -30,14 +35,16 @@ const props = defineProps({
     type: String,
     // This 'name' prop will now directly correspond to keys under 'meta',
     // e.g., 'FloatingLabel' or 'Events'
-    required: true // Making it required ensures it's always provided
-  }
+    required: true, // Making it required ensures it's always provided
+  },
 });
 
 const { path } = useRoute();
 
 // This fetch is correct for getting the full page object
-const { data: page } = await useAsyncData(`content-${path}`, () => queryCollection('docs').where({ _path: path }).findOne());
+const { data: page } = await useAsyncData(`content-${path}`, () =>
+  queryCollection("docs").where({ _path: path }).findOne(),
+);
 
 // console.log('ComponentProps Page Data:', page.value); // Keep this for debugging!
 </script>

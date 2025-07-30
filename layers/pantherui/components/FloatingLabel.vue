@@ -10,18 +10,18 @@
 const props = defineProps({
   label: {
     type: String,
-    default: 'Label'
+    default: "Label",
   },
   type: {
-    default: 'text',
-    type: String
+    default: "text",
+    type: String,
   },
   underlineColor: {
     type: String,
-    default: 'aliceblue'
-  }
+    default: "aliceblue",
+  },
 });
-const emits = defineEmits(['handleInput']);
+const emits = defineEmits(["handleInput"]);
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +73,7 @@ input {
   border-radius: 9999px;
   overflow: hidden;
   &::after {
-    content: '';
+    content: "";
     display: block;
     position: relative;
     z-index: 10;
